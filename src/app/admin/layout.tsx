@@ -21,7 +21,7 @@ export default async function AdminLayout({ children }: { children: React.ReactN
   return (
     <div className="min-h-screen bg-background">
       <header className="bg-(--card) border-b border-(--border) px-6 py-4 flex items-center justify-between">
-        <h1 className="font-bold text-lg">🧮 Smart Calc — Admin</h1>
+        <h1 className="font-bold text-lg">d-calc — Admin</h1>
         <nav className="flex gap-4 text-sm">
           <Link href="/admin" className="hover:text-indigo-600 transition-colors">Dashboard</Link>
           <Link href="/admin/analytics" className="hover:text-indigo-600 transition-colors">Analytics</Link>

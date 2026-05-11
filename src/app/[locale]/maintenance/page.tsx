@@ -4,7 +4,7 @@ export default function MaintenancePage() {
       <div className="text-7xl mb-6">🔧</div>
       <h1 className="text-3xl font-bold mb-3">ปิดปรับปรุงชั่วคราว</h1>
       <p className="text-(--muted-foreground) max-w-sm">
-        เว็บไซต์ Smart Calculator กำลังอยู่ระหว่างการปรับปรุง กรุณาลองใหม่อีกครั้งในภายหลัง
+        เว็บไซต์ D-Calc กำลังอยู่ระหว่างการปรับปรุง กรุณาลองใหม่อีกครั้งในภายหลัง
       </p>
       <p className="text-sm text-(--muted-foreground) mt-2">
         We&apos;ll be back shortly. Thank you for your patience.

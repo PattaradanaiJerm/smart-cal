@@ -2,6 +2,7 @@
 
 import { useLocale } from "next-intl";
 import { useRouter, usePathname } from "next/navigation";
+import Image from "next/image";
 import { Menu, Globe, Sun, Moon } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
@@ -38,8 +39,9 @@ export function Header({ onMenuToggle }: HeaderProps) {
       </button>
 
       {/* Logo (mobile only) */}
-      <span className="lg:hidden font-bold text-indigo-600 dark:text-indigo-400 text-base">
-        🧮 Smart Calc
+      <span className="lg:hidden inline-flex items-center gap-2 font-bold text-base">
+        <Image src="/logo.png" alt="d-calc" width={24} height={24} className="rounded-md" />
+        <span className="bg-linear-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">d-calc</span>
       </span>
 
       {/* Spacer */}

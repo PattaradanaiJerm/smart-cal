@@ -3,8 +3,8 @@ import Link from "next/link";
 import { calculators } from "@/config/calculators";
 
 export const metadata: Metadata = {
-  title: "About Us | Smart Calculator",
-  description: "Learn about Smart Calculator — free online tools for BMI, loan, GPA, calorie, currency and more.",
+  title: "About Us | D-Calc",
+  description: "Learn about D-Calc — free online tools for BMI, loan, GPA, calorie, currency and more.",
 };
 
 export default async function AboutPage({ params }: { params: Promise<{ locale: string }> }) {
@@ -15,8 +15,8 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
     <div className="max-w-2xl mx-auto py-8 px-4">
       {/* Hero */}
       <div className="rounded-2xl bg-linear-to-br from-indigo-500/10 to-purple-500/10 border border-indigo-100 dark:border-indigo-900/40 p-8 mb-8 text-center">
-        <div className="text-5xl mb-4">🧮</div>
-        <h1 className="text-2xl font-bold mb-2">Smart Calculator</h1>
+        <div className="mb-4 flex justify-center"><img src="/logo.png" alt="d-calc" width={80} height={80} className="rounded-2xl" /></div>
+        <h1 className="text-2xl font-bold mb-2">D-Calc</h1>
         <p className="text-(--muted-foreground) text-sm max-w-md mx-auto">
           {isTh
             ? "รวมเครื่องคำนวณออนไลน์ฟรี ใช้งานง่าย รองรับทุก device ไม่ต้องสมัครสมาชิก"

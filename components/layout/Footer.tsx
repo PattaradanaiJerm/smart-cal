@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 import { calculators } from "@/config/calculators";
 
@@ -15,8 +16,9 @@ export function Footer() {
 
           {/* Brand */}
           <div className="sm:col-span-2">
-            <Link href={`/${locale}`} className="inline-flex items-center gap-2 font-bold text-xl text-indigo-600 dark:text-indigo-400 mb-3">
-              <span>🧮</span> Smart Calc
+            <Link href={`/${locale}`} className="inline-flex items-center gap-2 font-bold text-xl mb-3">
+              <Image src="/logo.png" alt="d-calc" width={32} height={32} className="rounded-md" />
+              <span className="bg-linear-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">d-calc</span>
             </Link>
             <p className="text-sm text-(--muted-foreground) leading-relaxed max-w-xs">
               {isTh
@@ -77,7 +79,7 @@ export function Footer() {
 
         {/* Bottom bar */}
         <div className="pt-6 border-t border-(--border) flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-(--muted-foreground)">
-          <p>© {new Date().getFullYear()} Smart Calculator. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} D-Calc. All rights reserved.</p>
           <div className="flex items-center gap-4">
             <Link href={`/${locale}/privacy`} className="hover:text-indigo-600 transition-colors">Privacy Policy</Link>
             <Link href={`/${locale}/terms`} className="hover:text-indigo-600 transition-colors">Terms</Link>

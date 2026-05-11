@@ -3,8 +3,8 @@ import Link from "next/link";
 import { PolicyLayout, PolicySection } from "@/components/layout/PolicyLayout";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy | Smart Calculator",
-  description: "Privacy Policy of Smart Calculator — how we collect, use, and protect your data.",
+  title: "Privacy Policy | D-Calc",
+  description: "Privacy Policy of D-Calc — how we collect, use, and protect your data.",
 };
 
 export default function PrivacyPage() {
@@ -15,11 +15,11 @@ export default function PrivacyPage() {
     >
       <PolicySection title="1. Overview · ภาพรวม">
         <p>
-          Smart Calculator (&quot;we&quot;, &quot;our&quot;, or &quot;us&quot;) operates this website to provide free online calculation tools.
+          D-Calc (&quot;we&quot;, &quot;our&quot;, or &quot;us&quot;) operates this website to provide free online calculation tools.
           This Privacy Policy explains what information we collect, how we use it, and your choices.
         </p>
         <p className="text-indigo-600 dark:text-indigo-400 text-xs">
-          Smart Calculator ให้บริการเครื่องคำนวณออนไลน์ฟรี นโยบายนี้อธิบายว่าเราเก็บข้อมูลอะไร ใช้อย่างไร และสิทธิ์ของคุณมีอะไรบ้าง
+          D-Calc ให้บริการเครื่องคำนวณออนไลน์ฟรี นโยบายนี้อธิบายว่าเราเก็บข้อมูลอะไร ใช้อย่างไร และสิทธิ์ของคุณมีอะไรบ้าง
         </p>
       </PolicySection>
 

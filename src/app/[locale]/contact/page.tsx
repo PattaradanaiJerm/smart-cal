@@ -3,8 +3,8 @@ import { PolicyLayout } from "@/components/layout/PolicyLayout";
 import { Mail, Globe, Shield, MessageCircle } from "lucide-react";
 
 export const metadata: Metadata = {
-  title: "Contact Us | Smart Calculator",
-  description: "Contact Smart Calculator — ติดต่อเรา สำหรับคำถาม ข้อเสนอแนะ หรือรายงานปัญหา",
+  title: "Contact Us | D-Calc",
+  description: "Contact D-Calc — ติดต่อเรา สำหรับคำถาม ข้อเสนอแนะ หรือรายงานปัญหา",
 };
 
 export default async function ContactPage({
@@ -75,7 +75,7 @@ export default async function ContactPage({
             <Globe size={16} className="mt-0.5 text-indigo-500 shrink-0" />
             <div>
               <p className="font-medium text-foreground mb-0.5">{isTh ? "เว็บไซต์" : "Website"}</p>
-              <p>smartcalc.app</p>
+              <p>d-calc.vercel.app</p>
             </div>
           </div>
           <div className="flex items-start gap-3">
@@ -120,7 +120,7 @@ export default async function ContactPage({
             />
           </div>
           <a
-            href="mailto:contact@smartcalc.app"
+            href="mailto:contact@d-calc.vercel.app"
             className="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-semibold px-5 py-2.5 rounded-xl transition-colors"
           >
             <Mail size={14} />

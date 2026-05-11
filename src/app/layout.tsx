@@ -15,9 +15,13 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: { template: "%s | Smart Calculator", default: "Smart Calculator" },
+  title: { template: "%s | d-calc", default: "d-calc — เครื่องคำนวณออนไลน์ฟรี" },
   description: "เครื่องคำนวณออนไลน์ฟรี ใช้งานง่าย รองรับทุก device",
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://smartcalc.app"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://d-calc.vercel.app"),
+  icons: {
+    icon: "/logo.png",
+    apple: "/logo.png",
+  },
 };
 
 const adsenseId = process.env.NEXT_PUBLIC_ADSENSE_ID;

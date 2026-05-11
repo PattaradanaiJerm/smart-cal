@@ -2,6 +2,7 @@
 
 import { useTranslations, useLocale } from "next-intl";
 import Link from "next/link";
+import Image from "next/image";
 import { calculators } from "@/config/calculators";
 import { CheckCircle, Zap, Lock, Globe } from "lucide-react";
 import { useSiteStats } from "@/hooks/useSiteStats";
@@ -65,8 +66,8 @@ export function HomeContent() {
   const websiteSchema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: "Smart Calculator",
-    url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://smartcalc.app",
+    name: "D-Calc",
+    url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://d-calc.vercel.app",
     description: isTh ? "รวมเครื่องคำนวณออนไลน์ฟรีกว่า 10 ประเภท" : "10+ free online calculators",
     inLanguage: isTh ? "th" : "en",
   };
@@ -76,7 +77,8 @@ export function HomeContent() {
       {/* Hero */}
       <section className="text-center py-12 px-4">
         <div className="inline-flex items-center gap-2 bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 text-sm font-medium px-3 py-1 rounded-full mb-4">
-          <span>🧮</span> Smart Calculator
+          <Image src="/logo.png" alt="d-calc" width={20} height={20} className="rounded-sm" />
+          d-calc
         </div>
         <h1 className="text-4xl sm:text-5xl font-bold mb-4 bg-linear-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">
           {t("hero_title")}
@@ -135,10 +137,10 @@ export function HomeContent() {
         </div>
       </section>
 
-      {/* Why use Smart Calculator */}
+      {/* Why use D-Calc */}
       <section className="px-4 pb-12">
         <h2 className="text-xl font-bold mb-6 text-center">
-          {isTh ? "ทำไมต้องใช้ Smart Calculator?" : "Why use Smart Calculator?"}
+          {isTh ? "ทำไมต้องใช้ D-Calc?" : "Why use D-Calc?"}
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {features.map((f) => {

@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { PolicyLayout, PolicySection } from "@/components/layout/PolicyLayout";
 
 export const metadata: Metadata = {
-  title: "Terms of Service | Smart Calculator",
-  description: "Terms of Service for Smart Calculator.",
+  title: "Terms of Service | D-Calc",
+  description: "Terms of Service for D-Calc.",
 };
 
 export default function TermsPage() {
@@ -13,13 +13,13 @@ export default function TermsPage() {
       subtitle="ข้อกำหนดการใช้งาน"
     >
       <PolicySection title="1. Acceptance of Terms · การยอมรับข้อกำหนด">
-        <p>By accessing or using Smart Calculator, you agree to be bound by these Terms of Service.</p>
-        <p className="text-xs">การเข้าถึงหรือใช้งาน Smart Calculator ถือว่าคุณยอมรับข้อกำหนดเหล่านี้</p>
+        <p>By accessing or using D-Calc, you agree to be bound by these Terms of Service.</p>
+        <p className="text-xs">การเข้าถึงหรือใช้งาน D-Calc ถือว่าคุณยอมรับข้อกำหนดเหล่านี้</p>
       </PolicySection>
 
       <PolicySection title="2. Description of Service · คำอธิบายบริการ">
-        <p>Smart Calculator provides free online calculation tools including BMI, unit conversions, loan, GPA, calorie, and date calculators for personal and informational use.</p>
-        <p className="text-xs">Smart Calculator ให้บริการเครื่องคำนวณออนไลน์ฟรีสำหรับการใช้งานส่วนบุคคลและเพื่อข้อมูลเท่านั้น</p>
+        <p>D-Calc provides free online calculation tools including BMI, unit conversions, loan, GPA, calorie, and date calculators for personal and informational use.</p>
+        <p className="text-xs">D-Calc ให้บริการเครื่องคำนวณออนไลน์ฟรีสำหรับการใช้งานส่วนบุคคลและเพื่อข้อมูลเท่านั้น</p>
       </PolicySection>
 
       <PolicySection title="3. Disclaimer · ข้อจำกัดความรับผิดชอบ">
@@ -33,13 +33,13 @@ export default function TermsPage() {
       </PolicySection>
 
       <PolicySection title="5. Intellectual Property · ทรัพย์สินทางปัญญา">
-        <p>All content, design, and code on this site are owned by Smart Calculator. You may not reproduce, distribute, or create derivative works without prior written permission.</p>
-        <p className="text-xs">เนื้อหา การออกแบบ และโค้ดทั้งหมดเป็นทรัพย์สินของ Smart Calculator ห้ามทำซ้ำโดยไม่ได้รับอนุญาต</p>
+        <p>All content, design, and code on this site are owned by D-Calc. You may not reproduce, distribute, or create derivative works without prior written permission.</p>
+        <p className="text-xs">เนื้อหา การออกแบบ และโค้ดทั้งหมดเป็นทรัพย์สินของ D-Calc ห้ามทำซ้ำโดยไม่ได้รับอนุญาต</p>
       </PolicySection>
 
       <PolicySection title="6. Limitation of Liability · ข้อจำกัดความรับผิด">
-        <p>To the maximum extent permitted by law, Smart Calculator shall not be liable for any indirect, incidental, or consequential damages arising from use of this service.</p>
-        <p className="text-xs">Smart Calculator จะไม่รับผิดชอบต่อความเสียหายที่เกิดจากการใช้งานบริการ</p>
+        <p>To the maximum extent permitted by law, D-Calc shall not be liable for any indirect, incidental, or consequential damages arising from use of this service.</p>
+        <p className="text-xs">D-Calc จะไม่รับผิดชอบต่อความเสียหายที่เกิดจากการใช้งานบริการ</p>
       </PolicySection>
 
       <PolicySection title="7. Changes to Terms · การเปลี่ยนแปลงข้อกำหนด">

@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { useTranslations, useLocale } from "next-intl";
 import { calculators } from "@/config/calculators";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 import {
   Home,
   Info,
@@ -87,10 +88,10 @@ export function Sidebar({ onClose, collapsed = false, onToggleCollapse }: Sideba
         <Link
           href={`/${locale}`}
           onClick={onClose}
-          className={cn("flex items-center gap-2 font-bold text-lg text-indigo-600 dark:text-indigo-400 flex-1 min-w-0", collapsed && "lg:hidden")}
+          className={cn("flex items-center gap-2 font-bold text-lg flex-1 min-w-0", collapsed && "lg:hidden")}
         >
-          <span className="text-2xl shrink-0">🧮</span>
-          <span className="truncate">Smart Calc</span>
+          <Image src="/logo.png" alt="d-calc" width={28} height={28} className="shrink-0 rounded-md" />
+          <span className="truncate bg-linear-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">d-calc</span>
         </Link>
         <button
           onClick={onToggleCollapse}

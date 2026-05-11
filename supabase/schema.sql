@@ -1,5 +1,5 @@
 -- Run this SQL in Supabase SQL Editor
--- Project: Smart Calculator Analytics
+-- Project: D-Calc Analytics
 
 -- 1. Page views
 CREATE TABLE IF NOT EXISTS page_views (
