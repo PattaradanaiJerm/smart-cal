@@ -1,17 +1,20 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f8fafc;
-  --foreground: #0f172a;
+  --background: #f0f2ff;
+  --foreground: #0d1117;
   --sidebar-bg: #ffffff;
-  --sidebar-border: #e2e8f0;
+  --sidebar-border: #e4e7f0;
   --primary: #6366f1;
   --primary-foreground: #ffffff;
-  --muted: #f1f5f9;
-  --muted-foreground: #64748b;
-  --border: #e2e8f0;
+  --muted: #f4f6ff;
+  --muted-foreground: #6b7280;
+  --border: #e4e7f0;
   --card: #ffffff;
-  --card-foreground: #0f172a;
+  --card-foreground: #0d1117;
+  --input-bg: #fafbff;
+  --card-shadow: 0 0 0 1px rgba(99,102,241,0.05), 0 1px 3px rgba(0,0,0,0.04), 0 12px 32px -8px rgba(99,102,241,0.10);
+  --card-shadow-hover: 0 0 0 1px rgba(99,102,241,0.10), 0 4px 8px rgba(0,0,0,0.06), 0 20px 48px -8px rgba(99,102,241,0.18);
 }
 
 @theme inline {
@@ -22,20 +25,21 @@
 }
 
 .dark {
-  --background: #0f172a;
-  --foreground: #f8fafc;
-  --sidebar-bg: #1e293b;
-  --sidebar-border: #334155;
-  --muted: #1e293b;
-  --muted-foreground: #94a3b8;
-  --border: #334155;
-  --card: #1e293b;
-  --card-foreground: #f8fafc;
+  --background: #080c18;
+  --foreground: #f0f4ff;
+  --sidebar-bg: #0e1425;
+  --sidebar-border: #1e2a42;
+  --muted: #111827;
+  --muted-foreground: #8b9ab5;
+  --border: #1e2a42;
+  --card: #0e1425;
+  --card-foreground: #f0f4ff;
+  --input-bg: #111827;
+  --card-shadow: 0 0 0 1px rgba(99,102,241,0.10), 0 4px 24px rgba(0,0,0,0.40);
+  --card-shadow-hover: 0 0 0 1px rgba(99,102,241,0.20), 0 8px 40px rgba(99,102,241,0.15), 0 0 60px rgba(99,102,241,0.05);
 }
 
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
   background: var(--background);
@@ -44,18 +48,157 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
+/* ─── Premium calculator card ─── */
+.calc-card {
+  background: var(--card);
+  border: 1.5px solid var(--border);
+  border-radius: 1.25rem;
+  padding: 1.75rem;
+  box-shadow: var(--card-shadow);
+}
+
+/* ─── Premium input ─── */
+.calc-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: var(--input-bg);
+  border: 1.5px solid var(--border);
+  border-radius: 0.75rem;
+  font-size: 0.9375rem;
+  color: var(--foreground);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  outline: none;
+  appearance: none;
+}
+.calc-input:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3.5px rgba(99,102,241,0.14);
+}
+.calc-input::placeholder { color: var(--muted-foreground); opacity: 0.7; }
+
+/* ─── Select inherits calc-input ─── */
+.calc-select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: var(--input-bg);
+  border: 1.5px solid var(--border);
+  border-radius: 0.75rem;
+  font-size: 0.9375rem;
+  color: var(--foreground);
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  outline: none;
+  cursor: pointer;
+}
+.calc-select:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 3.5px rgba(99,102,241,0.14);
+}
+
+/* ─── Primary button ─── */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #6366f1 0%, #7c3aed 100%);
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 0.9375rem;
+  padding: 0.8125rem 1.5rem;
+  border-radius: 0.875rem;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, filter 0.15s ease;
+  box-shadow: 0 4px 14px rgba(99,102,241,0.35);
+  letter-spacing: 0.01em;
+}
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(99,102,241,0.45);
+  filter: brightness(1.05);
+}
+.btn-primary:active { transform: translateY(0); box-shadow: 0 2px 8px rgba(99,102,241,0.3); }
+
+/* ─── Secondary button ─── */
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--muted);
+  color: var(--muted-foreground);
+  font-weight: 600;
+  font-size: 0.875rem;
+  padding: 0.8125rem 1.25rem;
+  border-radius: 0.875rem;
+  border: 1.5px solid var(--border);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+.btn-secondary:hover { background: var(--border); color: var(--foreground); }
+
+/* ─── Result card ─── */
+.result-card {
+  background: var(--card);
+  border: 1.5px solid var(--border);
+  border-radius: 1.25rem;
+  padding: 1.75rem;
+  box-shadow: var(--card-shadow);
+  animation: slideUp 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ─── Stat row inside result card ─── */
+.stat-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.875rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.stat-row:last-child { border-bottom: none; padding-bottom: 0; }
+
+/* ─── Label for inputs ─── */
+.calc-label {
+  display: block;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--muted-foreground);
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+/* ─── Big gradient result number ─── */
+.result-number {
+  font-size: 3.5rem;
+  font-weight: 800;
+  line-height: 1;
+  background: linear-gradient(135deg, #6366f1, #a855f7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── Animations ─── */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(4px); }
+  from { opacity: 0; transform: translateY(6px); }
   to   { opacity: 1; transform: translateY(0); }
 }
-
-.page-transition { animation: fadeIn 0.18s ease-in-out; }
-
 @keyframes slideUp {
-  from { opacity: 0; transform: translateY(8px); }
+  from { opacity: 0; transform: translateY(12px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1); }
+}
 
-.result-card { animation: slideUp 0.2s ease-out; }
+.page-transition { animation: fadeIn 0.2s ease-out; }
+
+/* ─── Util ─── */
+.gradient-text {
+  background: linear-gradient(135deg, #6366f1, #a855f7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
 
 .sidebar-item { transition: background-color 0.15s ease, color 0.15s ease; }

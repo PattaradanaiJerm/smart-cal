@@ -8,29 +8,42 @@ interface CalculatorLayoutProps {
   color?: string;
 }
 
-export function CalculatorLayout({ title, description, children, icon, color = "indigo" }: CalculatorLayoutProps) {
-  const gradients: Record<string, string> = {
-    indigo: "from-indigo-500/10 to-purple-500/10 border-indigo-100 dark:border-indigo-900/40",
-    blue: "from-blue-500/10 to-cyan-500/10 border-blue-100 dark:border-blue-900/40",
-    green: "from-green-500/10 to-emerald-500/10 border-green-100 dark:border-green-900/40",
-    orange: "from-orange-500/10 to-yellow-500/10 border-orange-100 dark:border-orange-900/40",
-    pink: "from-pink-500/10 to-rose-500/10 border-pink-100 dark:border-pink-900/40",
-    teal: "from-teal-500/10 to-cyan-500/10 border-teal-100 dark:border-teal-900/40",
-  };
+const colorMap: Record<string, { grad: string; glow: string }> = {
+  indigo: { grad: "from-indigo-500 to-violet-600", glow: "rgba(99,102,241,0.20)" },
+  blue:   { grad: "from-blue-500 to-cyan-500",     glow: "rgba(59,130,246,0.20)" },
+  green:  { grad: "from-emerald-500 to-teal-500",  glow: "rgba(16,185,129,0.20)" },
+  orange: { grad: "from-orange-500 to-amber-500",  glow: "rgba(249,115,22,0.20)" },
+  pink:   { grad: "from-pink-500 to-rose-500",     glow: "rgba(236,72,153,0.20)" },
+  teal:   { grad: "from-teal-500 to-cyan-500",     glow: "rgba(20,184,166,0.20)" },
+};
 
-  const gradient = gradients[color] ?? gradients.indigo;
+export function CalculatorLayout({ title, description, children, icon, color = "indigo" }: CalculatorLayoutProps) {
+  const c = colorMap[color] ?? colorMap.indigo;
+  const iconClass = `flex-shrink-0 flex items-center justify-center w-14 h-14 rounded-2xl text-3xl bg-gradient-to-br ${c.grad} shadow-lg`;
+  const backdropClass = `absolute inset-0 bg-gradient-to-br ${c.grad} opacity-10 dark:opacity-20`;
+  const accentClass = `h-0.5 bg-gradient-to-r ${c.grad} opacity-40`;
 
   return (
     <div className="max-w-2xl mx-auto">
-      {/* Page header */}
-      <div className={`rounded-2xl border bg-linear-to-br ${gradient} p-6 mb-6`}>
-        {icon && <div className="mb-3 text-4xl">{icon}</div>}
-        <h1 className="text-2xl font-bold mb-1">{title}</h1>
-        <p className="text-(--muted-foreground) text-sm">{description}</p>
+      {/* ── Hero header ── */}
+      <div className="relative mb-6 rounded-2xl overflow-hidden border border-(--border)" style={{ boxShadow: "var(--card-shadow)" }}>
+        <div className={backdropClass} />
+        <div className="relative z-10 flex items-start gap-4 p-6">
+          {icon && (
+            <div className={iconClass} style={{ boxShadow: `0 8px 24px ${c.glow}` }}>
+              {icon}
+            </div>
+          )}
+          <div className="flex-1 min-w-0 pt-1">
+            <h1 className="text-2xl font-bold tracking-tight mb-1.5">{title}</h1>
+            <p className="text-sm text-(--muted-foreground) leading-relaxed">{description}</p>
+          </div>
+        </div>
+        <div className={accentClass} />
       </div>
 
-      {/* In-content ad — between header and calculator */}
-      <div className="mb-4">
+      {/* ── In-content ad ── */}
+      <div className="mb-5">
         <AdUnit
           slot={process.env.NEXT_PUBLIC_AD_SLOT_IN_CONTENT_TOP ?? "in-content-top"}
           className="h-24 w-full"
@@ -38,8 +51,8 @@ export function CalculatorLayout({ title, description, children, icon, color = "
         />
       </div>
 
+      {/* ── Calculator content ── */}
       {children}
     </div>
   );
 }
-

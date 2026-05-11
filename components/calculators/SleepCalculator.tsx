@@ -50,7 +50,7 @@ export function SleepCalculator() {
 
   return (
     <div className="space-y-4">
-      <div className="bg-(--card) border border-(--border) rounded-2xl p-6 space-y-4">
+      <div className="calc-card space-y-5">
         <div className="flex gap-2">
           {(["bedtime", "wake"] as Mode[]).map((m) => (
             <button key={m} onClick={() => setValue((s) => ({ ...s, mode: m, results: [] }))}
@@ -61,19 +61,19 @@ export function SleepCalculator() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-1.5">{state.mode === "bedtime" ? t("wake_time") : t("bedtime")}</label>
+          <label className="calc-label">{state.mode === "bedtime" ? t("wake_time") : t("bedtime")}</label>
           <input type="time" value={state.time} onChange={(e) => setValue((s) => ({ ...s, time: e.target.value, results: [] }))}
-            className="w-full px-4 py-2.5 bg-(--muted) border border-(--border) rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+            className="calc-input" />
         </div>
 
         <div className="flex gap-3 pt-2">
-          <button onClick={calculate} className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 rounded-xl transition-colors">{tc("calculate")}</button>
-          <button onClick={reset} className="px-4 bg-(--muted) hover:bg-(--border) rounded-xl text-sm transition-colors">{tc("reset")}</button>
+          <button onClick={calculate} className="btn-primary flex-1">{tc("calculate")}</button>
+          <button onClick={reset} className="btn-secondary">{tc("reset")}</button>
         </div>
       </div>
 
       {state.results.length > 0 && (
-        <div className="result-card bg-(--card) border border-(--border) rounded-2xl p-6">
+        <div className="result-card">
           <p className="text-sm font-semibold text-(--muted-foreground) mb-3">
             {state.mode === "bedtime" ? t("sleep_times") : t("wake_times")}
           </p>

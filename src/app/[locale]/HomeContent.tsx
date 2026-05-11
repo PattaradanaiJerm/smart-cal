@@ -75,23 +75,29 @@ export function HomeContent() {
   return (
     <div className="max-w-4xl mx-auto">
       {/* Hero */}
-      <section className="text-center py-12 px-4">
-        <div className="inline-flex items-center gap-2 bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 text-sm font-medium px-3 py-1 rounded-full mb-4">
-          <Image src="/logo.png" alt="d-calc" width={20} height={20} className="rounded-sm" />
-          d-calc
+      <section className="relative text-center py-16 px-4 overflow-hidden">
+        {/* Background blobs */}
+        <div className="absolute inset-0 pointer-events-none" aria-hidden>
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-gradient-to-br from-indigo-400/20 to-violet-500/20 rounded-full blur-3xl" />
         </div>
-        <h1 className="text-4xl sm:text-5xl font-bold mb-4 bg-linear-to-r from-indigo-600 to-violet-600 bg-clip-text text-transparent">
-          {t("hero_title")}
-        </h1>
-        <p className="text-lg text-(--muted-foreground) max-w-2xl mx-auto mb-8">
-          {t("hero_subtitle")}
-        </p>
-        <Link
-          href={`/${locale}/bmi`}
-          className="inline-flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold px-6 py-3 rounded-xl transition-colors shadow-lg shadow-indigo-200 dark:shadow-none"
-        >
-          {t("hero_cta")} →
-        </Link>
+        <div className="relative z-10">
+          <div className="inline-flex items-center gap-2 bg-white/80 dark:bg-white/5 backdrop-blur-sm border border-indigo-200/60 dark:border-indigo-500/20 text-indigo-600 dark:text-indigo-400 text-sm font-semibold px-4 py-1.5 rounded-full mb-6 shadow-sm">
+            <Image src="/logo.png" alt="d-calc" width={18} height={18} className="rounded-sm" />
+            d-calc
+          </div>
+          <h1 className="text-4xl sm:text-6xl font-extrabold mb-5 tracking-tight gradient-text leading-tight">
+            {t("hero_title")}
+          </h1>
+          <p className="text-lg text-(--muted-foreground) max-w-xl mx-auto mb-8 leading-relaxed">
+            {t("hero_subtitle")}
+          </p>
+          <Link
+            href={`/${locale}/bmi`}
+            className="btn-primary inline-flex gap-2 px-8 py-4 text-base"
+          >
+            {t("hero_cta")} <span aria-hidden>→</span>
+          </Link>
+        </div>
       </section>
 
       {/* Stats */}
@@ -101,9 +107,9 @@ export function HomeContent() {
           { label: isTh ? "การคำนวณ" : "Calculations", value: stats ? formatCount(stats.totalCalculations) : "…" },
           { label: isTh ? "ผู้เข้าชม" : "Page views", value: stats ? formatCount(stats.totalPageViews) : "…" },
         ].map((s) => (
-          <div key={s.label} className="bg-(--card) rounded-xl border border-(--border) p-4 text-center">
-            <p className="text-2xl font-bold text-indigo-600 dark:text-indigo-400">{s.value}</p>
-            <p className="text-sm text-(--muted-foreground) mt-1">{s.label}</p>
+          <div key={s.label} className="bg-(--card) rounded-2xl border border-(--border) p-5 text-center" style={{ boxShadow: "var(--card-shadow)" }}>
+            <p className="text-3xl font-extrabold gradient-text">{s.value}</p>
+            <p className="text-xs text-(--muted-foreground) mt-1.5 font-medium uppercase tracking-wide">{s.label}</p>
           </div>
         ))}
       </section>
@@ -118,7 +124,8 @@ export function HomeContent() {
               <Link
                 key={calc.slug}
                 href={`/${locale}/${calc.slug}`}
-                className="group flex items-start gap-4 bg-(--card) hover:shadow-md border border-(--border) rounded-xl p-5 transition-all hover:-translate-y-0.5"
+                className="group flex items-start gap-4 bg-(--card) border border-(--border) rounded-2xl p-5 transition-all duration-200 hover:-translate-y-1"
+                style={{ boxShadow: "var(--card-shadow)" }}
               >
                 <span className={`flex items-center justify-center w-10 h-10 rounded-xl text-white shrink-0 ${calc.color}`}>
                   <Icon size={20} />

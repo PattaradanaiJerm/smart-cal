@@ -53,37 +53,37 @@ export function AgeCalculator() {
 
   return (
     <div className="space-y-4">
-      <div className="bg-(--card) border border-(--border) rounded-2xl p-6 space-y-4">
+      <div className="calc-card space-y-5">
         <div>
-          <label className="block text-sm font-medium mb-1.5">{t("birthdate")}</label>
+          <label className="calc-label">{t("birthdate")}</label>
           <input
             type="date"
             value={state.birthdate}
             onChange={(e) => setValue((s) => ({ ...s, birthdate: e.target.value, result: null }))}
-            className="w-full px-4 py-2.5 bg-(--muted) border border-(--border) rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="calc-input"
           />
         </div>
         <div>
-          <label className="block text-sm font-medium mb-1.5">{t("reference_date")}</label>
+          <label className="calc-label">{t("reference_date")}</label>
           <input
             type="date"
             value={state.refDate}
             onChange={(e) => setValue((s) => ({ ...s, refDate: e.target.value, result: null }))}
-            className="w-full px-4 py-2.5 bg-(--muted) border border-(--border) rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="calc-input"
           />
         </div>
         <div className="flex gap-3 pt-2">
-          <button onClick={calculate} className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 rounded-xl transition-colors">
+          <button onClick={calculate} className="btn-primary flex-1">
             {tc("calculate")}
           </button>
-          <button onClick={reset} className="px-4 bg-(--muted) hover:bg-(--border) rounded-xl transition-colors text-sm">
+          <button onClick={reset} className="btn-secondary">
             {tc("reset")}
           </button>
         </div>
       </div>
 
       {state.result && (
-        <div className="result-card bg-(--card) border border-(--border) rounded-2xl p-6">
+        <div className="result-card">
           <div className="grid grid-cols-3 gap-4 mb-5">
             {[
               { val: state.result.years, label: t("years") },

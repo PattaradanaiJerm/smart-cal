@@ -82,14 +82,14 @@ export function UnitConverter() {
 
   return (
     <div className="space-y-4">
-      <div className="bg-(--card) border border-(--border) rounded-2xl p-6 space-y-4">
+      <div className="calc-card space-y-5">
         {/* Category */}
         <div>
-          <label className="block text-sm font-medium mb-1.5">{t("category")}</label>
+          <label className="calc-label">{t("category")}</label>
           <select
             value={state.category}
             onChange={(e) => setValue((s) => ({ ...s, category: e.target.value as Category, fromIdx: 0, toIdx: 1, result: "" }))}
-            className="w-full px-4 py-2.5 bg-(--muted) border border-(--border) rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="calc-input"
           >
             {(Object.keys(units) as Category[]).map((cat) => (
               <option key={cat} value={cat}>
@@ -102,21 +102,21 @@ export function UnitConverter() {
         {/* Value + from unit */}
         <div className="grid grid-cols-2 gap-3">
           <div>
-            <label className="block text-sm font-medium mb-1.5">{t("value")}</label>
+            <label className="calc-label">{t("value")}</label>
             <input
               type="number"
               value={state.input}
               onChange={(e) => setValue((s) => ({ ...s, input: e.target.value, result: "" }))}
               placeholder="0"
-              className="w-full px-4 py-2.5 bg-(--muted) border border-(--border) rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="calc-input"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium mb-1.5">{t("from_unit")}</label>
+            <label className="calc-label">{t("from_unit")}</label>
             <select
               value={state.fromIdx}
               onChange={(e) => setValue((s) => ({ ...s, fromIdx: +e.target.value, result: "" }))}
-              className="w-full px-4 py-2.5 bg-(--muted) border border-(--border) rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="calc-input"
             >
               {currentUnits.map((u, i) => (
                 <option key={i} value={i}>{u.label}</option>
@@ -127,11 +127,11 @@ export function UnitConverter() {
 
         {/* To unit */}
         <div>
-          <label className="block text-sm font-medium mb-1.5">{t("to_unit")}</label>
+          <label className="calc-label">{t("to_unit")}</label>
           <select
             value={state.toIdx}
             onChange={(e) => setValue((s) => ({ ...s, toIdx: +e.target.value, result: "" }))}
-            className="w-full px-4 py-2.5 bg-(--muted) border border-(--border) rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="calc-input"
           >
             {currentUnits.map((u, i) => (
               <option key={i} value={i}>{u.label}</option>
@@ -140,17 +140,17 @@ export function UnitConverter() {
         </div>
 
         <div className="flex gap-3 pt-2">
-          <button onClick={convert} className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 rounded-xl transition-colors">
+          <button onClick={convert} className="btn-primary flex-1">
             {tc("calculate")}
           </button>
-          <button onClick={reset} className="px-4 bg-(--muted) hover:bg-(--border) rounded-xl transition-colors text-sm">
+          <button onClick={reset} className="btn-secondary">
             {tc("reset")}
           </button>
         </div>
       </div>
 
       {state.result !== "" && (
-        <div className="result-card bg-(--card) border border-(--border) rounded-2xl p-6">
+        <div className="result-card">
           <p className="text-sm text-(--muted-foreground) mb-1">{tc("result")}</p>
           <p className="text-4xl font-bold break-all">
             {state.result} <span className="text-2xl text-(--muted-foreground)">{currentUnits[state.toIdx].label}</span>

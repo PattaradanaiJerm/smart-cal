@@ -35,36 +35,36 @@ export function CurrencyConverter() {
 
   return (
     <div className="space-y-4">
-      <div className="bg-(--card) border border-(--border) rounded-2xl p-6 space-y-4">
+      <div className="calc-card space-y-5">
         <div>
-          <label className="block text-sm font-medium mb-1.5">{t("amount")}</label>
+          <label className="calc-label">{t("amount")}</label>
           <input
             type="number"
             value={state.amount}
             onChange={(e) => setValue((s) => ({ ...s, amount: e.target.value, result: "" }))}
             placeholder="100"
-            className="w-full px-4 py-2.5 bg-(--muted) border border-(--border) rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="calc-input"
           />
         </div>
         <div className="grid grid-cols-[1fr_auto_1fr] gap-3 items-end">
           <div>
-            <label className="block text-sm font-medium mb-1.5">{t("from")}</label>
+            <label className="calc-label">{t("from")}</label>
             <CurrencySelect value={state.from} onChange={(v) => setValue((s) => ({ ...s, from: v, result: "" }))} />
           </div>
           <button onClick={swap} className="mb-0.5 px-3 py-2.5 bg-(--muted) hover:bg-(--border) rounded-xl text-sm font-medium transition-colors">⇄</button>
           <div>
-            <label className="block text-sm font-medium mb-1.5">{t("to")}</label>
+            <label className="calc-label">{t("to")}</label>
             <CurrencySelect value={state.to} onChange={(v) => setValue((s) => ({ ...s, to: v, result: "" }))} />
           </div>
         </div>
         <p className="text-xs text-(--muted-foreground)">{t("rate_note")}</p>
         <div className="flex gap-3 pt-1">
-          <button onClick={convert} className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 rounded-xl transition-colors">{tc("calculate")}</button>
-          <button onClick={reset} className="px-4 bg-(--muted) hover:bg-(--border) rounded-xl text-sm transition-colors">{tc("reset")}</button>
+          <button onClick={convert} className="btn-primary flex-1">{tc("calculate")}</button>
+          <button onClick={reset} className="btn-secondary">{tc("reset")}</button>
         </div>
       </div>
       {state.result && (
-        <div className="result-card bg-(--card) border border-(--border) rounded-2xl p-6">
+        <div className="result-card">
           <p className="text-sm text-(--muted-foreground) mb-1">{tc("result")}</p>
           <p className="text-4xl font-bold">{state.result} <span className="text-2xl text-(--muted-foreground)">{state.to}</span></p>
           <p className="text-sm text-(--muted-foreground) mt-2">
@@ -81,7 +81,7 @@ function CurrencySelect({ value, onChange }: { value: string; onChange: (v: stri
     <select
       value={value}
       onChange={(e) => onChange(e.target.value)}
-      className="w-full px-4 py-2.5 bg-(--muted) border border-(--border) rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+      className="calc-input"
     >
       {CURRENCIES.map((c) => <option key={c} value={c}>{c}</option>)}
     </select>

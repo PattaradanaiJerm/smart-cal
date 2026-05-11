@@ -28,11 +28,11 @@ export function Header({ onMenuToggle }: HeaderProps) {
   };
 
   return (
-    <header className="sticky top-0 z-40 h-14 bg-(--sidebar-bg) border-b border-(--sidebar-border) flex items-center px-4 gap-3">
+    <header className="sticky top-0 z-40 h-14 bg-(--sidebar-bg)/90 backdrop-blur-md border-b border-(--sidebar-border) flex items-center px-4 gap-3">
       {/* Mobile hamburger */}
       <button
         onClick={onMenuToggle}
-        className="lg:hidden p-2 rounded-md hover:bg-(--muted) transition-colors"
+        className="lg:hidden p-2 rounded-lg hover:bg-(--muted) transition-colors"
         aria-label="Toggle menu"
       >
         <Menu size={20} />
@@ -40,8 +40,8 @@ export function Header({ onMenuToggle }: HeaderProps) {
 
       {/* Logo (mobile only) */}
       <span className="lg:hidden inline-flex items-center gap-2 font-bold text-base">
-        <Image src="/logo.png" alt="d-calc" width={24} height={24} className="rounded-md" />
-        <span className="bg-linear-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">d-calc</span>
+        <Image src="/logo.png" alt="d-calc" width={26} height={26} className="rounded-lg" />
+        <span className="gradient-text font-extrabold">d-calc</span>
       </span>
 
       {/* Spacer */}
@@ -59,14 +59,10 @@ export function Header({ onMenuToggle }: HeaderProps) {
       )}
 
       {/* Lang toggle */}
-      <div className="flex items-center gap-1 bg-(--muted) rounded-lg p-1">
-        <Globe size={14} className="text-(--muted-foreground) ml-1" />
-        <LangButton active={locale === "th"} onClick={() => switchLocale("th")}>
-          TH
-        </LangButton>
-        <LangButton active={locale === "en"} onClick={() => switchLocale("en")}>
-          EN
-        </LangButton>
+      <div className="flex items-center gap-1 bg-(--muted) rounded-xl p-1 border border-(--border)">
+        <Globe size={13} className="text-(--muted-foreground) ml-1.5" />
+        <LangButton active={locale === "th"} onClick={() => switchLocale("th")}>TH</LangButton>
+        <LangButton active={locale === "en"} onClick={() => switchLocale("en")}>EN</LangButton>
       </div>
     </header>
   );

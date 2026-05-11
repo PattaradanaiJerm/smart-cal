@@ -39,37 +39,37 @@ export function LoanCalculator() {
 
   return (
     <div className="space-y-4">
-      <div className="bg-(--card) border border-(--border) rounded-2xl p-6 space-y-4">
+      <div className="calc-card space-y-5">
         {[
           { label: t("principal"), key: "principal" as const, placeholder: "1,000,000" },
           { label: t("interest_rate"), key: "rate" as const, placeholder: "5.5" },
           { label: t("term_months"), key: "months" as const, placeholder: "120" },
         ].map(({ label, key, placeholder }) => (
           <div key={key}>
-            <label className="block text-sm font-medium mb-1.5">{label}</label>
+            <label className="calc-label">{label}</label>
             <input
               type="number"
               value={state[key]}
               onChange={(e) => setValue((s) => ({ ...s, [key]: e.target.value, result: null }))}
               placeholder={placeholder}
-              className="w-full px-4 py-2.5 bg-(--muted) border border-(--border) rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="calc-input"
             />
           </div>
         ))}
         <div className="flex gap-3 pt-2">
-          <button onClick={calculate} className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 rounded-xl transition-colors">{tc("calculate")}</button>
-          <button onClick={reset} className="px-4 bg-(--muted) hover:bg-(--border) rounded-xl text-sm transition-colors">{tc("reset")}</button>
+          <button onClick={calculate} className="btn-primary flex-1">{tc("calculate")}</button>
+          <button onClick={reset} className="btn-secondary">{tc("reset")}</button>
         </div>
       </div>
 
       {state.result && (
-        <div className="result-card bg-(--card) border border-(--border) rounded-2xl p-6 space-y-4">
+        <div className="result-card space-y-1">
           {[
             { label: t("monthly_payment"), value: fmt(state.result.monthly), highlight: true },
             { label: t("total_payment"), value: fmt(state.result.total) },
             { label: t("total_interest"), value: fmt(state.result.interest), color: "text-red-500" },
           ].map(({ label, value, highlight, color }) => (
-            <div key={label} className="flex justify-between items-center border-b border-(--border) pb-3 last:border-0 last:pb-0">
+            <div key={label} className="stat-row">
               <span className="text-sm text-(--muted-foreground)">{label}</span>
               <span className={`text-xl font-bold ${color ?? (highlight ? "text-indigo-600 dark:text-indigo-400" : "")}`}>
                 ฿{value}

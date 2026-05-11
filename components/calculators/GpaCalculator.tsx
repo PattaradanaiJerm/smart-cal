@@ -59,23 +59,23 @@ export function GpaCalculator() {
 
   return (
     <div className="space-y-4">
-      <div className="bg-(--card) border border-(--border) rounded-2xl p-6 space-y-3">
+      <div className="calc-card space-y-4">
         {state.courses.map((course, i) => (
           <div key={i} className="grid grid-cols-[1fr_80px_80px_36px] gap-2 items-end">
             <div>
-              {i === 0 && <label className="block text-xs font-medium mb-1">{t("course_name")}</label>}
+              {i === 0 && <label className="calc-label">{t("course_name")}</label>}
               <input value={course.name} onChange={(e) => updateCourse(i, "name", e.target.value)} placeholder={`${t("course_name")} ${i + 1}`}
-                className="w-full px-3 py-2 bg-(--muted) border border-(--border) rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+                className="calc-input" />
             </div>
             <div>
-              {i === 0 && <label className="block text-xs font-medium mb-1">{t("credits")}</label>}
+              {i === 0 && <label className="calc-label">{t("credits")}</label>}
               <input type="number" value={course.credits} onChange={(e) => updateCourse(i, "credits", e.target.value)} min="1" max="6"
-                className="w-full px-3 py-2 bg-(--muted) border border-(--border) rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+                className="calc-input" />
             </div>
             <div>
-              {i === 0 && <label className="block text-xs font-medium mb-1">{t("grade")}</label>}
+              {i === 0 && <label className="calc-label">{t("grade")}</label>}
               <select value={course.grade} onChange={(e) => updateCourse(i, "grade", e.target.value)}
-                className="w-full px-3 py-2 bg-(--muted) border border-(--border) rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                className="calc-input">
                 {GRADES.map((g) => <option key={g} value={g}>{g}</option>)}
               </select>
             </div>
@@ -93,25 +93,25 @@ export function GpaCalculator() {
         {/* Previous GPA */}
         <div className="pt-2 border-t border-(--border) grid grid-cols-2 gap-3">
           <div>
-            <label className="block text-xs font-medium mb-1">{t("prev_gpa")}</label>
+            <label className="calc-label">{t("prev_gpa")}</label>
             <input type="number" value={state.prevGpa} step="0.01" min="0" max="4" onChange={(e) => setValue((s) => ({ ...s, prevGpa: e.target.value, result: null }))} placeholder="3.50"
-              className="w-full px-3 py-2 bg-(--muted) border border-(--border) rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+              className="calc-input" />
           </div>
           <div>
-            <label className="block text-xs font-medium mb-1">{t("prev_credits")}</label>
+            <label className="calc-label">{t("prev_credits")}</label>
             <input type="number" value={state.prevCredits} onChange={(e) => setValue((s) => ({ ...s, prevCredits: e.target.value, result: null }))} placeholder="60"
-              className="w-full px-3 py-2 bg-(--muted) border border-(--border) rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+              className="calc-input" />
           </div>
         </div>
 
         <div className="flex gap-3 pt-2">
-          <button onClick={calculate} className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 rounded-xl transition-colors">{tc("calculate")}</button>
-          <button onClick={reset} className="px-4 bg-(--muted) hover:bg-(--border) rounded-xl text-sm transition-colors">{tc("reset")}</button>
+          <button onClick={calculate} className="btn-primary flex-1">{tc("calculate")}</button>
+          <button onClick={reset} className="btn-secondary">{tc("reset")}</button>
         </div>
       </div>
 
       {state.result && (
-        <div className="result-card bg-(--card) border border-(--border) rounded-2xl p-6 space-y-4">
+        <div className="result-card space-y-1">
           <div className="grid grid-cols-2 gap-4">
             <div className="text-center bg-indigo-50 dark:bg-indigo-950/40 rounded-xl p-4">
               <p className="text-3xl font-bold text-indigo-600 dark:text-indigo-400">{state.result.semGpa.toFixed(2)}</p>

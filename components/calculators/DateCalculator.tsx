@@ -47,7 +47,7 @@ export function DateCalculator() {
 
   return (
     <div className="space-y-4">
-      <div className="bg-(--card) border border-(--border) rounded-2xl p-6 space-y-4">
+      <div className="calc-card space-y-5">
         <div className="flex gap-2">
           {(["diff", "add"] as Mode[]).map((m) => (
             <button key={m} onClick={() => setValue((s) => ({ ...s, mode: m, result: "" }))}
@@ -58,33 +58,33 @@ export function DateCalculator() {
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-1.5">{state.mode === "diff" ? t("start_date") : t("base_date")}</label>
+          <label className="calc-label">{state.mode === "diff" ? t("start_date") : t("base_date")}</label>
           <input type="date" value={state.date1} onChange={(e) => setValue((s) => ({ ...s, date1: e.target.value, result: "" }))}
-            className="w-full px-4 py-2.5 bg-(--muted) border border-(--border) rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+            className="calc-input" />
         </div>
 
         {state.mode === "diff" ? (
           <div>
-            <label className="block text-sm font-medium mb-1.5">{t("end_date")}</label>
+            <label className="calc-label">{t("end_date")}</label>
             <input type="date" value={state.date2} onChange={(e) => setValue((s) => ({ ...s, date2: e.target.value, result: "" }))}
-              className="w-full px-4 py-2.5 bg-(--muted) border border-(--border) rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+              className="calc-input" />
           </div>
         ) : (
           <div>
-            <label className="block text-sm font-medium mb-1.5">{t("days_to_add")}</label>
+            <label className="calc-label">{t("days_to_add")}</label>
             <input type="number" value={state.days} onChange={(e) => setValue((s) => ({ ...s, days: e.target.value, result: "" }))} placeholder="30"
-              className="w-full px-4 py-2.5 bg-(--muted) border border-(--border) rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+              className="calc-input" />
           </div>
         )}
 
         <div className="flex gap-3 pt-2">
-          <button onClick={calculate} className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 rounded-xl transition-colors">{tc("calculate")}</button>
-          <button onClick={reset} className="px-4 bg-(--muted) hover:bg-(--border) rounded-xl text-sm transition-colors">{tc("reset")}</button>
+          <button onClick={calculate} className="btn-primary flex-1">{tc("calculate")}</button>
+          <button onClick={reset} className="btn-secondary">{tc("reset")}</button>
         </div>
       </div>
 
       {state.result && (
-        <div className="result-card bg-(--card) border border-(--border) rounded-2xl p-6">
+        <div className="result-card">
           <p className="text-sm text-(--muted-foreground) mb-2">{tc("result")}</p>
           <p className="text-xl font-bold">{state.result}</p>
         </div>

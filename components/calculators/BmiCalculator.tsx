@@ -38,7 +38,7 @@ export function BmiCalculator() {
 
   return (
     <div className="space-y-4">
-      <div className="bg-(--card) border border-(--border) rounded-2xl p-6 space-y-4">
+      <div className="calc-card space-y-5">
         <Field
           label={`${t("weight")} (${t("weight_unit")})`}
           value={state.weight}
@@ -56,13 +56,13 @@ export function BmiCalculator() {
         <div className="flex gap-3 pt-2">
           <button
             onClick={calculate}
-            className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 rounded-xl transition-colors"
+            className="btn-primary flex-1"
           >
             {tc("calculate")}
           </button>
           <button
             onClick={reset}
-            className="px-4 bg-(--muted) hover:bg-(--border) rounded-xl transition-colors text-sm"
+            className="btn-secondary"
           >
             {tc("reset")}
           </button>
@@ -70,19 +70,33 @@ export function BmiCalculator() {
       </div>
 
       {state.result !== null && (
-        <div className="result-card bg-(--card) border border-(--border) rounded-2xl p-6">
-          <p className="text-sm text-(--muted-foreground) mb-1">{t("your_bmi")}</p>
-          <p className="text-5xl font-bold mb-2">{state.result}</p>
-          <p className={`text-lg font-semibold ${getStatus(state.result).color}`}>
+      <div className="result-card">
+          <p className="text-xs font-semibold text-(--muted-foreground) uppercase tracking-widest mb-2">{t("your_bmi")}</p>
+          <p className="result-number mb-1">{state.result}</p>
+          <span className={`inline-flex items-center gap-1.5 text-sm font-bold px-3 py-1 rounded-full ${
+            state.result < 18.5 ? "bg-blue-100 text-blue-700 dark:bg-blue-950/50 dark:text-blue-300" :
+            state.result < 25   ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-950/50 dark:text-emerald-300" :
+            state.result < 30   ? "bg-amber-100 text-amber-700 dark:bg-amber-950/50 dark:text-amber-300" :
+                                  "bg-red-100 text-red-700 dark:bg-red-950/50 dark:text-red-300"
+          }`}>
             {getStatus(state.result).label}
-          </p>
-          <div className="mt-4 h-3 bg-(--muted) rounded-full overflow-hidden">
-            <div
-              className="h-full bg-linear-to-r from-blue-400 via-yellow-400 to-red-500 rounded-full"
-              style={{ width: `${Math.min((state.result / 40) * 100, 100)}%` }}
-            />
+          </span>
+          {/* BMI bar */}
+          <div className="mt-5 space-y-1.5">
+            <div className="flex justify-between text-xs text-(--muted-foreground) font-medium">
+              <span>Underweight</span><span>Normal</span><span>Overweight</span><span>Obese</span>
+            </div>
+            <div className="h-2.5 bg-(--muted) rounded-full overflow-hidden">
+              <div
+                className="h-full rounded-full bg-gradient-to-r from-blue-400 via-emerald-400 via-amber-400 to-red-500 transition-all duration-500"
+                style={{ width: `${Math.min((state.result / 40) * 100, 100)}%` }}
+              />
+            </div>
+            <div className="flex justify-between text-xs text-(--muted-foreground)">
+              <span>18.5</span><span>25</span><span>30</span><span>40+</span>
+            </div>
           </div>
-          <p className="text-xs text-(--muted-foreground) mt-3">{t("tip")}</p>
+          <p className="text-xs text-(--muted-foreground) mt-4 leading-relaxed">{t("tip")}</p>
         </div>
       )}
     </div>
@@ -104,13 +118,13 @@ function Field({
 }) {
   return (
     <div>
-      <label className="block text-sm font-medium mb-1.5">{label}</label>
+      <label className="calc-label">{label}</label>
       <input
         type={type}
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="w-full px-4 py-2.5 bg-(--muted) border border-(--border) rounded-xl focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm transition-colors"
+        className="calc-input"
       />
     </div>
   );

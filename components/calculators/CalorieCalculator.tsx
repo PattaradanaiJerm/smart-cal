@@ -50,10 +50,10 @@ export function CalorieCalculator() {
 
   return (
     <div className="space-y-4">
-      <div className="bg-(--card) border border-(--border) rounded-2xl p-6 space-y-4">
+      <div className="calc-card space-y-5">
         {/* Gender */}
         <div>
-          <label className="block text-sm font-medium mb-1.5">{t("gender")}</label>
+          <label className="calc-label">{t("gender")}</label>
           <div className="flex gap-2">
             {(["male", "female"] as const).map((g) => (
               <button
@@ -73,42 +73,42 @@ export function CalorieCalculator() {
           { label: t("height"), key: "height" as const, placeholder: "170" },
         ].map(({ label, key, placeholder }) => (
           <div key={key}>
-            <label className="block text-sm font-medium mb-1.5">{label}</label>
+            <label className="calc-label">{label}</label>
             <input type="number" value={state[key]} onChange={(e) => setValue((s) => ({ ...s, [key]: e.target.value, result: null }))} placeholder={placeholder}
-              className="w-full px-4 py-2.5 bg-(--muted) border border-(--border) rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500" />
+              className="calc-input" />
           </div>
         ))}
 
         <div>
-          <label className="block text-sm font-medium mb-1.5">{t("activity")}</label>
+          <label className="calc-label">{t("activity")}</label>
           <select value={state.activity} onChange={(e) => setValue((s) => ({ ...s, activity: +e.target.value, result: null }))}
-            className="w-full px-4 py-2.5 bg-(--muted) border border-(--border) rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            className="calc-input">
             {ACTIVITY.map((a) => <option key={a.key} value={a.factor}>{t(`activity_${a.key}` as Parameters<typeof t>[0])}</option>)}
           </select>
         </div>
 
         <div>
-          <label className="block text-sm font-medium mb-1.5">{t("goal")}</label>
+          <label className="calc-label">{t("goal")}</label>
           <select value={state.goal} onChange={(e) => setValue((s) => ({ ...s, goal: e.target.value as CalState["goal"], result: null }))}
-            className="w-full px-4 py-2.5 bg-(--muted) border border-(--border) rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            className="calc-input">
             {(["maintain", "lose", "gain"] as const).map((g) => <option key={g} value={g}>{t(`goal_${g}` as Parameters<typeof t>[0])}</option>)}
           </select>
         </div>
 
         <div className="flex gap-3 pt-2">
-          <button onClick={calculate} className="flex-1 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 rounded-xl transition-colors">{tc("calculate")}</button>
-          <button onClick={reset} className="px-4 bg-(--muted) hover:bg-(--border) rounded-xl text-sm transition-colors">{tc("reset")}</button>
+          <button onClick={calculate} className="btn-primary flex-1">{tc("calculate")}</button>
+          <button onClick={reset} className="btn-secondary">{tc("reset")}</button>
         </div>
       </div>
 
       {state.result && (
-        <div className="result-card bg-(--card) border border-(--border) rounded-2xl p-6 space-y-4">
+        <div className="result-card space-y-1">
           {[
             { label: t("bmr"), value: state.result.bmr, color: "" },
             { label: t("tdee"), value: state.result.tdee, color: "text-indigo-600 dark:text-indigo-400" },
             { label: tc("result"), value: state.result.target, color: "text-green-600 dark:text-green-400" },
           ].map(({ label, value, color }) => (
-            <div key={label} className="flex justify-between items-center border-b border-(--border) pb-3 last:border-0 last:pb-0">
+            <div key={label} className="stat-row">
               <span className="text-sm text-(--muted-foreground)">{label}</span>
               <span className={`text-xl font-bold ${color}`}>{value.toLocaleString()} kcal</span>
             </div>
