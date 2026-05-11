@@ -1,3 +1,5 @@
+import { AdUnit } from "@/components/ads/AdUnit";
+
 interface CalculatorLayoutProps {
   title: string;
   description: string;
@@ -25,6 +27,15 @@ export function CalculatorLayout({ title, description, children, icon, color = "
         {icon && <div className="mb-3 text-4xl">{icon}</div>}
         <h1 className="text-2xl font-bold mb-1">{title}</h1>
         <p className="text-(--muted-foreground) text-sm">{description}</p>
+      </div>
+
+      {/* In-content ad — between header and calculator */}
+      <div className="mb-4">
+        <AdUnit
+          slot={process.env.NEXT_PUBLIC_AD_SLOT_IN_CONTENT_TOP ?? "in-content-top"}
+          className="h-24 w-full"
+          format="horizontal"
+        />
       </div>
 
       {children}
