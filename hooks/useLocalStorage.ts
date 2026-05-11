@@ -2,10 +2,12 @@
 
 import { useCallback, useRef, useSyncExternalStore } from "react";
 
+const STORAGE_EVENT = "sc_storage_change";
+
 // Module-level subscribe — stable reference, no re-subscription on re-render
 function subscribe(callback: () => void): () => void {
-  window.addEventListener("storage", callback);
-  return () => window.removeEventListener("storage", callback);
+  window.addEventListener(STORAGE_EVENT, callback);
+  return () => window.removeEventListener(STORAGE_EVENT, callback);
 }
 
 export function useLocalStorage<T>(key: string, initialValue: T) {
@@ -33,7 +35,7 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
         const next = typeof value === "function" ? (value as (prev: T) => T)(current) : value;
         window.localStorage.setItem(key, JSON.stringify(next));
         // Notify all useSyncExternalStore subscribers in this tab
-        window.dispatchEvent(new Event("storage"));
+        window.dispatchEvent(new Event(STORAGE_EVENT));
       } catch {
         // ignore (e.g. incognito quota exceeded)
       }
@@ -44,7 +46,7 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
   const reset = useCallback(() => {
     try {
       window.localStorage.removeItem(key);
-      window.dispatchEvent(new Event("storage"));
+      window.dispatchEvent(new Event(STORAGE_EVENT));
     } catch {
       // ignore
     }
