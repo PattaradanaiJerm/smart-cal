@@ -85,6 +85,7 @@ export function Footer() {
               <span className="w-2 h-2 rounded-full bg-green-500 inline-block" />
               {isTh ? "ฟรี 100%" : "100% Free"}
             </span>
+            <span className="text-(--muted-foreground)/60">v1.1</span>
           </div>
         </div>
       </div>

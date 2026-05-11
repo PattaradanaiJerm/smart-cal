@@ -83,18 +83,18 @@ export function Sidebar({ onClose, collapsed = false, onToggleCollapse }: Sideba
   return (
     <nav className="flex flex-col h-full overflow-y-auto">
       {/* Logo + collapse */}
-      <div className="flex items-center h-14 pl-4 pr-2 border-b border-(--sidebar-border) shrink-0">
+      <div className={cn("flex items-center h-14 pl-4 pr-2 border-b border-(--sidebar-border) shrink-0", collapsed && "lg:justify-center lg:pl-2 lg:pr-2")}>
         <Link
           href={`/${locale}`}
           onClick={onClose}
-          className="flex items-center gap-2 font-bold text-lg text-indigo-600 dark:text-indigo-400 flex-1 min-w-0"
+          className={cn("flex items-center gap-2 font-bold text-lg text-indigo-600 dark:text-indigo-400 flex-1 min-w-0", collapsed && "lg:hidden")}
         >
           <span className="text-2xl shrink-0">🧮</span>
-          <span className={cn("truncate", collapsed && "lg:hidden")}>Smart Calc</span>
+          <span className="truncate">Smart Calc</span>
         </Link>
         <button
           onClick={onToggleCollapse}
-          className="hidden lg:flex items-center justify-center w-7 h-7 rounded-md hover:bg-(--muted) text-(--muted-foreground) transition-colors shrink-0"
+          className="hidden lg:flex items-center justify-center w-8 h-8 rounded-md hover:bg-(--muted) text-(--muted-foreground) transition-colors shrink-0"
           aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
         >
           {collapsed ? <ChevronsRight size={16} /> : <ChevronsLeft size={16} />}
