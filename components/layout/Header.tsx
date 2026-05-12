@@ -83,7 +83,7 @@ function LangButton({
       className={cn(
         "px-2.5 py-1 rounded-md text-xs font-semibold transition-colors",
         active
-          ? "bg-white dark:bg-(--card) text-indigo-600 dark:text-indigo-400 shadow-sm"
+          ? "bg-white dark:bg-(--card) text-blue-600 dark:text-blue-400 shadow-sm"
           : "text-(--muted-foreground) hover:text-foreground"
       )}
     >

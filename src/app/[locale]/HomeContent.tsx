@@ -4,7 +4,7 @@ import { useTranslations, useLocale } from "next-intl";
 import Link from "next/link";
 import Image from "next/image";
 import { calculators } from "@/config/calculators";
-import { CheckCircle, Zap, Lock, Globe } from "lucide-react";
+import { CheckCircle, Zap, Lock, Globe, ChevronDown } from "lucide-react";
 import { useSiteStats } from "@/hooks/useSiteStats";
 
 /** Format large numbers nicely: 1234 → "1.2K", 12345 → "12K", 0 → "0" */
@@ -74,92 +74,129 @@ export function HomeContent() {
 
   return (
     <div className="max-w-4xl mx-auto">
-      {/* Hero */}
-      <section className="relative text-center py-16 px-4 overflow-hidden">
-        {/* Background blobs */}
+
+      {/* ─── Hero ─── */}
+      <section className="relative text-center py-20 lg:py-28 px-4 overflow-hidden">
+        {/* Gradient blobs */}
         <div className="absolute inset-0 pointer-events-none" aria-hidden>
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-gradient-to-br from-blue-400/15 to-cyan-500/15 rounded-full blur-3xl" />
+          <div className="absolute -top-24 right-[8%] w-[480px] h-[380px] bg-blue-500/[0.08] dark:bg-blue-500/[0.09] rounded-full blur-[90px]" />
+          <div className="absolute bottom-0 -left-10 w-[360px] h-[280px] bg-cyan-500/[0.07] dark:bg-cyan-400/[0.07] rounded-full blur-[80px]" />
         </div>
-        <div className="relative z-10">
-          <div className="inline-flex items-center gap-2 bg-white/80 dark:bg-white/5 backdrop-blur-sm border border-blue-200/60 dark:border-blue-500/20 text-blue-600 dark:text-blue-400 text-sm font-semibold px-4 py-1.5 rounded-full mb-6 shadow-sm">
-            <Image src="/logo.png" alt="d-calc" width={18} height={18} className="rounded-sm" />
-            d-calc
+
+        <div className="relative z-10 max-w-2xl mx-auto">
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2.5 bg-white/90 dark:bg-white/[0.05] backdrop-blur-sm border border-blue-200/70 dark:border-blue-500/25 text-blue-700 dark:text-blue-300 text-sm font-semibold px-4 py-2 rounded-full mb-8 shadow-sm">
+            <span className="relative flex h-2 w-2 shrink-0">
+              <span className="absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75 animate-ping" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500" />
+            </span>
+            <Image src="/logo.png" alt="d-calc" width={16} height={16} className="rounded-sm opacity-90" />
+            d-calc — {isTh ? "ฟรี ใช้ได้เลย" : "Free & Instant"}
           </div>
-          <h1 className="text-4xl sm:text-6xl font-extrabold mb-5 tracking-tight gradient-text leading-tight">
+
+          {/* H1 */}
+          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black mb-5 leading-[1.06] tracking-tight gradient-text">
             {t("hero_title")}
           </h1>
-          <p className="text-lg text-(--muted-foreground) max-w-xl mx-auto mb-8 leading-relaxed">
+
+          {/* Subtitle */}
+          <p className="text-lg sm:text-xl text-(--muted-foreground) max-w-lg mx-auto mb-10 leading-relaxed">
             {t("hero_subtitle")}
           </p>
-          <Link
-            href={`/${locale}/bmi`}
-            className="btn-primary inline-flex gap-2 px-8 py-4 text-base"
-          >
-            {t("hero_cta")} <span aria-hidden>→</span>
-          </Link>
+
+          {/* CTAs */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
+            <Link href={`/${locale}/bmi`} className="btn-primary gap-2 px-8 py-3.5 text-base w-full sm:w-auto">
+              {t("hero_cta")} <span aria-hidden>→</span>
+            </Link>
+            <a href="#calculators" className="btn-secondary gap-2 px-7 py-3.5 text-base w-full sm:w-auto">
+              {isTh ? "ดูทั้งหมด" : "Browse all"} <ChevronDown size={15} />
+            </a>
+          </div>
         </div>
       </section>
 
-      {/* Stats */}
-      <section className="grid grid-cols-3 gap-4 mb-10 px-4">
-        {[
-          { label: t("stats_tools"), value: `${calculators.length}+` },
-          { label: isTh ? "การคำนวณ" : "Calculations", value: stats ? formatCount(stats.totalCalculations) : "…" },
-          { label: isTh ? "ผู้เข้าชม" : "Page views", value: stats ? formatCount(stats.totalPageViews) : "…" },
-        ].map((s) => (
-          <div key={s.label} className="bg-(--card) rounded-2xl border border-(--border) p-5 text-center" style={{ boxShadow: "var(--card-shadow)" }}>
-            <p className="text-3xl font-extrabold gradient-text">{s.value}</p>
-            <p className="text-xs text-(--muted-foreground) mt-1.5 font-medium uppercase tracking-wide">{s.label}</p>
-          </div>
-        ))}
+      {/* ─── Stats strip ─── */}
+      <section className="px-4 mb-12">
+        <div
+          className="bg-(--card) border border-(--border) rounded-2xl overflow-hidden flex divide-x divide-(--border)"
+          style={{ boxShadow: "var(--card-shadow)" }}
+        >
+          {[
+            { label: t("stats_tools"), value: `${calculators.length}+` },
+            { label: isTh ? "การคำนวณ" : "Calculations", value: stats ? formatCount(stats.totalCalculations) : "—" },
+            { label: isTh ? "ผู้เข้าชม" : "Page views", value: stats ? formatCount(stats.totalPageViews) : "—" },
+          ].map((s) => (
+            <div key={s.label} className="flex-1 px-4 py-5 sm:py-6 text-center">
+              <p className="text-2xl sm:text-3xl font-black gradient-text leading-none mb-1.5">{s.value}</p>
+              <p className="text-[11px] text-(--muted-foreground) font-semibold uppercase tracking-widest">{s.label}</p>
+            </div>
+          ))}
+        </div>
       </section>
 
-      {/* Calculator grid */}
-      <section className="px-4 pb-10">
-        <h2 className="text-xl font-bold mb-6">{t("all_tools")}</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      {/* ─── Calculator grid ─── */}
+      <section id="calculators" className="px-4 pb-12">
+        <h2 className="text-2xl font-bold mb-6">{t("all_tools")}</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {calculators.map((calc) => {
             const Icon = calc.icon;
             return (
               <Link
                 key={calc.slug}
                 href={`/${locale}/${calc.slug}`}
-                className="group flex items-start gap-4 bg-(--card) border border-(--border) rounded-2xl p-5 transition-all duration-200 hover:-translate-y-1"
+                className="group flex items-center gap-4 bg-(--card) border border-(--border) rounded-2xl p-4 transition-all duration-200 hover:-translate-y-0.5"
                 style={{ boxShadow: "var(--card-shadow)" }}
+                onMouseEnter={(e) => (e.currentTarget.style.boxShadow = "var(--card-shadow-hover)")}
+                onMouseLeave={(e) => (e.currentTarget.style.boxShadow = "var(--card-shadow)")}
               >
-                <span className={`flex items-center justify-center w-10 h-10 rounded-xl text-white shrink-0 ${calc.color}`}>
+                <span className={`flex items-center justify-center w-11 h-11 rounded-xl text-white shrink-0 ${calc.color}`}>
                   <Icon size={20} />
                 </span>
-                <div className="min-w-0">
-                  <p className="font-semibold group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                <div className="min-w-0 flex-1">
+                  <p className="font-semibold text-sm group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors leading-snug">
                     {tn(calc.nameKey as Parameters<typeof tn>[0])}
                   </p>
-                  <p className="text-sm text-(--muted-foreground) mt-0.5 line-clamp-2">
+                  <p className="text-xs text-(--muted-foreground) mt-0.5 line-clamp-1">
                     {isTh ? calc.descTh : calc.descEn}
                   </p>
                 </div>
+                <svg className="w-4 h-4 text-(--muted-foreground) shrink-0 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+                </svg>
               </Link>
             );
           })}
         </div>
       </section>
 
-      {/* Why use D-Calc */}
+      {/* ─── Why D-Calc ─── */}
       <section className="px-4 pb-12">
-        <h2 className="text-xl font-bold mb-6 text-center">
-          {isTh ? "ทำไมต้องใช้ D-Calc?" : "Why use D-Calc?"}
-        </h2>
+        <div className="text-center mb-8">
+          <h2 className="text-2xl font-bold mb-2">{isTh ? "ทำไมต้องใช้ D-Calc?" : "Why use D-Calc?"}</h2>
+          <p className="text-sm text-(--muted-foreground)">
+            {isTh ? "ออกแบบมาให้ใช้งานง่าย ถูกต้อง และเร็วที่สุด" : "Built for speed, accuracy, and simplicity."}
+          </p>
+        </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {features.map((f) => {
+          {features.map((f, i) => {
             const Icon = f.icon;
             return (
-              <div key={f.title} className="flex items-start gap-4 bg-(--card) border border-(--border) rounded-xl p-5">
-                <span className="flex items-center justify-center w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 shrink-0">
+              <div
+                key={f.title}
+                className="relative flex items-start gap-4 bg-(--card) border border-(--border) rounded-2xl p-5 overflow-hidden"
+                style={{ boxShadow: "var(--card-shadow)" }}
+              >
+                {/* Background number accent */}
+                <div className="absolute right-3 -top-1 text-7xl font-black text-(--border) select-none leading-none pointer-events-none" aria-hidden>
+                  {String(i + 1).padStart(2, "0")}
+                </div>
+                <span className="relative z-10 flex items-center justify-center w-11 h-11 rounded-xl bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 border border-blue-100 dark:border-blue-900/50 shrink-0">
                   <Icon size={20} />
                 </span>
-                <div>
-                  <p className="font-semibold">{f.title}</p>
-                  <p className="text-sm text-(--muted-foreground) mt-0.5">{f.desc}</p>
+                <div className="relative z-10">
+                  <p className="font-bold mb-1">{f.title}</p>
+                  <p className="text-sm text-(--muted-foreground) leading-relaxed">{f.desc}</p>
                 </div>
               </div>
             );
@@ -167,19 +204,24 @@ export function HomeContent() {
         </div>
       </section>
 
-      {/* FAQ */}
-      <section className="px-4 pb-12">
-        <h2 className="text-xl font-bold mb-6">
+      {/* ─── FAQ ─── */}
+      <section className="px-4 pb-14">
+        <h2 className="text-2xl font-bold mb-6 text-center">
           {isTh ? "คำถามที่พบบ่อย" : "Frequently Asked Questions"}
         </h2>
-        <div className="space-y-3">
+        <div className="space-y-2">
           {faqs.map(({ q, a }) => (
-            <details key={q} className="bg-(--card) border border-(--border) rounded-xl px-5 py-4 group">
-              <summary className="font-medium cursor-pointer list-none flex items-center justify-between gap-2">
+            <details key={q} className="group bg-(--card) border border-(--border) rounded-2xl overflow-hidden">
+              <summary className="flex items-center justify-between gap-3 px-5 py-4 font-medium cursor-pointer list-none select-none hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
                 <span>{q}</span>
-                <span className="text-(--muted-foreground) shrink-0 transition-transform group-open:rotate-45">+</span>
+                <ChevronDown
+                  size={16}
+                  className="shrink-0 text-(--muted-foreground) transition-transform duration-200 group-open:rotate-180"
+                />
               </summary>
-              <p className="text-sm text-(--muted-foreground) mt-3 leading-relaxed">{a}</p>
+              <div className="px-5 pb-5 border-t border-(--border)">
+                <p className="text-sm text-(--muted-foreground) leading-relaxed pt-4">{a}</p>
+              </div>
             </details>
           ))}
         </div>
@@ -191,3 +233,4 @@ export function HomeContent() {
     </div>
   );
 }
+
