@@ -74,7 +74,7 @@ export function CalorieCalculator() {
         ].map(({ label, key, placeholder }) => (
           <div key={key}>
             <label className="calc-label">{label}</label>
-            <input type="number" value={state[key]} onChange={(e) => setValue((s) => ({ ...s, [key]: e.target.value, result: null }))} placeholder={placeholder}
+            <input type="number" value={state[key]} onChange={(e) => setValue((s) => ({ ...s, [key]: e.target.value, result: null }))} onKeyDown={(e) => e.key === "Enter" && calculate()} placeholder={placeholder}
               className="calc-input" />
           </div>
         ))}
@@ -102,7 +102,7 @@ export function CalorieCalculator() {
       </div>
 
       {state.result && (
-        <div className="result-card space-y-1">
+        <div className="result-card space-y-4">
           {[
             { label: t("bmr"), value: state.result.bmr, color: "" },
             { label: t("tdee"), value: state.result.tdee, color: "text-indigo-600 dark:text-indigo-400" },
@@ -113,6 +113,34 @@ export function CalorieCalculator() {
               <span className={`text-xl font-bold ${color}`}>{value.toLocaleString()} kcal</span>
             </div>
           ))}
+
+          {/* BMR → TDEE → Target stacked bars */}
+          {(() => {
+            const max = Math.max(state.result.bmr, state.result.tdee, state.result.target) * 1.1;
+            const bars = [
+              { label: t("bmr"), value: state.result.bmr, color: "bg-(--muted-foreground)/60" },
+              { label: t("tdee"), value: state.result.tdee, color: "bg-indigo-500" },
+              { label: tc("result"), value: state.result.target, color: "bg-green-500" },
+            ];
+            return (
+              <div className="pt-2 border-t border-(--border) space-y-2">
+                {bars.map((b) => (
+                  <div key={b.label} className="space-y-1">
+                    <div className="flex justify-between text-xs text-(--muted-foreground)">
+                      <span>{b.label}</span>
+                      <span className="font-semibold">{b.value.toLocaleString()} kcal</span>
+                    </div>
+                    <div className="h-2 rounded-full bg-(--muted) overflow-hidden">
+                      <div
+                        className={`h-full rounded-full ${b.color} transition-all duration-700`}
+                        style={{ width: `${(b.value / max) * 100}%` }}
+                      />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            );
+          })()}
         </div>
       )}
     </div>

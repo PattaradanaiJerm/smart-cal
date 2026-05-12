@@ -42,6 +42,7 @@ export function CurrencyConverter() {
             type="number"
             value={state.amount}
             onChange={(e) => setValue((s) => ({ ...s, amount: e.target.value, result: "" }))}
+            onKeyDown={(e) => e.key === "Enter" && convert()}
             placeholder="100"
             className="calc-input"
           />

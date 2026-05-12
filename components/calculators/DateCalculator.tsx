@@ -72,7 +72,7 @@ export function DateCalculator() {
         ) : (
           <div>
             <label className="calc-label">{t("days_to_add")}</label>
-            <input type="number" value={state.days} onChange={(e) => setValue((s) => ({ ...s, days: e.target.value, result: "" }))} placeholder="30"
+          <input type="number" value={state.days} onChange={(e) => setValue((s) => ({ ...s, days: e.target.value, result: "" }))} onKeyDown={(e) => e.key === "Enter" && calculate()} placeholder="30"
               className="calc-input" />
           </div>
         )}

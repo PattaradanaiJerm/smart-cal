@@ -63,6 +63,7 @@ export function SleepCalculator() {
         <div>
           <label className="calc-label">{state.mode === "bedtime" ? t("wake_time") : t("bedtime")}</label>
           <input type="time" value={state.time} onChange={(e) => setValue((s) => ({ ...s, time: e.target.value, results: [] }))}
+            onKeyDown={(e) => e.key === "Enter" && calculate()}
             className="calc-input" />
         </div>
 

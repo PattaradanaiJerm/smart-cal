@@ -94,12 +94,12 @@ export function GpaCalculator() {
         <div className="pt-2 border-t border-(--border) grid grid-cols-2 gap-3">
           <div>
             <label className="calc-label">{t("prev_gpa")}</label>
-            <input type="number" value={state.prevGpa} step="0.01" min="0" max="4" onChange={(e) => setValue((s) => ({ ...s, prevGpa: e.target.value, result: null }))} placeholder="3.50"
+            <input type="number" value={state.prevGpa} step="0.01" min="0" max="4" onChange={(e) => setValue((s) => ({ ...s, prevGpa: e.target.value, result: null }))} onKeyDown={(e) => e.key === "Enter" && calculate()} placeholder="3.50"
               className="calc-input" />
           </div>
           <div>
             <label className="calc-label">{t("prev_credits")}</label>
-            <input type="number" value={state.prevCredits} onChange={(e) => setValue((s) => ({ ...s, prevCredits: e.target.value, result: null }))} placeholder="60"
+            <input type="number" value={state.prevCredits} onChange={(e) => setValue((s) => ({ ...s, prevCredits: e.target.value, result: null }))} onKeyDown={(e) => e.key === "Enter" && calculate()} placeholder="60"
               className="calc-input" />
           </div>
         </div>

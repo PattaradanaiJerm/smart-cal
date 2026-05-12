@@ -107,6 +107,7 @@ export function UnitConverter() {
               type="number"
               value={state.input}
               onChange={(e) => setValue((s) => ({ ...s, input: e.target.value, result: "" }))}
+              onKeyDown={(e) => e.key === "Enter" && convert()}
               placeholder="0"
               className="calc-input"
             />

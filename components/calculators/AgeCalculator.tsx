@@ -60,6 +60,7 @@ export function AgeCalculator() {
             type="date"
             value={state.birthdate}
             onChange={(e) => setValue((s) => ({ ...s, birthdate: e.target.value, result: null }))}
+            onKeyDown={(e) => e.key === "Enter" && calculate()}
             className="calc-input"
           />
         </div>
@@ -69,6 +70,7 @@ export function AgeCalculator() {
             type="date"
             value={state.refDate}
             onChange={(e) => setValue((s) => ({ ...s, refDate: e.target.value, result: null }))}
+            onKeyDown={(e) => e.key === "Enter" && calculate()}
             className="calc-input"
           />
         </div>

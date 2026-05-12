@@ -51,6 +51,7 @@ export function LoanCalculator() {
               type="number"
               value={state[key]}
               onChange={(e) => setValue((s) => ({ ...s, [key]: e.target.value, result: null }))}
+              onKeyDown={(e) => e.key === "Enter" && calculate()}
               placeholder={placeholder}
               className="calc-input"
             />
@@ -63,7 +64,7 @@ export function LoanCalculator() {
       </div>
 
       {state.result && (
-        <div className="result-card space-y-1">
+        <div className="result-card space-y-4">
           {[
             { label: t("monthly_payment"), value: fmt(state.result.monthly), highlight: true },
             { label: t("total_payment"), value: fmt(state.result.total) },
@@ -76,6 +77,32 @@ export function LoanCalculator() {
               </span>
             </div>
           ))}
+
+          {/* Principal vs Interest breakdown bar */}
+          {(() => {
+            const principal = parseFloat(state.principal) || 0;
+            const interestPct = Math.round((state.result.interest / state.result.total) * 100);
+            const principalPct = 100 - interestPct;
+            return (
+              <div className="pt-2 border-t border-(--border) space-y-2">
+                <p className="text-xs font-semibold text-(--muted-foreground) uppercase tracking-widest">สัดส่วนเงินต้น vs ดอกเบี้ย</p>
+                <div className="h-3 rounded-full overflow-hidden bg-(--muted) flex">
+                  <div
+                    className="h-full bg-indigo-500 transition-all duration-700 rounded-l-full"
+                    style={{ width: `${principalPct}%` }}
+                  />
+                  <div
+                    className="h-full bg-red-400 transition-all duration-700 rounded-r-full"
+                    style={{ width: `${interestPct}%` }}
+                  />
+                </div>
+                <div className="flex justify-between text-xs text-(--muted-foreground)">
+                  <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-indigo-500 inline-block" />เงินต้น {principalPct}%</span>
+                  <span className="flex items-center gap-1.5"><span className="w-2 h-2 rounded-full bg-red-400 inline-block" />ดอกเบี้ย {interestPct}%</span>
+                </div>
+              </div>
+            );
+          })()}
         </div>
       )}
     </div>

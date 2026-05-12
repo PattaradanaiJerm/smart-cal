@@ -65,6 +65,7 @@ export function PercentageCalculator() {
               type="number"
               value={i === 0 ? state.a : state.b}
               onChange={(e) => setValue((s) => ({ ...s, [i === 0 ? "a" : "b"]: e.target.value, result: "" }))}
+              onKeyDown={(e) => e.key === "Enter" && calculate()}
               placeholder="0"
               className="calc-input"
             />
