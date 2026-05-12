@@ -25,20 +25,20 @@
 }
 
 .dark {
-  --background: #050911;
-  --foreground: #e2e8ff;
-  --sidebar-bg: #07091a;
-  --sidebar-border: #111d40;
+  --background: #080c18;
+  --foreground: #f0f4ff;
+  --sidebar-bg: #0e1425;
+  --sidebar-border: #1e2a42;
   --primary: #4b82ff;
   --primary-foreground: #ffffff;
-  --muted: #0c1125;
-  --muted-foreground: #5d7ab5;
-  --border: #111d40;
-  --card: #080e20;
-  --card-foreground: #e2e8ff;
-  --input-bg: #0c1125;
-  --card-shadow: 0 0 0 1px rgba(75,130,255,0.10), 0 4px 24px rgba(0,0,0,0.50), 0 0 0 1px rgba(255,255,255,0.03) inset;
-  --card-shadow-hover: 0 0 0 1px rgba(75,130,255,0.22), 0 8px 40px rgba(75,130,255,0.14), 0 0 60px rgba(75,130,255,0.05);
+  --muted: #111827;
+  --muted-foreground: #8b9ab5;
+  --border: #1e2a42;
+  --card: #0e1425;
+  --card-foreground: #f0f4ff;
+  --input-bg: #111827;
+  --card-shadow: 0 0 0 1px rgba(75,130,255,0.10), 0 4px 24px rgba(0,0,0,0.40);
+  --card-shadow-hover: 0 0 0 1px rgba(75,130,255,0.20), 0 8px 40px rgba(75,130,255,0.15), 0 0 60px rgba(75,130,255,0.05);
 }
 
 * { box-sizing: border-box; }
