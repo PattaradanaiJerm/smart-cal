@@ -138,11 +138,11 @@ export function Sidebar({ onClose, collapsed = false, onToggleCollapse }: Sideba
                   "w-full flex items-center gap-2.5 rounded-lg text-sm mb-0.5 px-3 py-2 transition-colors",
                   collapsed && "lg:w-10 lg:mx-auto lg:px-0 lg:py-2.5 lg:justify-center lg:gap-0",
                   hasActive
-                    ? "text-indigo-600 dark:text-indigo-400 font-medium"
+                    ? "text-blue-600 dark:text-blue-400 font-medium"
                     : "text-foreground hover:bg-(--muted)"
                 )}
               >
-                <span className={cn("flex items-center justify-center w-6 h-6 rounded-md text-white shrink-0", hasActive ? "bg-indigo-500" : "bg-slate-400 dark:bg-slate-600")}>
+                <span className={cn("flex items-center justify-center w-6 h-6 rounded-md text-white shrink-0", hasActive ? "bg-blue-500" : "bg-slate-400 dark:bg-slate-600")}>
                   <CatIcon size={13} />
                 </span>
                 <span className={cn("flex-1 text-left", collapsed && "lg:hidden")}>{label}</span>
@@ -208,7 +208,7 @@ function NavLink({
         "flex items-center gap-2.5 rounded-lg text-sm transition-colors px-3 py-2",
         collapsed && "lg:w-10 lg:mx-auto lg:px-0 lg:py-2 lg:justify-center lg:gap-0",
         active
-          ? "bg-indigo-50 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 font-medium"
+          ? "bg-blue-50 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 font-medium"
           : "text-foreground hover:bg-(--muted)"
       )}
     >

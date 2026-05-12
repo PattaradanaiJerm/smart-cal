@@ -78,10 +78,10 @@ export function HomeContent() {
       <section className="relative text-center py-16 px-4 overflow-hidden">
         {/* Background blobs */}
         <div className="absolute inset-0 pointer-events-none" aria-hidden>
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-gradient-to-br from-indigo-400/20 to-violet-500/20 rounded-full blur-3xl" />
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-gradient-to-br from-blue-400/15 to-cyan-500/15 rounded-full blur-3xl" />
         </div>
         <div className="relative z-10">
-          <div className="inline-flex items-center gap-2 bg-white/80 dark:bg-white/5 backdrop-blur-sm border border-indigo-200/60 dark:border-indigo-500/20 text-indigo-600 dark:text-indigo-400 text-sm font-semibold px-4 py-1.5 rounded-full mb-6 shadow-sm">
+          <div className="inline-flex items-center gap-2 bg-white/80 dark:bg-white/5 backdrop-blur-sm border border-blue-200/60 dark:border-blue-500/20 text-blue-600 dark:text-blue-400 text-sm font-semibold px-4 py-1.5 rounded-full mb-6 shadow-sm">
             <Image src="/logo.png" alt="d-calc" width={18} height={18} className="rounded-sm" />
             d-calc
           </div>
@@ -131,7 +131,7 @@ export function HomeContent() {
                   <Icon size={20} />
                 </span>
                 <div className="min-w-0">
-                  <p className="font-semibold group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                  <p className="font-semibold group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                     {tn(calc.nameKey as Parameters<typeof tn>[0])}
                   </p>
                   <p className="text-sm text-(--muted-foreground) mt-0.5 line-clamp-2">
@@ -154,7 +154,7 @@ export function HomeContent() {
             const Icon = f.icon;
             return (
               <div key={f.title} className="flex items-start gap-4 bg-(--card) border border-(--border) rounded-xl p-5">
-                <span className="flex items-center justify-center w-10 h-10 rounded-xl bg-indigo-100 dark:bg-indigo-950/40 text-indigo-600 dark:text-indigo-400 shrink-0">
+                <span className="flex items-center justify-center w-10 h-10 rounded-xl bg-blue-100 dark:bg-blue-950/40 text-blue-600 dark:text-blue-400 shrink-0">
                   <Icon size={20} />
                 </span>
                 <div>

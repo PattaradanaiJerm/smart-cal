@@ -9,7 +9,7 @@ interface CalculatorLayoutProps {
 }
 
 const colorMap: Record<string, { grad: string; glow: string }> = {
-  indigo: { grad: "from-indigo-500 to-violet-600", glow: "rgba(99,102,241,0.20)" },
+  indigo: { grad: "from-blue-500 to-cyan-500",     glow: "rgba(59,130,246,0.22)" },
   blue:   { grad: "from-blue-500 to-cyan-500",     glow: "rgba(59,130,246,0.20)" },
   green:  { grad: "from-emerald-500 to-teal-500",  glow: "rgba(16,185,129,0.20)" },
   orange: { grad: "from-orange-500 to-amber-500",  glow: "rgba(249,115,22,0.20)" },
