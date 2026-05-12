@@ -50,13 +50,11 @@ export default function LocaleClientLayout({
     });
   };
 
+  const sidebarWidth = sidebarCollapsed ? "4rem" : "16rem";
+
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
-      {/* CSS variable tracks sidebar width so full-width footer can offset correctly */}
-      <div
-        className="flex flex-col min-h-screen"
-        style={{ "--sidebar-w": sidebarCollapsed ? "4rem" : "16rem" } as React.CSSProperties}
-      >
+      <div className="flex flex-col min-h-screen">
         <Header onMenuToggle={() => setSidebarOpen((v) => !v)} />
 
         <div className="flex flex-1 relative">
@@ -103,8 +101,12 @@ export default function LocaleClientLayout({
           </main>
         </div>
 
-        {/* Footer — full viewport width, offset on desktop to clear the fixed sidebar */}
-        <footer className="border-t border-(--border) lg:pl-(--sidebar-w) transition-[padding] duration-200">
+        {/* Footer — full viewport width. On lg+ screens, padding-left mirrors the
+            fixed sidebar so the footer aligns with the main content column. */}
+        <footer
+          className="border-t border-(--border) transition-[padding] duration-200"
+          style={{ paddingLeft: `max(0px, ${sidebarWidth})` }}
+        >
           <FooterContent />
         </footer>
       </div>

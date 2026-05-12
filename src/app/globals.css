@@ -120,6 +120,14 @@ body {
   transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
   outline: none;
   appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: textfield;
+}
+/* Remove spin buttons on number inputs inside calc-input */
+.calc-input::-webkit-outer-spin-button,
+.calc-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 .calc-input:focus {
   border-color: var(--primary);
