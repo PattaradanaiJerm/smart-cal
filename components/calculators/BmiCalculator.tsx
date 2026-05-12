@@ -43,13 +43,16 @@ export function BmiCalculator() {
           label={`${t("weight")} (${t("weight_unit")})`}
           value={state.weight}
           onChange={(v) => setValue((s) => ({ ...s, weight: v, result: null }))}
+          onEnter={calculate}
           placeholder="70"
           type="number"
+          autoFocus
         />
         <Field
           label={`${t("height")} (${t("height_unit")})`}
           value={state.height}
           onChange={(v) => setValue((s) => ({ ...s, height: v, result: null }))}
+          onEnter={calculate}
           placeholder="170"
           type="number"
         />
@@ -107,14 +110,18 @@ function Field({
   label,
   value,
   onChange,
+  onEnter,
   placeholder,
   type = "text",
+  autoFocus,
 }: {
   label: string;
   value: string;
   onChange: (v: string) => void;
+  onEnter?: () => void;
   placeholder?: string;
   type?: string;
+  autoFocus?: boolean;
 }) {
   return (
     <div>
@@ -123,8 +130,10 @@ function Field({
         type={type}
         value={value}
         onChange={(e) => onChange(e.target.value)}
+        onKeyDown={(e) => e.key === "Enter" && onEnter?.()}
         placeholder={placeholder}
         className="calc-input"
+        autoFocus={autoFocus}
       />
     </div>
   );

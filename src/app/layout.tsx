@@ -28,6 +28,12 @@ export const metadata: Metadata = {
   title: { template: "%s | d-calc", default: "d-calc — เครื่องคำนวณออนไลน์ฟรี" },
   description: "เครื่องคำนวณออนไลน์ฟรี ใช้งานง่าย รองรับทุก device",
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://d-calc.vercel.app"),
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "D-Calc",
+  },
   icons: {
     icon: "/logo.png",
     apple: "/logo.png",

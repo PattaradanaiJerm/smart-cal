@@ -1,0 +1,31 @@
+{
+  "name": "D-Calc — เครื่องคำนวณออนไลน์",
+  "short_name": "D-Calc",
+  "description": "เครื่องคำนวณออนไลน์ฟรีกว่า 10 ประเภท รองรับไทย–อังกฤษ",
+  "start_url": "/th",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#f5f7ff",
+  "theme_color": "#2563eb",
+  "lang": "th",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/logo.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "shortcuts": [
+    { "name": "BMI", "url": "/th/bmi", "description": "คำนวณ BMI" },
+    { "name": "แปลงหน่วย", "url": "/th/unit-converter", "description": "แปลงหน่วย" },
+    { "name": "สินเชื่อ", "url": "/th/loan-calculator", "description": "คำนวณสินเชื่อ" }
+  ]
+}

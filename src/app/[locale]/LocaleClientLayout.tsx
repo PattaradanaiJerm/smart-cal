@@ -2,6 +2,9 @@
 
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
+import Link from "next/link";
+import { Home, Calculator, RotateCw, Moon, Sun } from "lucide-react";
+import { useTheme } from "next-themes";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -22,6 +25,8 @@ export default function LocaleClientLayout({
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const { theme, setTheme, resolvedTheme } = useTheme();
+  const isDark = resolvedTheme === "dark";
 
   // Track pageviews on every navigation
   useEffect(() => {
@@ -91,7 +96,7 @@ export default function LocaleClientLayout({
           />
 
           {/* Main area */}
-          <main className="flex-1 min-w-0 flex flex-col">
+          <main className="flex-1 min-w-0 flex flex-col pb-14 lg:pb-0">
             {/* Ad layout wraps ALL page content — ads are isolated here */}
             <AdLayout>
               {children}
@@ -102,6 +107,48 @@ export default function LocaleClientLayout({
         </div>
       </div>
       <CookieBanner />
+
+      {/* ── Mobile bottom nav (hidden on lg+) ── */}
+      <nav className="mobile-bottom-nav lg:hidden" aria-label="Mobile navigation">
+        <Link
+          href={`/${locale}`}
+          className={cn(
+            "flex flex-col items-center gap-0.5 px-4 py-1.5 text-[10px] font-semibold transition-colors",
+            pathname === `/${locale}` ? "text-blue-600 dark:text-blue-400" : "text-(--muted-foreground)"
+          )}
+        >
+          <Home size={20} strokeWidth={pathname === `/${locale}` ? 2.5 : 1.8} />
+          หน้าหลัก
+        </Link>
+        <Link
+          href={`/${locale}/bmi`}
+          className={cn(
+            "flex flex-col items-center gap-0.5 px-4 py-1.5 text-[10px] font-semibold transition-colors",
+            pathname.includes("/bmi") ? "text-blue-600 dark:text-blue-400" : "text-(--muted-foreground)"
+          )}
+        >
+          <Calculator size={20} strokeWidth={pathname.includes("/bmi") ? 2.5 : 1.8} />
+          BMI
+        </Link>
+        <Link
+          href={`/${locale}/unit-converter`}
+          className={cn(
+            "flex flex-col items-center gap-0.5 px-4 py-1.5 text-[10px] font-semibold transition-colors",
+            pathname.includes("/unit-converter") ? "text-blue-600 dark:text-blue-400" : "text-(--muted-foreground)"
+          )}
+        >
+          <RotateCw size={20} strokeWidth={pathname.includes("/unit-converter") ? 2.5 : 1.8} />
+          แปลงหน่วย
+        </Link>
+        <button
+          onClick={() => setTheme(isDark ? "light" : "dark")}
+          className="flex flex-col items-center gap-0.5 px-4 py-1.5 text-[10px] font-semibold text-(--muted-foreground) transition-colors"
+          aria-label="Toggle theme"
+        >
+          {isDark ? <Sun size={20} strokeWidth={1.8} /> : <Moon size={20} strokeWidth={1.8} />}
+          {isDark ? "สว่าง" : "มืด"}
+        </button>
+      </nav>
     </NextIntlClientProvider>
   );
 }

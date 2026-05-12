@@ -85,10 +85,11 @@ export function HomeContent() {
         {/* Canvas floating particles */}
         <FloatingParticles />
 
-        {/* Gradient blobs */}
-        <div className="absolute inset-0 pointer-events-none" aria-hidden>
-          <div className="absolute -top-20 right-[5%] w-[400px] h-[320px] bg-blue-500/[0.08] dark:bg-blue-500/[0.10] rounded-full blur-[80px]" />
-          <div className="absolute bottom-0 -left-16 w-[300px] h-[240px] bg-cyan-500/[0.06] dark:bg-cyan-400/[0.07] rounded-full blur-[70px]" />
+        {/* Aurora animated background */}
+        <div className="aurora-wrap" aria-hidden>
+          <div className="aurora-blob aurora-1" />
+          <div className="aurora-blob aurora-2" />
+          <div className="aurora-blob aurora-3" />
         </div>
 
         {/* Shimmer sweep */}
@@ -97,7 +98,7 @@ export function HomeContent() {
         <div className="relative z-10 max-w-2xl mx-auto">
           {/* Live badge */}
           <FadeInUp delay={0}>
-            <div className="inline-flex items-center gap-2.5 bg-white/90 dark:bg-white/[0.05] backdrop-blur-sm border border-blue-200/70 dark:border-blue-500/25 text-blue-700 dark:text-blue-300 text-sm font-semibold px-4 py-2 rounded-full mb-8 shadow-sm">
+            <div className="inline-flex items-center gap-2.5 glass-badge text-blue-700 dark:text-blue-300 text-sm font-semibold px-4 py-2 rounded-full mb-8 shadow-sm">
               <span className="relative flex h-2 w-2 shrink-0">
                 <span className="absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75 animate-ping" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500" />

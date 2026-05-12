@@ -1,4 +1,8 @@
 ✨ สิ่งที่ทำให้ utility website ดูโปรขึ้นทันที
+
+รองรับ Responsive Design Mobile Freindly 
+
+
 🌌 1. Animated Background เบา ๆ
 
 เช่น:
@@ -114,4 +118,8 @@ smooth transitions
 fullscreen cards
 installable PWA
 
-ช่วยให้เว็บดู modern กว่า utility ทั่วไปมาก
+🌌 Visual & Atmosphere
+11. Aurora Background
+
+พื้นหลังแสงไหลแบบ gradient เคลื่อนช้า ๆ
+ให้ vibe futuristic / AI startup
