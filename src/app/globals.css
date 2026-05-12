@@ -1,18 +1,18 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f0f2ff;
-  --foreground: #0d1117;
+  --background: #f4f6ff;
+  --foreground: #0a0d1a;
   --sidebar-bg: #ffffff;
-  --sidebar-border: #e4e7f0;
+  --sidebar-border: #dde1f0;
   --primary: #6366f1;
   --primary-foreground: #ffffff;
-  --muted: #f4f6ff;
-  --muted-foreground: #6b7280;
-  --border: #e4e7f0;
+  --muted: #edf0ff;
+  --muted-foreground: #4b5563;
+  --border: #dde1f0;
   --card: #ffffff;
-  --card-foreground: #0d1117;
-  --input-bg: #fafbff;
+  --card-foreground: #0a0d1a;
+  --input-bg: #f9faff;
   --card-shadow: 0 0 0 1px rgba(99,102,241,0.05), 0 1px 3px rgba(0,0,0,0.04), 0 12px 32px -8px rgba(99,102,241,0.10);
   --card-shadow-hover: 0 0 0 1px rgba(99,102,241,0.10), 0 4px 8px rgba(0,0,0,0.06), 0 20px 48px -8px rgba(99,102,241,0.18);
 }
@@ -99,7 +99,7 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #6366f1 0%, #7c3aed 100%);
+  background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
   color: #ffffff;
   font-weight: 700;
   font-size: 0.9375rem;
@@ -171,10 +171,11 @@ body {
   font-size: 3.5rem;
   font-weight: 800;
   line-height: 1;
-  background: linear-gradient(135deg, #6366f1, #a855f7);
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  color: #4f46e5;
 }
 
 /* ─── Animations ─── */
@@ -195,7 +196,14 @@ body {
 
 /* ─── Util ─── */
 .gradient-text {
-  background: linear-gradient(135deg, #6366f1, #a855f7);
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: #4f46e5; /* fallback */
+}
+.dark .gradient-text {
+  background: linear-gradient(135deg, #818cf8, #c084fc);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

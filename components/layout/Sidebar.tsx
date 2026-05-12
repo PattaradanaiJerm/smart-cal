@@ -83,15 +83,15 @@ export function Sidebar({ onClose, collapsed = false, onToggleCollapse }: Sideba
 
   return (
     <nav className="flex flex-col h-full overflow-y-auto">
-      {/* Logo + collapse */}
-      <div className={cn("flex items-center h-14 pl-4 pr-2 border-b border-(--sidebar-border) shrink-0", collapsed && "lg:justify-center lg:pl-2 lg:pr-2")}>
+      {/* Logo + collapse — hidden on mobile (Header already shows logo) */}
+      <div className={cn("hidden lg:flex items-center h-14 pl-4 pr-2 border-b border-(--sidebar-border) shrink-0", collapsed && "lg:justify-center lg:pl-2 lg:pr-2")}>
         <Link
           href={`/${locale}`}
           onClick={onClose}
           className={cn("flex items-center gap-2 font-bold text-lg flex-1 min-w-0", collapsed && "lg:hidden")}
         >
           <Image src="/logo.png" alt="d-calc" width={28} height={28} className="shrink-0 rounded-md" />
-          <span className="truncate bg-linear-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">d-calc</span>
+          <span className="truncate gradient-text">d-calc</span>
         </Link>
         <button
           onClick={onToggleCollapse}
