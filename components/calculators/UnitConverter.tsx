@@ -3,6 +3,7 @@
 import { useTranslations, useLocale } from "next-intl";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useAnalytics } from "@/hooks/useAnalytics";
+import { useState } from "react";
 
 type Category = "length" | "weight" | "temperature" | "area" | "volume" | "speed";
 
@@ -66,10 +67,15 @@ export function UnitConverter() {
   const locale = useLocale();
   const { value: state, setValue, reset } = useLocalStorage<UnitState>("sc_unit-converter_state", INITIAL);
   const { logCalculatorEvent } = useAnalytics();
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const convert = () => {
     const v = parseFloat(state.input);
-    if (isNaN(v)) return;
+    if (state.input === "" || isNaN(v)) {
+      setErrors({ input: locale === "th" ? "กรุณากรอกค่า" : "Value required" });
+      return;
+    }
+    setErrors({});
     const list = units[state.category];
     const base = list[state.fromIdx].toBase(v);
     const result = list[state.toIdx].fromBase(base);
@@ -106,11 +112,12 @@ export function UnitConverter() {
             <input
               type="number"
               value={state.input}
-              onChange={(e) => setValue((s) => ({ ...s, input: e.target.value, result: "" }))}
+              onChange={(e) => { setValue((s) => ({ ...s, input: e.target.value, result: "" })); setErrors({}); }}
               onKeyDown={(e) => e.key === "Enter" && convert()}
               placeholder="0"
-              className="calc-input"
+              className={`calc-input${errors.input ? " calc-input-error" : ""}`}
             />
+            {errors.input && <p className="field-error">⚠ {errors.input}</p>}
           </div>
           <div>
             <label className="calc-label">{t("from_unit")}</label>

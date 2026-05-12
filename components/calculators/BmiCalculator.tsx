@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import { useLocale } from "next-intl";
+import { useState } from "react";
 
 interface BMIState {
   weight: string;
@@ -19,11 +20,16 @@ export function BmiCalculator() {
   const locale = useLocale();
   const { value: state, setValue, reset } = useLocalStorage<BMIState>("sc_bmi_state", INITIAL);
   const { logCalculatorEvent } = useAnalytics();
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const calculate = () => {
+    const errs: Record<string, string> = {};
     const w = parseFloat(state.weight);
     const h = parseFloat(state.height) / 100;
-    if (!w || !h || h <= 0) return;
+    if (!state.weight || isNaN(w) || w <= 0) errs.weight = locale === "th" ? "กรุณากรอกน้ำหนัก" : "Weight required";
+    if (!state.height || isNaN(parseFloat(state.height)) || parseFloat(state.height) <= 0) errs.height = locale === "th" ? "กรุณากรอกส่วนสูง" : "Height required";
+    setErrors(errs);
+    if (Object.keys(errs).length > 0) return;
     const bmi = w / (h * h);
     setValue((s) => ({ ...s, result: Math.round(bmi * 10) / 10 }));
     logCalculatorEvent("bmi", locale);
@@ -42,19 +48,21 @@ export function BmiCalculator() {
         <Field
           label={`${t("weight")} (${t("weight_unit")})`}
           value={state.weight}
-          onChange={(v) => setValue((s) => ({ ...s, weight: v, result: null }))}
+          onChange={(v) => { setValue((s) => ({ ...s, weight: v, result: null })); setErrors(p => ({ ...p, weight: "" })); }}
           onEnter={calculate}
           placeholder="70"
           type="number"
           autoFocus
+          error={errors.weight}
         />
         <Field
           label={`${t("height")} (${t("height_unit")})`}
           value={state.height}
-          onChange={(v) => setValue((s) => ({ ...s, height: v, result: null }))}
+          onChange={(v) => { setValue((s) => ({ ...s, height: v, result: null })); setErrors(p => ({ ...p, height: "" })); }}
           onEnter={calculate}
           placeholder="170"
           type="number"
+          error={errors.height}
         />
         <div className="flex gap-3 pt-2">
           <button
@@ -107,34 +115,23 @@ export function BmiCalculator() {
 }
 
 function Field({
-  label,
-  value,
-  onChange,
-  onEnter,
-  placeholder,
-  type = "text",
-  autoFocus,
+  label, value, onChange, onEnter, placeholder, type = "text", autoFocus, error,
 }: {
-  label: string;
-  value: string;
-  onChange: (v: string) => void;
-  onEnter?: () => void;
-  placeholder?: string;
-  type?: string;
-  autoFocus?: boolean;
+  label: string; value: string; onChange: (v: string) => void;
+  onEnter?: () => void; placeholder?: string; type?: string; autoFocus?: boolean; error?: string;
 }) {
   return (
     <div>
       <label className="calc-label">{label}</label>
       <input
-        type={type}
-        value={value}
+        type={type} value={value}
         onChange={(e) => onChange(e.target.value)}
         onKeyDown={(e) => e.key === "Enter" && onEnter?.()}
         placeholder={placeholder}
-        className="calc-input"
+        className={`calc-input${error ? " calc-input-error" : ""}`}
         autoFocus={autoFocus}
       />
+      {error && <p className="field-error">⚠ {error}</p>}
     </div>
   );
 }

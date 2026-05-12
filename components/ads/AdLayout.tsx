@@ -28,7 +28,7 @@ export function AdLayout({ children }: { children: React.ReactNode }) {
       {/* ── CONTENT + RIGHT SIDEBAR ── */}
       <div className="flex gap-0 items-start">
         {/* Page content */}
-        <div className="flex-1 min-w-0 px-4 py-6 page-transition">
+        <div className="flex-1 min-w-0 px-4 py-8 page-transition flex flex-col items-center">
           {children}
         </div>
 

@@ -3,6 +3,7 @@
 import { useTranslations, useLocale } from "next-intl";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useAnalytics } from "@/hooks/useAnalytics";
+import { useState } from "react";
 
 type Mode = "diff" | "add";
 interface DateState { mode: Mode; date1: string; date2: string; days: string; result: string }
@@ -15,8 +16,14 @@ export function DateCalculator() {
   const locale = useLocale();
   const { value: state, setValue, reset } = useLocalStorage<DateState>("sc_date-calculator_state", INITIAL);
   const { logCalculatorEvent } = useAnalytics();
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const calculate = () => {
+    if (state.mode === "add" && (state.days === "" || isNaN(parseInt(state.days)))) {
+      setErrors({ days: locale === "th" ? "กรุณากรอกจำนวนวัน" : "Days required" });
+      return;
+    }
+    setErrors({});
     if (state.mode === "diff") {
       const d1 = new Date(state.date1);
       const d2 = new Date(state.date2);
@@ -72,8 +79,9 @@ export function DateCalculator() {
         ) : (
           <div>
             <label className="calc-label">{t("days_to_add")}</label>
-          <input type="number" value={state.days} onChange={(e) => setValue((s) => ({ ...s, days: e.target.value, result: "" }))} onKeyDown={(e) => e.key === "Enter" && calculate()} placeholder="30"
-              className="calc-input" />
+          <input type="number" value={state.days} onChange={(e) => { setValue((s) => ({ ...s, days: e.target.value, result: "" })); setErrors({}); }} onKeyDown={(e) => e.key === "Enter" && calculate()} placeholder="30"
+            className={`calc-input${errors.days ? " calc-input-error" : ""}`} />
+          {errors.days && <p className="field-error">⚠ {errors.days}</p>}
           </div>
         )}
 

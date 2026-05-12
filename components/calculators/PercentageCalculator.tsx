@@ -3,6 +3,7 @@
 import { useTranslations, useLocale } from "next-intl";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useAnalytics } from "@/hooks/useAnalytics";
+import { useState } from "react";
 
 type Mode = "basic" | "change" | "ratio";
 interface PercentState {
@@ -18,12 +19,17 @@ export function PercentageCalculator() {
   const locale = useLocale();
   const { value: state, setValue, reset } = useLocalStorage<PercentState>("sc_percentage-calculator_state", INITIAL);
   const { logCalculatorEvent } = useAnalytics();
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const calculate = () => {
+    const errs: Record<string, string> = {};
     const a = parseFloat(state.a);
     const b = parseFloat(state.b);
-    if (isNaN(a) || isNaN(b)) return;
-
+    if (state.a === "" || isNaN(a)) errs.a = locale === "th" ? "กรุณากรอกตัวเลข" : "Value required";
+    if (state.b === "" || isNaN(b)) errs.b = locale === "th" ? "กรุณากรอกตัวเลข" : "Value required";
+    if (state.mode !== "change" && b === 0) errs.b = locale === "th" ? "ตัวเลขต้องไม่เป็น 0" : "Value cannot be 0";
+    setErrors(errs);
+    if (Object.keys(errs).length > 0) return;
     let result = "";
     if (state.mode === "basic") result = `${((a / 100) * b).toFixed(4)}`;
     else if (state.mode === "change") {
@@ -64,11 +70,12 @@ export function PercentageCalculator() {
             <input
               type="number"
               value={i === 0 ? state.a : state.b}
-              onChange={(e) => setValue((s) => ({ ...s, [i === 0 ? "a" : "b"]: e.target.value, result: "" }))}
+              onChange={(e) => { setValue((s) => ({ ...s, [i === 0 ? "a" : "b"]: e.target.value, result: "" })); setErrors(p => ({ ...p, [i === 0 ? "a" : "b"]: "" })); }}
               onKeyDown={(e) => e.key === "Enter" && calculate()}
               placeholder="0"
-              className="calc-input"
+              className={`calc-input${errors[i === 0 ? "a" : "b"] ? " calc-input-error" : ""}`}
             />
+            {errors[i === 0 ? "a" : "b"] && <p className="field-error">⚠ {errors[i === 0 ? "a" : "b"]}</p>}
           </div>
         ))}
 

@@ -3,6 +3,7 @@
 import { useTranslations, useLocale } from "next-intl";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useAnalytics } from "@/hooks/useAnalytics";
+import { useState } from "react";
 
 const ACTIVITY = [
   { key: "sedentary", factor: 1.2 },
@@ -27,12 +28,18 @@ export function CalorieCalculator() {
   const locale = useLocale();
   const { value: state, setValue, reset } = useLocalStorage<CalState>("sc_calorie-calculator_state", INITIAL);
   const { logCalculatorEvent } = useAnalytics();
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const calculate = () => {
+    const errs: Record<string, string> = {};
+    if (!state.age || parseFloat(state.age) <= 0) errs.age = locale === "th" ? "กรุณากรอกอายุ" : "Age required";
+    if (!state.weight || parseFloat(state.weight) <= 0) errs.weight = locale === "th" ? "กรุณากรอกน้ำหนัก" : "Weight required";
+    if (!state.height || parseFloat(state.height) <= 0) errs.height = locale === "th" ? "กรุณากรอกส่วนสูง" : "Height required";
+    setErrors(errs);
+    if (Object.keys(errs).length > 0) return;
     const w = parseFloat(state.weight);
     const h = parseFloat(state.height);
     const a = parseFloat(state.age);
-    if (!w || !h || !a) return;
 
     const bmr = state.gender === "male"
       ? 10 * w + 6.25 * h - 5 * a + 5
@@ -74,8 +81,9 @@ export function CalorieCalculator() {
         ].map(({ label, key, placeholder }) => (
           <div key={key}>
             <label className="calc-label">{label}</label>
-            <input type="number" value={state[key]} onChange={(e) => setValue((s) => ({ ...s, [key]: e.target.value, result: null }))} onKeyDown={(e) => e.key === "Enter" && calculate()} placeholder={placeholder}
-              className="calc-input" />
+            <input type="number" value={state[key]} onChange={(e) => { setValue((s) => ({ ...s, [key]: e.target.value, result: null })); setErrors(p => ({...p, [key]: ""})); }} onKeyDown={(e) => e.key === "Enter" && calculate()} placeholder={placeholder}
+              className={`calc-input${errors[key] ? " calc-input-error" : ""}`} />
+            {errors[key] && <p className="field-error">⚠ {errors[key]}</p>}
           </div>
         ))}
 

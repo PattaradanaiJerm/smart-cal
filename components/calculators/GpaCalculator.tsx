@@ -4,6 +4,7 @@ import { useTranslations, useLocale } from "next-intl";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import { Plus, Trash2 } from "lucide-react";
+import { useState } from "react";
 
 const GRADES = ["A", "B+", "B", "C+", "C", "D+", "D", "F"];
 const GRADE_POINTS: Record<string, number> = { A: 4.0, "B+": 3.5, B: 3.0, "C+": 2.5, C: 2.0, "D+": 1.5, D: 1.0, F: 0.0 };
@@ -28,10 +29,15 @@ export function GpaCalculator() {
   const locale = useLocale();
   const { value: state, setValue, reset } = useLocalStorage<GPAState>("sc_gpa-calculator_state", INITIAL);
   const { logCalculatorEvent } = useAnalytics();
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const calculate = () => {
     const validCourses = state.courses.filter((c) => parseFloat(c.credits) > 0);
-    if (!validCourses.length) return;
+    if (!validCourses.length) {
+      setErrors({ general: locale === "th" ? "กรุณาเพิ่มอย่างน้อย 1 รายวิชาที่มีหน่วยกิต" : "Add at least 1 course with credits" });
+      return;
+    }
+    setErrors({});
 
     let totalPoints = 0, totalCreds = 0;
     for (const c of validCourses) {
@@ -108,6 +114,7 @@ export function GpaCalculator() {
           <button onClick={calculate} className="btn-primary flex-1">{tc("calculate")}</button>
           <button onClick={reset} className="btn-secondary">{tc("reset")}</button>
         </div>
+        {errors.general && <p className="field-error">⚠ {errors.general}</p>}
       </div>
 
       {state.result && (

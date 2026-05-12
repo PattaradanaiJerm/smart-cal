@@ -3,6 +3,7 @@
 import { useTranslations, useLocale } from "next-intl";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useAnalytics } from "@/hooks/useAnalytics";
+import { useState } from "react";
 
 interface AgeState {
   birthdate: string;
@@ -19,9 +20,14 @@ export function AgeCalculator() {
   const locale = useLocale();
   const { value: state, setValue, reset } = useLocalStorage<AgeState>("sc_age-calculator_state", INITIAL);
   const { logCalculatorEvent } = useAnalytics();
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const calculate = () => {
-    if (!state.birthdate) return;
+    if (!state.birthdate) {
+      setErrors({ birthdate: locale === "th" ? "กรุณาเลือกวันเกิด" : "Birthdate required" });
+      return;
+    }
+    setErrors({});
     const birth = new Date(state.birthdate);
     const ref = new Date(state.refDate || today);
 
@@ -59,10 +65,11 @@ export function AgeCalculator() {
           <input
             type="date"
             value={state.birthdate}
-            onChange={(e) => setValue((s) => ({ ...s, birthdate: e.target.value, result: null }))}
+            onChange={(e) => { setValue((s) => ({ ...s, birthdate: e.target.value, result: null })); setErrors({}); }}
             onKeyDown={(e) => e.key === "Enter" && calculate()}
-            className="calc-input"
+            className={`calc-input${errors.birthdate ? " calc-input-error" : ""}`}
           />
+          {errors.birthdate && <p className="field-error">⚠ {errors.birthdate}</p>}
         </div>
         <div>
           <label className="calc-label">{t("reference_date")}</label>

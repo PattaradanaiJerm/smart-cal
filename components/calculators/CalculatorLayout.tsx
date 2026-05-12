@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo } from "react";
+import { useMemo, useEffect } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import Link from "next/link";
 import { AdUnit } from "@/components/ads/AdUnit";
@@ -40,8 +40,18 @@ export function CalculatorLayout({ title, description, children, icon, color = "
     return shuffled.slice(0, 3);
   }, [slug]);
 
+  // Track recently used
+  useEffect(() => {
+    if (!slug) return;
+    try {
+      const stored = JSON.parse(localStorage.getItem("sc_recent_calcs") ?? "[]") as string[];
+      const updated = [slug, ...stored.filter((s) => s !== slug)].slice(0, 5);
+      localStorage.setItem("sc_recent_calcs", JSON.stringify(updated));
+    } catch {}
+  }, [slug]);
+
   return (
-    <div className="max-w-2xl mx-auto">
+    <div className="w-full max-w-2xl mx-auto">
       {/* ── Hero header ── */}
       <div className="relative mb-6 rounded-2xl overflow-hidden border border-(--border)" style={{ boxShadow: "var(--card-shadow)" }}>
         <div className={backdropClass} />

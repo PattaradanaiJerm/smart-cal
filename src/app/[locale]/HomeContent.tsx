@@ -75,7 +75,7 @@ export function HomeContent() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto">
+    <div className="w-full max-w-4xl mx-auto">
 
       {/* ══════════════════════ HERO ══════════════════════ */}
       <section className="relative text-center py-20 lg:py-28 px-4 overflow-hidden">

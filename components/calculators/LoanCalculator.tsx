@@ -3,6 +3,7 @@
 import { useTranslations, useLocale } from "next-intl";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useAnalytics } from "@/hooks/useAnalytics";
+import { useState } from "react";
 
 interface LoanState {
   principal: string;
@@ -19,18 +20,22 @@ export function LoanCalculator() {
   const locale = useLocale();
   const { value: state, setValue, reset } = useLocalStorage<LoanState>("sc_loan-calculator_state", INITIAL);
   const { logCalculatorEvent } = useAnalytics();
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const calculate = () => {
+    const errs: Record<string, string> = {};
+    if (!state.principal || parseFloat(state.principal) <= 0) errs.principal = locale === "th" ? "กรุณากรอกยอดเงินกู้" : "Loan amount required";
+    if (!state.rate || parseFloat(state.rate) <= 0) errs.rate = locale === "th" ? "กรุณากรอกอัตราดอกเบี้ย" : "Interest rate required";
+    if (!state.months || parseInt(state.months) <= 0) errs.months = locale === "th" ? "กรุณากรอกระยะเวลา" : "Term required";
+    setErrors(errs);
+    if (Object.keys(errs).length > 0) return;
     const P = parseFloat(state.principal);
     const annualRate = parseFloat(state.rate);
     const n = parseInt(state.months);
-    if (!P || !annualRate || !n) return;
-
     const r = annualRate / 100 / 12;
     const monthly = r === 0 ? P / n : (P * r * Math.pow(1 + r, n)) / (Math.pow(1 + r, n) - 1);
     const total = monthly * n;
     const interest = total - P;
-
     setValue((s) => ({ ...s, result: { monthly: Math.round(monthly * 100) / 100, total: Math.round(total * 100) / 100, interest: Math.round(interest * 100) / 100 } }));
     logCalculatorEvent("loan-calculator", locale);
   };
@@ -50,11 +55,12 @@ export function LoanCalculator() {
             <input
               type="number"
               value={state[key]}
-              onChange={(e) => setValue((s) => ({ ...s, [key]: e.target.value, result: null }))}
+              onChange={(e) => { setValue((s) => ({ ...s, [key]: e.target.value, result: null })); setErrors(p => ({ ...p, [key]: "" })); }}
               onKeyDown={(e) => e.key === "Enter" && calculate()}
               placeholder={placeholder}
-              className="calc-input"
+              className={`calc-input${errors[key] ? " calc-input-error" : ""}`}
             />
+            {errors[key] && <p className="field-error">⚠ {errors[key]}</p>}
           </div>
         ))}
         <div className="flex gap-3 pt-2">

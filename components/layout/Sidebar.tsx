@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTranslations, useLocale } from "next-intl";
@@ -8,15 +8,8 @@ import { calculators } from "@/config/calculators";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import {
-  Home,
-  Info,
-  Mail,
-  ChevronDown,
-  ChevronsLeft,
-  ChevronsRight,
-  Calculator,
-  ArrowLeftRight,
-  Shuffle,
+  Home, Info, Mail, ChevronDown, ChevronsLeft, ChevronsRight,
+  Calculator, ArrowLeftRight, Shuffle, Search, Clock,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
@@ -63,6 +56,29 @@ export function Sidebar({ onClose, collapsed = false, onToggleCollapse }: Sideba
   const pathname = usePathname();
 
   const isActive = (slug: string) => pathname.includes(`/${slug}`);
+
+  const [search, setSearch] = useState("");
+  const [recentSlugs, setRecentSlugs] = useState<string[]>([]);
+
+  useEffect(() => {
+    try {
+      const stored = JSON.parse(localStorage.getItem("sc_recent_calcs") ?? "[]") as string[];
+      setRecentSlugs(stored.slice(0, 3));
+    } catch {}
+  }, [pathname]);
+
+  const filteredCalcs = search.trim()
+    ? calculators.filter((c) => {
+        const term = search.toLowerCase();
+        const name = t(c.nameKey as Parameters<typeof t>[0]).toLowerCase();
+        const desc = (locale === "th" ? c.descTh : c.descEn).toLowerCase();
+        return name.includes(term) || c.slug.includes(term) || desc.includes(term);
+      })
+    : [];
+
+  const recentCalcs = recentSlugs
+    .map((slug) => calculators.find((c) => c.slug === slug))
+    .filter(Boolean) as typeof calculators;
 
   const [openCategories, setOpenCategories] = useState<Record<string, boolean>>(() => {
     const initial: Record<string, boolean> = {};
@@ -116,14 +132,81 @@ export function Sidebar({ onClose, collapsed = false, onToggleCollapse }: Sideba
         </NavLink>
       </div>
 
+      {/* Search */}
+      {!collapsed && (
+        <div className="px-3 pb-2">
+          <div className="relative">
+            <Search size={13} className="absolute left-2.5 top-1/2 -translate-y-1/2 text-(--muted-foreground) pointer-events-none" />
+            <input
+              type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              placeholder={locale === "th" ? "ค้นหาเครื่องคำนวณ..." : "Search calculators..."}
+              className="w-full pl-8 pr-3 py-1.5 text-sm bg-(--muted) border border-(--border) rounded-lg text-foreground placeholder:text-(--muted-foreground) focus:outline-none focus:border-(--primary) focus:bg-(--card) transition-colors"
+            />
+          </div>
+        </div>
+      )}
+
+      {/* Search results */}
+      {!collapsed && search.trim() && (
+        <div className="px-2 pb-2">
+          {filteredCalcs.length === 0 ? (
+            <p className="text-xs text-(--muted-foreground) px-3 py-2">
+              {locale === "th" ? "ไม่พบผลลัพธ์" : "No results found"}
+            </p>
+          ) : (
+            filteredCalcs.map((calc) => {
+              const Icon = calc.icon;
+              return (
+                <NavLink
+                  key={calc.slug}
+                  href={`/${locale}/${calc.slug}`}
+                  active={isActive(calc.slug)}
+                  onClick={() => { setSearch(""); onClose?.(); }}
+                  collapsed={false}
+                >
+                  <span className={cn("flex items-center justify-center w-5 h-5 rounded text-white shrink-0", calc.color)}>
+                    <Icon size={11} />
+                  </span>
+                  <span>{t(calc.nameKey as Parameters<typeof t>[0])}</span>
+                </NavLink>
+              );
+            })
+          )}
+        </div>
+      )}
+
+      {/* Recently used */}
+      {!collapsed && !search.trim() && recentCalcs.length > 0 && (
+        <div className="px-2 pb-1">
+          <p className="text-xs font-semibold text-(--muted-foreground) uppercase tracking-wider px-3 py-1.5 flex items-center gap-1.5">
+            <Clock size={11} />
+            {locale === "th" ? "ที่ใช้ล่าสุด" : "Recently used"}
+          </p>
+          {recentCalcs.map((calc) => {
+            const Icon = calc.icon;
+            return (
+              <NavLink key={calc.slug} href={`/${locale}/${calc.slug}`} active={isActive(calc.slug)} onClick={onClose} collapsed={false}>
+                <span className={cn("flex items-center justify-center w-5 h-5 rounded text-white shrink-0", calc.color)}>
+                  <Icon size={11} />
+                </span>
+                <span>{t(calc.nameKey as Parameters<typeof t>[0])}</span>
+              </NavLink>
+            );
+          })}
+        </div>
+      )}
+
       {/* Section label */}
-      <p className={cn("text-xs font-semibold text-(--muted-foreground) uppercase tracking-wider px-5 py-1.5", collapsed && "lg:hidden")}>
+      <p className={cn("text-xs font-semibold text-(--muted-foreground) uppercase tracking-wider px-5 py-1.5", collapsed && "lg:hidden", search.trim() && "hidden")}>
         {tc("all_calculators")}
       </p>
 
       {/* Categories */}
-      <div className="px-2 pb-4 flex-1">
-        {categoryConfig.map((cat) => {
+      {!search.trim() && (
+        <div className="px-2 pb-4 flex-1">
+          {categoryConfig.map((cat) => {
           const CatIcon = cat.icon;
           const isOpen = openCategories[cat.id] ?? false;
           const hasActive = cat.slugs.some((slug) => isActive(slug));
@@ -171,8 +254,9 @@ export function Sidebar({ onClose, collapsed = false, onToggleCollapse }: Sideba
               )}
             </div>
           );
-        })}
-      </div>
+          })}
+        </div>
+      )}
 
       {/* Footer */}
       <div className="px-2 py-3 border-t border-(--sidebar-border) space-y-0.5">

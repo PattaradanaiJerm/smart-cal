@@ -3,6 +3,7 @@
 import { useTranslations, useLocale } from "next-intl";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
 import { useAnalytics } from "@/hooks/useAnalytics";
+import { useState } from "react";
 
 // Static approximate rates relative to THB
 const RATES: Record<string, number> = {
@@ -21,10 +22,15 @@ export function CurrencyConverter() {
   const locale = useLocale();
   const { value: state, setValue, reset } = useLocalStorage<CurrencyState>("sc_currency-converter_state", INITIAL);
   const { logCalculatorEvent } = useAnalytics();
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const convert = () => {
     const v = parseFloat(state.amount);
-    if (isNaN(v)) return;
+    if (state.amount === "" || isNaN(v) || v <= 0) {
+      setErrors({ amount: locale === "th" ? "กรุณากรอกจำนวนเงิน" : "Amount required" });
+      return;
+    }
+    setErrors({});
     const inThb = v * RATES[state.from];
     const result = inThb / RATES[state.to];
     setValue((s) => ({ ...s, result: result.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 4 }) }));
@@ -41,11 +47,12 @@ export function CurrencyConverter() {
           <input
             type="number"
             value={state.amount}
-            onChange={(e) => setValue((s) => ({ ...s, amount: e.target.value, result: "" }))}
+            onChange={(e) => { setValue((s) => ({ ...s, amount: e.target.value, result: "" })); setErrors({}); }}
             onKeyDown={(e) => e.key === "Enter" && convert()}
             placeholder="100"
-            className="calc-input"
+            className={`calc-input${errors.amount ? " calc-input-error" : ""}`}
           />
+          {errors.amount && <p className="field-error">⚠ {errors.amount}</p>}
         </div>
         <div className="grid grid-cols-[1fr_auto_1fr] gap-3 items-end">
           <div>
