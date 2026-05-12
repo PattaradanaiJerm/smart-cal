@@ -3,16 +3,15 @@ import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 import { calculators } from "@/config/calculators";
 
-export function Footer() {
+export function FooterContent() {
   const locale = useLocale();
   const t = useTranslations("nav");
   const tc = useTranslations("common");
   const isTh = locale === "th";
 
   return (
-    <footer className="mt-auto border-t border-(--border)">
-      <div className="max-w-5xl mx-auto px-6 py-12">
-        <div className="grid grid-cols-1 sm:grid-cols-4 gap-8 mb-10">
+    <div className="max-w-5xl mx-auto px-6 py-12">
+      <div className="grid grid-cols-1 sm:grid-cols-4 gap-8 mb-10">
 
           {/* Brand */}
           <div className="sm:col-span-2">
@@ -91,6 +90,5 @@ export function Footer() {
           </div>
         </div>
       </div>
-    </footer>
   );
 }

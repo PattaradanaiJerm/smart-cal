@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { Sidebar } from "@/components/layout/Sidebar";
 import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
+import { FooterContent } from "@/components/layout/Footer";
 import { AdLayout } from "@/components/ads/AdLayout";
 import { CookieBanner } from "@/components/CookieBanner";
 import { NextIntlClientProvider } from "next-intl";
@@ -52,7 +52,11 @@ export default function LocaleClientLayout({
 
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
-      <div className="flex flex-col min-h-screen">
+      {/* CSS variable tracks sidebar width so full-width footer can offset correctly */}
+      <div
+        className="flex flex-col min-h-screen"
+        style={{ "--sidebar-w": sidebarCollapsed ? "4rem" : "16rem" } as React.CSSProperties}
+      >
         <Header onMenuToggle={() => setSidebarOpen((v) => !v)} />
 
         <div className="flex flex-1 relative">
@@ -96,10 +100,13 @@ export default function LocaleClientLayout({
             <AdLayout>
               {children}
             </AdLayout>
-
-            <Footer />
           </main>
         </div>
+
+        {/* Footer — full viewport width, offset on desktop to clear the fixed sidebar */}
+        <footer className="border-t border-(--border) lg:pl-(--sidebar-w) transition-[padding] duration-200">
+          <FooterContent />
+        </footer>
       </div>
       <CookieBanner />
     </NextIntlClientProvider>
