@@ -81,8 +81,17 @@ export default function LocaleClientLayout({
             />
           </aside>
 
-          {/* Main area — right of sidebar */}
-          <main className={cn("flex-1 min-w-0 flex flex-col transition-all duration-200", sidebarCollapsed ? "lg:ml-16" : "lg:ml-64")}>
+          {/* In-flow spacer that mirrors sidebar width — ensures main doesn't slip under fixed sidebar */}
+          <div
+            className={cn(
+              "hidden lg:block shrink-0 transition-all duration-200",
+              sidebarCollapsed ? "w-16" : "w-64"
+            )}
+            aria-hidden
+          />
+
+          {/* Main area */}
+          <main className="flex-1 min-w-0 flex flex-col">
             {/* Ad layout wraps ALL page content — ads are isolated here */}
             <AdLayout>
               {children}

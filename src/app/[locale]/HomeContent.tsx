@@ -85,12 +85,6 @@ export function HomeContent() {
         {/* Canvas floating particles */}
         <FloatingParticles />
 
-        {/* Rotating rings */}
-        <div className="absolute inset-0 flex items-center justify-center pointer-events-none" aria-hidden>
-          <div className="w-[520px] h-[520px] sm:w-[700px] sm:h-[700px] rounded-full border border-blue-400/[0.09] dark:border-blue-400/[0.06] spin-slow" />
-          <div className="absolute w-[360px] h-[360px] sm:w-[500px] sm:h-[500px] rounded-full border border-cyan-400/[0.08] dark:border-cyan-400/[0.05] spin-reverse" />
-        </div>
-
         {/* Gradient blobs */}
         <div className="absolute inset-0 pointer-events-none" aria-hidden>
           <div className="absolute -top-20 right-[5%] w-[400px] h-[320px] bg-blue-500/[0.08] dark:bg-blue-500/[0.10] rounded-full blur-[80px]" />
