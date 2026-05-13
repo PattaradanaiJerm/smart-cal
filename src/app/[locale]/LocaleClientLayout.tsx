@@ -50,8 +50,6 @@ export default function LocaleClientLayout({
     });
   };
 
-  const sidebarWidth = sidebarCollapsed ? "4rem" : "16rem";
-
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
       <div className="flex flex-col min-h-screen">
@@ -98,17 +96,13 @@ export default function LocaleClientLayout({
             <AdLayout>
               {children}
             </AdLayout>
+
+            {/* Footer — inside main so it naturally aligns with all content above */}
+            <footer className="border-t border-(--border)">
+              <FooterContent />
+            </footer>
           </main>
         </div>
-
-        {/* Footer — full viewport width. On lg+ screens, padding-left mirrors the
-            fixed sidebar so the footer aligns with the main content column. */}
-        <footer
-          className="border-t border-(--border) transition-[padding] duration-200"
-          style={{ paddingLeft: `max(0px, ${sidebarWidth})` }}
-        >
-          <FooterContent />
-        </footer>
       </div>
       <CookieBanner />
     </NextIntlClientProvider>
