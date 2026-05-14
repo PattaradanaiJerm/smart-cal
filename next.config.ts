@@ -4,7 +4,8 @@ import createNextIntlPlugin from "next-intl/plugin";
 const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
 
 const nextConfig: NextConfig = {
-  output: "standalone",
+  // Use standalone output only for Docker builds, not Vercel
+  output: process.env.VERCEL ? undefined : "standalone",
   images: {
     formats: ["image/avif", "image/webp"],
   },
