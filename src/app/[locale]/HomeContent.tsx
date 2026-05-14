@@ -6,7 +6,6 @@ import Image from "next/image";
 import { calculators } from "@/config/calculators";
 import { CheckCircle, Zap, Lock, Globe, ChevronDown } from "lucide-react";
 import { useSiteStats } from "@/hooks/useSiteStats";
-import { AnimatedGrid } from "@/components/ui/AnimatedGrid";
 import { FloatingParticles } from "@/components/ui/FloatingParticles";
 import { CountUp } from "@/components/ui/CountUp";
 import { FadeInUp } from "@/components/ui/FadeInUp";
@@ -22,39 +21,24 @@ function formatCount(n: number): string {
 export function HomeContent() {
   const t = useTranslations("home");
   const tn = useTranslations("nav");
+  const tc = useTranslations("cards");
   const locale = useLocale();
-  const isTh = locale === "th";
   const stats = useSiteStats();
 
-  const features = isTh
-    ? [
-        { icon: Zap,         title: "ใช้งานได้ทันที",   desc: "ไม่ต้องสมัครสมาชิก ไม่ต้องดาวน์โหลด เปิดเว็บแล้วใช้เลย" },
-        { icon: CheckCircle, title: "ผลลัพธ์แม่นยำ",   desc: "สูตรคำนวณมาตรฐานสากล ทดสอบและตรวจสอบโดยผู้เชี่ยวชาญ" },
-        { icon: Lock,        title: "ความเป็นส่วนตัว", desc: "ข้อมูลทั้งหมดประมวลผลในเบราว์เซอร์ของคุณ ไม่ส่งข้อมูลไปเซิร์ฟเวอร์" },
-        { icon: Globe,       title: "รองรับสองภาษา",   desc: "ใช้งานได้ทั้งภาษาไทยและภาษาอังกฤษ สลับภาษาได้ทุกเมื่อ" },
-      ]
-    : [
-        { icon: Zap,         title: "Instant Access",   desc: "No signup, no download. Open the site and start calculating." },
-        { icon: CheckCircle, title: "Accurate Results", desc: "Industry-standard formulas, tested and verified." },
-        { icon: Lock,        title: "Privacy First",    desc: "All calculations run in your browser — no data sent to servers." },
-        { icon: Globe,       title: "Bilingual",        desc: "Available in Thai and English. Switch anytime." },
-      ];
+  const features = [
+    { icon: Zap,         title: t("feature_instant_title"),   desc: t("feature_instant_desc") },
+    { icon: CheckCircle, title: t("feature_accurate_title"),  desc: t("feature_accurate_desc") },
+    { icon: Lock,        title: t("feature_privacy_title"),   desc: t("feature_privacy_desc") },
+    { icon: Globe,       title: t("feature_bilingual_title"), desc: t("feature_bilingual_desc") },
+  ];
 
-  const faqs = isTh
-    ? [
-        { q: "เว็บนี้ใช้งานฟรีไหม?",          a: "ฟรี 100% ไม่มีค่าใช้จ่ายใดๆ ทั้งสิ้น ไม่ต้องสมัครสมาชิก" },
-        { q: "คำนวณ BMI คืออะไร?",            a: "BMI คือดัชนีมวลกาย คำนวณจากน้ำหนัก (กก.) หารด้วยส่วนสูง (เมตร) ยกกำลัง 2" },
-        { q: "ข้อมูลที่กรอกจะถูกเก็บไหม?",    a: "ไม่ ข้อมูลทั้งหมดคำนวณในเบราว์เซอร์ ไม่มีการส่งข้อมูลไปยังเซิร์ฟเวอร์" },
-        { q: "เครื่องคำนวณสินเชื่อคำนวณยังไง?", a: "ใช้สูตร Amortization โดยคำนวณจากจำนวนเงินกู้ อัตราดอกเบี้ยต่อปี และระยะเวลาผ่อน" },
-        { q: "รองรับบนมือถือไหม?",            a: "รองรับทุก device ทั้ง PC, tablet และมือถือ Responsive Design" },
-      ]
-    : [
-        { q: "Is this website free to use?",       a: "Yes, 100% free. No subscription, no signup required." },
-        { q: "What is BMI?",                       a: "BMI is calculated by dividing your weight in kg by your height in meters squared." },
-        { q: "Is my data stored anywhere?",        a: "No. All calculations happen entirely in your browser." },
-        { q: "How does the loan calculator work?", a: "It uses the standard amortization formula based on loan amount, interest rate, and period." },
-        { q: "Does it work on mobile?",            a: "Yes, fully responsive — works on PC, tablet, and mobile." },
-      ];
+  const faqs = [
+    { q: t("faq_free_q"),   a: t("faq_free_a") },
+    { q: t("faq_bmi_q"),    a: t("faq_bmi_a") },
+    { q: t("faq_data_q"),   a: t("faq_data_a") },
+    { q: t("faq_loan_q"),   a: t("faq_loan_a") },
+    { q: t("faq_mobile_q"), a: t("faq_mobile_a") },
+  ];
 
   const faqSchema = {
     "@context": "https://schema.org",
@@ -70,18 +54,15 @@ export function HomeContent() {
     "@type": "WebSite",
     name: "D-Calc",
     url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://dcalcs.com",
-    description: isTh ? "รวมเครื่องคำนวณออนไลน์ฟรีกว่า 10 ประเภท" : "10+ free online calculators",
-    inLanguage: isTh ? "th" : "en",
+    description: t("website_description"),
+    inLanguage: locale,
   };
 
   return (
     <div className="w-full max-w-4xl mx-auto">
 
       {/* ══════════════════════ HERO ══════════════════════ */}
-      <section className="relative text-center py-20 lg:py-28 px-4 overflow-hidden">
-        {/* SVG animated grid */}
-        <AnimatedGrid />
-
+      <section className="relative text-center py-20 lg:py-28 px-4 overflow-hidden flex flex-col items-center justify-center min-h-[60vh]">
         {/* Canvas floating particles */}
         <FloatingParticles />
 
@@ -100,11 +81,10 @@ export function HomeContent() {
           <FadeInUp delay={0}>
             <div className="inline-flex items-center gap-2.5 glass-badge text-blue-700 dark:text-blue-300 text-sm font-semibold px-4 py-2 rounded-full mb-8 shadow-sm">
               <span className="relative flex h-2 w-2 shrink-0">
-                <span className="absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75 animate-ping" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-green-500" />
               </span>
               <Image src="/logo.png" alt="d-calc" width={16} height={16} className="rounded-sm opacity-90" />
-              d-calc — {isTh ? "ฟรี ใช้ได้เลย" : "Free & Instant"}
+              d-calc — {t("badge_free")}
             </div>
           </FadeInUp>
 
@@ -122,11 +102,11 @@ export function HomeContent() {
 
           <FadeInUp delay={240}>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3">
-              <Link href={`/${locale}/bmi`} className="btn-primary gap-2 px-8 py-3.5 text-base w-full sm:w-auto">
+              <Link href="/bmi" className="btn-primary gap-2 px-8 py-3.5 text-base w-full sm:w-auto">
                 {t("hero_cta")} <span aria-hidden>→</span>
               </Link>
               <a href="#calculators" className="btn-secondary gap-2 px-7 py-3.5 text-base w-full sm:w-auto">
-                {isTh ? "ดูทั้งหมด" : "Browse all"} <ChevronDown size={15} />
+                {t("browse_all")} <ChevronDown size={15} />
               </a>
             </div>
           </FadeInUp>
@@ -134,15 +114,15 @@ export function HomeContent() {
       </section>
 
       {/* ══════════════════════ STATS (live from DB) ══════════════════════ */}
-      <FadeInUp className="px-4 mb-12">
+      <FadeInUp className="px-4 mt-16 mb-16">
         <div
           className="bg-(--card) border border-(--border) rounded-2xl overflow-hidden flex divide-x divide-(--border)"
           style={{ boxShadow: "var(--card-shadow)" }}
         >
           {[
-            { label: t("stats_tools"),                              raw: calculators.length, suffix: "+" },
-            { label: isTh ? "การคำนวณ" : "Calculations",           raw: stats?.totalCalculations ?? 0, fmt: formatCount },
-            { label: isTh ? "ผู้เข้าชม" : "Page views",           raw: stats?.totalPageViews ?? 0,    fmt: formatCount },
+            { label: t("stats_tools"),        raw: calculators.length,              suffix: "+" },
+            { label: t("stats_calc"),          raw: stats?.totalCalculations ?? 0,   fmt: formatCount },
+            { label: t("stats_page_views"),    raw: stats?.totalPageViews ?? 0,      fmt: formatCount },
           ].map((s) => (
             <div key={s.label} className="flex-1 px-4 py-5 sm:py-6 text-center">
               <p className="text-2xl sm:text-3xl font-black gradient-text leading-none mb-1.5">
@@ -159,7 +139,7 @@ export function HomeContent() {
       {/* ══════════════════════ CALCULATOR GRID ══════════════════════ */}
       <section id="calculators" className="px-4 pb-12">
         <FadeInUp>
-          <h2 className="text-2xl font-bold mb-6">{t("all_tools")}</h2>
+          <h2 className="text-2xl font-bold mb-6 mt-10">{t("all_tools")}</h2>
         </FadeInUp>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
           {calculators.map((calc, i) => {
@@ -167,7 +147,7 @@ export function HomeContent() {
             return (
               <FadeInUp key={calc.slug} delay={Math.min(i * 35, 280)}>
                 <Link
-                  href={`/${locale}/${calc.slug}`}
+                  href={`/${calc.slug}`}
                   className="card-glow group flex items-center gap-4 bg-(--card) border border-(--border) rounded-2xl p-4 transition-all duration-200 hover:-translate-y-0.5 w-full"
                   style={{ boxShadow: "var(--card-shadow)" }}
                   onMouseEnter={(e) => (e.currentTarget.style.boxShadow = "var(--card-shadow-hover)")}
@@ -181,7 +161,7 @@ export function HomeContent() {
                       {tn(calc.nameKey as Parameters<typeof tn>[0])}
                     </p>
                     <p className="text-xs text-(--muted-foreground) mt-0.5 line-clamp-1">
-                      {isTh ? calc.descTh : calc.descEn}
+                      {tc(calc.cardDescKey as Parameters<typeof tc>[0])}
                     </p>
                   </div>
                   <svg className="w-4 h-4 text-(--muted-foreground) shrink-0 opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-200" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
@@ -197,9 +177,9 @@ export function HomeContent() {
       {/* ══════════════════════ WHY D-CALC ══════════════════════ */}
       <section className="px-4 pb-12">
         <FadeInUp className="text-center mb-8">
-          <h2 className="text-2xl font-bold mb-2">{isTh ? "ทำไมต้องใช้ D-Calc?" : "Why use D-Calc?"}</h2>
+          <h2 className="text-2xl font-bold mb-2">{t("why_title")}</h2>
           <p className="text-sm text-(--muted-foreground)">
-            {isTh ? "ออกแบบมาให้ใช้งานง่าย ถูกต้อง และเร็วที่สุด" : "Built for speed, accuracy, and simplicity."}
+            {t("why_subtitle")}
           </p>
         </FadeInUp>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -234,7 +214,7 @@ export function HomeContent() {
       <section className="px-4 pb-14">
         <FadeInUp>
           <h2 className="text-2xl font-bold mb-6 text-center">
-            {isTh ? "คำถามที่พบบ่อย" : "Frequently Asked Questions"}
+            {t("faq_title")}
           </h2>
         </FadeInUp>
         <div className="space-y-2">

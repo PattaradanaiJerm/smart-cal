@@ -34,7 +34,7 @@ export function GpaCalculator() {
   const calculate = () => {
     const validCourses = state.courses.filter((c) => parseFloat(c.credits) > 0);
     if (!validCourses.length) {
-      setErrors({ general: locale === "th" ? "กรุณาเพิ่มอย่างน้อย 1 รายวิชาที่มีหน่วยกิต" : "Add at least 1 course with credits" });
+      setErrors({ general: t("required_course") });
       return;
     }
     setErrors({});
@@ -64,8 +64,8 @@ export function GpaCalculator() {
     setValue((s) => ({ ...s, courses: s.courses.map((c, idx) => idx === i ? { ...c, [field]: val } : c), result: null }));
 
   return (
-    <div className="space-y-4">
-      <div className="calc-card space-y-4">
+    <div className="calc-page-stack">
+      <div className="calc-card">
         {state.courses.map((course, i) => (
           <div key={i} className="grid grid-cols-[1fr_80px_80px_36px] gap-2 items-end">
             <div>

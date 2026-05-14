@@ -49,8 +49,8 @@ export function SleepCalculator() {
   };
 
   return (
-    <div className="space-y-4">
-      <div className="calc-card space-y-5">
+    <div className="calc-page-stack">
+      <div className="calc-card">
         <div className="flex gap-2">
           {(["bedtime", "wake"] as Mode[]).map((m) => (
             <button key={m} onClick={() => setValue((s) => ({ ...s, mode: m, results: [] }))}

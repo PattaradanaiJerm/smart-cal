@@ -20,7 +20,7 @@ export function DateCalculator() {
 
   const calculate = () => {
     if (state.mode === "add" && (state.days === "" || isNaN(parseInt(state.days)))) {
-      setErrors({ days: locale === "th" ? "กรุณากรอกจำนวนวัน" : "Days required" });
+      setErrors({ days: t("required_days") });
       return;
     }
     setErrors({});
@@ -53,8 +53,8 @@ export function DateCalculator() {
   };
 
   return (
-    <div className="space-y-4">
-      <div className="calc-card space-y-5">
+    <div className="calc-page-stack">
+      <div className="calc-card">
         <div className="flex gap-2">
           {(["diff", "add"] as Mode[]).map((m) => (
             <button key={m} onClick={() => setValue((s) => ({ ...s, mode: m, result: "" }))}

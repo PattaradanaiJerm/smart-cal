@@ -48,6 +48,15 @@ CREATE TABLE IF NOT EXISTS announcements (
   updated_at timestamptz DEFAULT now()
 );
 
+-- 6. Contact messages
+CREATE TABLE IF NOT EXISTS contact_messages (
+  id         uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+  topic      text NOT NULL,
+  message    text NOT NULL,
+  locale     text,
+  created_at timestamptz DEFAULT now()
+);
+
 -- Indexes for analytics queries
 CREATE INDEX IF NOT EXISTS idx_page_views_created ON page_views(created_at DESC);
 CREATE INDEX IF NOT EXISTS idx_calc_events_slug ON calculator_events(slug);

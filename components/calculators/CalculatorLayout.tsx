@@ -1,7 +1,7 @@
 "use client";
 
-import { useMemo, useEffect } from "react";
-import { useLocale, useTranslations } from "next-intl";
+import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { AdUnit } from "@/components/ads/AdUnit";
 import { calculators } from "@/config/calculators";
@@ -29,15 +29,19 @@ export function CalculatorLayout({ title, description, children, icon, color = "
   const iconClass = `flex-shrink-0 flex items-center justify-center w-14 h-14 rounded-2xl text-3xl bg-gradient-to-br ${c.grad} shadow-lg`;
   const backdropClass = `absolute inset-0 bg-gradient-to-br ${c.grad} opacity-10 dark:opacity-20`;
   const accentClass = `h-0.5 bg-gradient-to-r ${c.grad} opacity-40`;
-  const locale = useLocale();
-  const isTh = locale === "th";
   const tn = useTranslations("nav");
+  const tc = useTranslations("common");
 
-  // Pick 3 random related calculators (excluding this one)
-  const suggestions = useMemo(() => {
+  // Pick 3 random related calculators — computed client-side only to avoid SSR/client mismatch
+  // mounted guard ensures suggestions never render during SSR or first client paint
+  const [mounted, setMounted] = useState(false);
+  const [suggestions, setSuggestions] = useState<typeof calculators>([]);
+
+  useEffect(() => {
+    setMounted(true);
     const pool = calculators.filter((c) => c.slug !== slug);
     const shuffled = [...pool].sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, 3);
+    setSuggestions(shuffled.slice(0, 3));
   }, [slug]);
 
   // Track recently used
@@ -82,16 +86,16 @@ export function CalculatorLayout({ title, description, children, icon, color = "
       {children}
 
       {/* ── Smart Suggestions ── */}
-      {suggestions.length > 0 && (
+      {mounted && suggestions.length > 0 && (
         <div className="mt-8 pt-6 border-t border-(--border)">
           <p className="text-xs font-semibold text-(--muted-foreground) uppercase tracking-widest mb-3">
-            {isTh ? "คนอื่นยังใช้" : "Users also use"}
+            {tc("users_also_use")}
           </p>
           <div className="flex flex-wrap gap-2">
             {suggestions.map((s) => {
               const Icon = s.icon;
               return (
-                <Link key={s.slug} href={`/${locale}/${s.slug}`} className="suggestion-chip">
+                <Link key={s.slug} href={`/${s.slug}`} className="suggestion-chip">
                   <Icon size={13} />
                   {tn(s.nameKey as Parameters<typeof tn>[0])}
                 </Link>

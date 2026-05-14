@@ -6,17 +6,15 @@ import { Sidebar } from "@/components/layout/Sidebar";
 import { Header } from "@/components/layout/Header";
 import { FooterContent } from "@/components/layout/Footer";
 import { AdLayout } from "@/components/ads/AdLayout";
+import { AdUnit } from "@/components/ads/AdUnit";
 import { CookieBanner } from "@/components/CookieBanner";
-import { NextIntlClientProvider } from "next-intl";
 import { cn } from "@/lib/utils";
 
 export default function LocaleClientLayout({
   children,
-  messages,
   locale,
 }: {
   children: React.ReactNode;
-  messages: Record<string, unknown>;
   locale: string;
 }) {
   const pathname = usePathname();
@@ -51,7 +49,7 @@ export default function LocaleClientLayout({
   };
 
   return (
-    <NextIntlClientProvider locale={locale} messages={messages}>
+    <>
       <div className="flex flex-col min-h-screen">
         <Header onMenuToggle={() => setSidebarOpen((v) => !v)} />
 
@@ -90,22 +88,37 @@ export default function LocaleClientLayout({
             aria-hidden
           />
 
-          {/* Main area */}
-          <main className="flex-1 min-w-0 flex flex-col">
-            {/* Ad layout wraps ALL page content — ads are isolated here */}
-            <AdLayout>
-              {children}
-            </AdLayout>
+          {/* Content area: main + right ad + footer, all after the sidebar spacer */}
+          <div className="flex-1 min-w-0 flex flex-col">
+            <div className="flex flex-1">
+              {/* Main column */}
+              <main className="flex-1 min-w-0 flex flex-col">
+                <AdLayout>
+                  {children}
+                </AdLayout>
+              </main>
 
-            {/* Footer — inside main so it naturally aligns with all content above */}
+              {/* Right sidebar ad */}
+              <div className="hidden xl:flex shrink-0 w-72 border-l border-(--border)/50">
+                <div className="sticky top-14 w-full px-4 py-6">
+                  <AdUnit
+                    slot={process.env.NEXT_PUBLIC_AD_SLOT_RIGHT_SIDEBAR ?? "right-sidebar"}
+                    className="w-full h-150"
+                    format="rectangle"
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Footer — spans full width after sidebar, including past right ad */}
             <footer className="border-t border-(--border)">
               <FooterContent />
             </footer>
-          </main>
+          </div>
         </div>
       </div>
       <CookieBanner />
-    </NextIntlClientProvider>
+    </>
   );
 }
 

@@ -3,18 +3,25 @@
 import { useState, useCallback, useEffect } from "react";
 
 export function useLocalStorage<T>(key: string, initialValue: T) {
-  const [stored, setStored] = useState<T>(() => {
-    if (typeof window === "undefined") return initialValue;
+  // Always start with initialValue so SSR and first client render match (no hydration mismatch)
+  const [stored, setStored] = useState<T>(initialValue);
+  const [hydrated, setHydrated] = useState(false);
+
+  // Load from localStorage only after mount (client-only)
+  useEffect(() => {
     try {
       const item = window.localStorage.getItem(key);
-      return item != null ? (JSON.parse(item) as T) : initialValue;
+      if (item != null) setStored(JSON.parse(item) as T);
     } catch {
-      return initialValue;
+      // ignore
     }
-  });
+    setHydrated(true);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [key]);
 
   // Sync across tabs via native storage event
   useEffect(() => {
+    if (!hydrated) return;
     const onStorage = (e: StorageEvent) => {
       if (e.key !== key) return;
       try {
@@ -25,7 +32,7 @@ export function useLocalStorage<T>(key: string, initialValue: T) {
     };
     window.addEventListener("storage", onStorage);
     return () => window.removeEventListener("storage", onStorage);
-  }, [key, initialValue]);
+  }, [key, initialValue, hydrated]);
 
   const setValue = useCallback(
     (value: T | ((prev: T) => T)) => {

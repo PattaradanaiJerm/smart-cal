@@ -25,9 +25,9 @@ export function PercentageCalculator() {
     const errs: Record<string, string> = {};
     const a = parseFloat(state.a);
     const b = parseFloat(state.b);
-    if (state.a === "" || isNaN(a)) errs.a = locale === "th" ? "กรุณากรอกตัวเลข" : "Value required";
-    if (state.b === "" || isNaN(b)) errs.b = locale === "th" ? "กรุณากรอกตัวเลข" : "Value required";
-    if (state.mode !== "change" && b === 0) errs.b = locale === "th" ? "ตัวเลขต้องไม่เป็น 0" : "Value cannot be 0";
+    if (state.a === "" || isNaN(a)) errs.a = t("required_value");
+    if (state.b === "" || isNaN(b)) errs.b = t("required_value");
+    if (state.mode !== "change" && b === 0) errs.b = t("nonzero_value");
     setErrors(errs);
     if (Object.keys(errs).length > 0) return;
     let result = "";
@@ -49,8 +49,8 @@ export function PercentageCalculator() {
   };
 
   return (
-    <div className="space-y-4">
-      <div className="calc-card space-y-5">
+    <div className="calc-page-stack">
+      <div className="calc-card">
         {/* Mode selector */}
         <div className="flex bg-(--muted) rounded-xl p-1 gap-1">
           {(["basic", "change", "ratio"] as Mode[]).map((m) => (

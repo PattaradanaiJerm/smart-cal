@@ -32,9 +32,9 @@ export function CalorieCalculator() {
 
   const calculate = () => {
     const errs: Record<string, string> = {};
-    if (!state.age || parseFloat(state.age) <= 0) errs.age = locale === "th" ? "กรุณากรอกอายุ" : "Age required";
-    if (!state.weight || parseFloat(state.weight) <= 0) errs.weight = locale === "th" ? "กรุณากรอกน้ำหนัก" : "Weight required";
-    if (!state.height || parseFloat(state.height) <= 0) errs.height = locale === "th" ? "กรุณากรอกส่วนสูง" : "Height required";
+    if (!state.age || parseFloat(state.age) <= 0) errs.age = t("required_age");
+    if (!state.weight || parseFloat(state.weight) <= 0) errs.weight = t("required_weight");
+    if (!state.height || parseFloat(state.height) <= 0) errs.height = t("required_height");
     setErrors(errs);
     if (Object.keys(errs).length > 0) return;
     const w = parseFloat(state.weight);
@@ -56,8 +56,8 @@ export function CalorieCalculator() {
   };
 
   return (
-    <div className="space-y-4">
-      <div className="calc-card space-y-5">
+    <div className="calc-page-stack">
+      <div className="calc-card">
         {/* Gender */}
         <div>
           <label className="calc-label">{t("gender")}</label>

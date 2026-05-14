@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 import { Layers, Shuffle } from "lucide-react";
 
@@ -16,21 +16,10 @@ const COLORS = [
   "from-red-500 to-orange-500",
 ];
 
-const DEFAULT_ITEMS_TH = [
-  "ผู้เล่น 1","ผู้เล่น 2","ผู้เล่น 3","ผู้เล่น 4","ผู้เล่น 5",
-  "ผู้เล่น 6","ผู้เล่น 7","ผู้เล่น 8","ผู้เล่น 9","ผู้เล่น 10",
-];
-const DEFAULT_ITEMS_EN = [
-  "Player 1","Player 2","Player 3","Player 4","Player 5",
-  "Player 6","Player 7","Player 8","Player 9","Player 10",
-];
-
 export function CardDrawGame() {
-  const locale = useLocale();
-  const isTh = locale === "th";
+  const t = useTranslations("card_draw");
 
-  const defaultItems = isTh ? DEFAULT_ITEMS_TH : DEFAULT_ITEMS_EN;
-  const [inputText, setInputText] = useState(defaultItems.join("\n"));
+  const [inputText, setInputText] = useState(() => t("default_items"));
   const [drawCount, setDrawCount] = useState(3);
   const [drawn, setDrawn] = useState<string[]>([]);
   const [remaining, setRemaining] = useState<string[]>([]);
@@ -45,7 +34,6 @@ export function CardDrawGame() {
   const safeDraw = Math.min(drawCount, items.length);
 
   const handleDraw = () => {
-    // Shuffle all items (Fisher-Yates)
     const shuffled = [...items];
     for (let i = shuffled.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -66,31 +54,26 @@ export function CardDrawGame() {
   return (
     <div className="space-y-4">
       {!hasDrawn ? (
-        /* ---------------------------------------------------------------- */
-        /* Setup screen                                                      */
-        /* ---------------------------------------------------------------- */
         <div className="bg-(--card) border border-(--border) rounded-2xl p-6 space-y-4">
           <div>
-            <label className="block text-sm font-medium mb-1">
-              {isTh ? "รายการในกองไพ่ (1 รายการต่อบรรทัด)" : "Deck items (one per line)"}
-            </label>
+            <label className="block text-sm font-medium mb-1">{t("deck_label")}</label>
             <textarea
               value={inputText}
               onChange={(e) => setInputText(e.target.value)}
               rows={10}
               className="w-full border border-(--border) rounded-xl px-3 py-2 bg-background text-sm resize-none"
-              placeholder={isTh ? DEFAULT_ITEMS_TH.join("\n") : DEFAULT_ITEMS_EN.join("\n")}
+              placeholder={t("placeholder")}
             />
             <p className="text-xs text-(--muted-foreground) mt-1">
-              {items.length} {isTh ? "รายการ" : "items"}
+              {items.length} {t("items_suffix")}
             </p>
           </div>
 
           <div>
             <label className="block text-sm font-medium mb-1">
-              {isTh ? "จั่วกี่ใบ" : "Draw how many"}
+              {t("draw_count")}
               <span className="text-(--muted-foreground) font-normal ml-1">
-                ({isTh ? "สูงสุด" : "max"} {items.length})
+                ({t("max_label")} {items.length})
               </span>
             </label>
             <input
@@ -111,21 +94,17 @@ export function CardDrawGame() {
             className="w-full flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-600 text-white font-semibold py-3 rounded-xl transition-colors shadow-lg shadow-amber-200 dark:shadow-none disabled:opacity-50 disabled:cursor-not-allowed"
           >
             <Layers size={18} />
-            {isTh ? "จั่วไพ่!" : "Draw cards!"}
+            {t("draw_btn")}
           </button>
         </div>
       ) : (
-        /* ---------------------------------------------------------------- */
-        /* Result screen                                                     */
-        /* ---------------------------------------------------------------- */
         <div key={animKey} className="space-y-4">
-          {/* Drawn cards */}
           <div className="bg-(--card) border border-(--border) rounded-2xl p-6">
             <div className="flex items-center justify-between mb-4">
               <h3 className="font-semibold">
-                {isTh ? "ไพ่ที่จั่วได้" : "Drawn cards"}
+                {t("drawn_label")}
                 <span className="ml-2 text-sm font-normal text-(--muted-foreground)">
-                  ({drawn.length} {isTh ? "ใบ" : "cards"})
+                  ({drawn.length} {t("cards_suffix")})
                 </span>
               </h3>
             </div>
@@ -142,30 +121,22 @@ export function CardDrawGame() {
                   )}
                   style={{ animationDelay: `${i * 80}ms` }}
                 >
-                  {/* Card number */}
                   <span className="absolute top-2 left-3 text-xs opacity-70">#{i + 1}</span>
-                  {/* Suit decoration */}
-                  <span className="absolute top-2 right-3 text-xs opacity-70">♠</span>
                   <p className="text-base mt-3 leading-snug wrap-break-word">{item}</p>
-                  <span className="absolute bottom-2 right-3 text-xs opacity-70 rotate-180">♠</span>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Remaining deck */}
           {remaining.length > 0 && (
             <div className="bg-(--card) border border-(--border) rounded-2xl p-5">
               <p className="text-sm font-medium text-(--muted-foreground) mb-3">
-                {isTh ? "คงเหลือในกอง" : "Remaining in deck"}
+                {t("remaining")}
                 <span className="ml-1 text-foreground font-semibold">({remaining.length})</span>
               </p>
               <div className="flex flex-wrap gap-2">
                 {remaining.map((item, i) => (
-                  <span
-                    key={i}
-                    className="text-xs px-3 py-1.5 rounded-full bg-(--muted) text-(--muted-foreground)"
-                  >
+                  <span key={i} className="text-xs px-3 py-1.5 rounded-full bg-(--muted) text-(--muted-foreground)">
                     {item}
                   </span>
                 ))}
@@ -173,21 +144,20 @@ export function CardDrawGame() {
             </div>
           )}
 
-          {/* Actions */}
           <div className="flex gap-3">
             <button
               onClick={handleReshuffle}
               className="flex-1 flex items-center justify-center gap-2 border border-(--border) hover:bg-(--muted) font-semibold py-3 rounded-xl transition-colors text-sm"
             >
               <Shuffle size={16} />
-              {isTh ? "สับไพ่ใหม่" : "Reshuffle"}
+              {t("reshuffle")}
             </button>
             <button
               onClick={handleDraw}
               className="flex-1 flex items-center justify-center gap-2 bg-amber-500 hover:bg-amber-600 text-white font-semibold py-3 rounded-xl transition-colors shadow shadow-amber-200 dark:shadow-none text-sm"
             >
               <Layers size={16} />
-              {isTh ? "จั่วใหม่ (ชุดเดิม)" : "Draw again"}
+              {t("draw_again")}
             </button>
           </div>
         </div>

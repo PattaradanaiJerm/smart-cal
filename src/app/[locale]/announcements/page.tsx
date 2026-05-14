@@ -31,7 +31,7 @@ export default async function AnnouncementsPage({ params }: { params: Promise<{ 
           {posts.map((post) => (
             <Link
               key={post.id}
-              href={`/${locale}/announcements/${post.id}`}
+              href={`/announcements/${post.id}`}
               className="block bg-(--card) border border-(--border) rounded-xl p-5 hover:border-indigo-400 hover:shadow-sm transition-all"
             >
               <h2 className="font-semibold text-base mb-1">

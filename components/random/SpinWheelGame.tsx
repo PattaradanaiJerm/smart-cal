@@ -1,21 +1,15 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
 import { RotateCw } from "lucide-react";
 
-// ---------------------------------------------------------------------------
-// Wheel colours
-// ---------------------------------------------------------------------------
 const COLORS = [
   "#6366f1","#8b5cf6","#ec4899","#f43f5e","#f97316",
   "#eab308","#22c55e","#14b8a6","#3b82f6","#06b6d4",
   "#a855f7","#10b981","#ef4444","#f59e0b","#0ea5e9",
 ];
-
-const DEFAULT_ITEMS_TH = ["ตัวเลือก 1","ตัวเลือก 2","ตัวเลือก 3","ตัวเลือก 4","ตัวเลือก 5","ตัวเลือก 6"];
-const DEFAULT_ITEMS_EN = ["Option 1","Option 2","Option 3","Option 4","Option 5","Option 6"];
 
 // ---------------------------------------------------------------------------
 // SVG Wheel
@@ -121,11 +115,10 @@ function SpinWheel({
 // Main component
 // ---------------------------------------------------------------------------
 export function SpinWheelGame() {
-  const locale = useLocale();
-  const isTh = locale === "th";
+  const t = useTranslations("spin_wheel");
+  const tc = useTranslations("common");
 
-  const defaultItems = isTh ? DEFAULT_ITEMS_TH : DEFAULT_ITEMS_EN;
-  const [inputText, setInputText] = useState(defaultItems.join("\n"));
+  const [inputText, setInputText] = useState(() => t("default_items"));
   const [rotation, setRotation] = useState(0);
   const [spinning, setSpinning] = useState(false);
   const [winner, setWinner] = useState<string | null>(null);
@@ -175,7 +168,7 @@ export function SpinWheelGame() {
         {/* Input */}
         <div className="bg-(--card) border border-(--border) rounded-2xl p-5 space-y-3">
           <label className="block text-sm font-medium">
-            {isTh ? "รายการ (1 รายการต่อบรรทัด)" : "Options (one per line)"}
+            {t("items_label")}
           </label>
           <textarea
             value={inputText}
@@ -186,19 +179,17 @@ export function SpinWheelGame() {
             }}
             rows={10}
             className="w-full border border-(--border) rounded-xl px-3 py-2 bg-background text-sm resize-none"
-            placeholder={isTh ? "ใส่รายการที่นี่...\nตัวเลือก 1\nตัวเลือก 2" : "Enter options...\nOption 1\nOption 2"}
+            placeholder={t("input_placeholder")}
           />
           <p className="text-xs text-(--muted-foreground)">
-            {items.length} {isTh ? "รายการ" : "items"}
+            {items.length} {t("items_suffix")}
             {items.length > 15 && (
-              <span className="text-yellow-500 ml-1">
-                ({isTh ? "แนะนำไม่เกิน 15 รายการ" : "15 items recommended max"})
-              </span>
+              <span className="text-yellow-500 ml-1">({t("items_max_warning")})</span>
             )}
           </p>
           {tooFew && (
             <p className="text-sm text-red-500">
-              {isTh ? "ใส่อย่างน้อย 2 รายการ" : "Add at least 2 items"}
+              {t("add_items")}
             </p>
           )}
         </div>
@@ -208,9 +199,8 @@ export function SpinWheelGame() {
           {items.length >= 2 ? (
             <SpinWheel items={items} rotation={rotation} spinning={spinning} />
           ) : (
-            <div
-            className="w-75 h-75 rounded-full border-2 border-dashed border-(--border) flex items-center justify-center text-(--muted-foreground) text-sm">
-              {isTh ? "ใส่รายการเพื่อแสดงวงล้อ" : "Add items to see the wheel"}
+            <div className="w-75 h-75 rounded-full border-2 border-dashed border-(--border) flex items-center justify-center text-(--muted-foreground) text-sm">
+              {t("add_to_see_wheel")}
             </div>
           )}
 
@@ -225,9 +215,7 @@ export function SpinWheelGame() {
             )}
           >
             <RotateCw size={18} className={cn(spinning && "animate-spin")} />
-            {spinning
-              ? isTh ? "กำลังหมุน..." : "Spinning..."
-              : isTh ? "หมุนวงล้อ!" : "Spin!"}
+            {spinning ? t("spinning") : t("spin")}
           </button>
         </div>
       </div>
@@ -236,7 +224,7 @@ export function SpinWheelGame() {
       {winner !== null && !spinning && (
         <div className="bg-(--card) border-2 border-indigo-300 dark:border-indigo-700 rounded-2xl p-6 text-center animate-in fade-in zoom-in-95 duration-300">
           <p className="text-xs font-semibold text-(--muted-foreground) uppercase tracking-wider mb-2">
-            {isTh ? "ผลลัพธ์" : "Result"}
+            {t("result_label")}
           </p>
           <div
             className="inline-block px-4 py-2 rounded-xl text-white font-bold text-2xl mb-1"
@@ -245,7 +233,7 @@ export function SpinWheelGame() {
             {winner}
           </div>
           <p className="text-sm text-(--muted-foreground) mt-2">
-            🎉 {isTh ? "ยินดีด้วย!" : "Congratulations!"}
+            🎉 {t("congratulations")}
           </p>
         </div>
       )}

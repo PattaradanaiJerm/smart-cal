@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import { calculators } from "@/config/calculators";
 
 export const metadata: Metadata = {
@@ -7,50 +9,53 @@ export const metadata: Metadata = {
   description: "Learn about D-Calc — free online tools for BMI, loan, GPA, calorie, currency and more.",
 };
 
-export default async function AboutPage({ params }: { params: Promise<{ locale: string }> }) {
-  const { locale } = await params;
-  const isTh = locale === "th";
+export default async function AboutPage() {
+  const t = await getTranslations("about");
+  const tn = await getTranslations("nav");
+
+  const values = [
+    { icon: "🔓", titleKey: "value_free_title",     descKey: "value_free_desc" },
+    { icon: "🔒", titleKey: "value_privacy_title",  descKey: "value_privacy_desc" },
+    { icon: "⚡", titleKey: "value_fast_title",     descKey: "value_fast_desc" },
+    { icon: "📊", titleKey: "value_autosave_title", descKey: "value_autosave_desc" },
+  ];
 
   return (
     <div className="max-w-2xl mx-auto py-8 px-4">
       {/* Hero */}
       <div className="rounded-2xl bg-linear-to-br from-indigo-500/10 to-purple-500/10 border border-indigo-100 dark:border-indigo-900/40 p-8 mb-8 text-center">
-        <div className="mb-4 flex justify-center"><img src="/logo.png" alt="d-calc" width={80} height={80} className="rounded-2xl" /></div>
+        <div className="mb-4 flex justify-center"><Image src="/logo.png" alt="d-calc" width={80} height={80} className="rounded-2xl" /></div>
         <h1 className="text-2xl font-bold mb-2">D-Calc</h1>
         <p className="text-(--muted-foreground) text-sm max-w-md mx-auto">
-          {isTh
-            ? "รวมเครื่องคำนวณออนไลน์ฟรี ใช้งานง่าย รองรับทุก device ไม่ต้องสมัครสมาชิก"
-            : "Free online calculators — easy to use on any device, no sign-up required."}
+          {t("subtitle")}
         </p>
       </div>
 
       {/* Mission */}
       <section className="mb-8">
-        <h2 className="text-lg font-bold mb-3">{isTh ? "พันธกิจของเรา" : "Our Mission"}</h2>
+        <h2 className="text-lg font-bold mb-3">{t("mission")}</h2>
         <p className="text-(--muted-foreground) leading-relaxed">
-          {isTh
-            ? "เราเชื่อว่าการคำนวณพื้นฐานในชีวิตประจำวัน เช่น BMI น้ำหนักตัว ดอกเบี้ยกู้ยืม GPA หรือแคลอรี่ ควรเข้าถึงได้ฟรีและง่ายดาย โดยไม่มีโฆษณาที่รบกวน และไม่ต้องสมัครสมาชิก"
-            : "We believe everyday calculations — BMI, loans, GPA, calories — should be free, fast, and accessible to everyone without intrusive popups or account requirements."}
+          {t("mission_long")}
         </p>
       </section>
 
       {/* Tools */}
       <section className="mb-8">
-        <h2 className="text-lg font-bold mb-4">{isTh ? "เครื่องมือทั้งหมด" : "Our Tools"}</h2>
+        <h2 className="text-lg font-bold mb-4">{t("tools_heading")}</h2>
         <div className="grid grid-cols-2 gap-3">
           {calculators.map((calc) => {
             const Icon = calc.icon;
             return (
               <Link
                 key={calc.slug}
-                href={`/${locale}/${calc.slug}`}
+                href={`/${calc.slug}`}
                 className="flex items-center gap-3 p-3 rounded-xl border border-(--border) bg-(--card) hover:shadow-sm hover:-translate-y-0.5 transition-all group"
               >
                 <span className={`p-2 rounded-lg bg-${calc.color}-100 dark:bg-${calc.color}-900/30 text-${calc.color}-600`}>
                   <Icon size={16} />
                 </span>
                 <span className="text-sm font-medium group-hover:text-indigo-600 transition-colors">
-                  {isTh ? calc.nameKey : calc.slug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase())}
+                  {tn(calc.nameKey as Parameters<typeof tn>[0])}
                 </span>
               </Link>
             );
@@ -60,19 +65,14 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
 
       {/* Values */}
       <section className="mb-8">
-        <h2 className="text-lg font-bold mb-4">{isTh ? "สิ่งที่เราให้ความสำคัญ" : "What We Stand For"}</h2>
+        <h2 className="text-lg font-bold mb-4">{t("values_heading")}</h2>
         <div className="space-y-3">
-          {[
-            { icon: "🔓", title: isTh ? "เปิดให้ใช้ฟรี" : "Free & Open", desc: isTh ? "ทุกเครื่องมือใช้ได้ฟรีโดยไม่มีค่าใช้จ่าย" : "Every tool is free, forever. No paywalls." },
-            { icon: "🔒", title: isTh ? "ความเป็นส่วนตัว" : "Privacy First", desc: isTh ? "ข้อมูลของคุณอยู่ในเครื่องของคุณ เราไม่เก็บ PII" : "Your data stays in your browser. We collect zero PII." },
-            { icon: "⚡", title: isTh ? "รวดเร็ว ใช้งานง่าย" : "Fast & Simple", desc: isTh ? "ออกแบบสำหรับมือถือและ desktop รองรับทั้ง 2 ภาษา" : "Designed for mobile & desktop. Available in Thai & English." },
-            { icon: "📊", title: isTh ? "ผลลัพธ์บันทึกอัตโนมัติ" : "Auto-Save", desc: isTh ? "ผลลัพธ์บันทึกไว้ในเบราว์เซอร์ — ปิดแล้วเปิดใหม่ยังอยู่" : "Results are saved locally — reopen and continue where you left off." },
-          ].map((v) => (
-            <div key={v.title} className="flex gap-4 p-4 rounded-xl bg-(--card) border border-(--border)">
+          {values.map((v) => (
+            <div key={v.titleKey} className="flex gap-4 p-4 rounded-xl bg-(--card) border border-(--border)">
               <span className="text-2xl shrink-0">{v.icon}</span>
               <div>
-                <p className="font-semibold text-sm mb-0.5">{v.title}</p>
-                <p className="text-xs text-(--muted-foreground)">{v.desc}</p>
+                <p className="font-semibold text-sm mb-0.5">{t(v.titleKey as Parameters<typeof t>[0])}</p>
+                <p className="text-xs text-(--muted-foreground)">{t(v.descKey as Parameters<typeof t>[0])}</p>
               </div>
             </div>
           ))}
@@ -81,8 +81,8 @@ export default async function AboutPage({ params }: { params: Promise<{ locale: 
 
       {/* Legal links */}
       <div className="flex gap-4 text-sm text-(--muted-foreground)">
-        <Link href={`/${locale}/privacy`} className="hover:text-indigo-600 transition-colors">Privacy Policy</Link>
-        <Link href={`/${locale}/terms`} className="hover:text-indigo-600 transition-colors">Terms of Service</Link>
+        <Link href="/privacy" className="hover:text-indigo-600 transition-colors">Privacy Policy</Link>
+        <Link href="/terms" className="hover:text-indigo-600 transition-colors">Terms of Service</Link>
       </div>
     </div>
   );

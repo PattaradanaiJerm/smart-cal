@@ -1,5 +1,6 @@
 import { hasLocale } from "next-intl";
 import { getMessages } from "next-intl/server";
+import { NextIntlClientProvider } from "next-intl";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import LocaleClientLayout from "./LocaleClientLayout";
@@ -20,5 +21,9 @@ export default async function LocaleLayout({
 
   const messages = await getMessages();
 
-  return <LocaleClientLayout locale={locale} messages={messages as Record<string, unknown>}>{children}</LocaleClientLayout>;
+  return (
+    <NextIntlClientProvider locale={locale} messages={messages} timeZone="Asia/Bangkok">
+      <LocaleClientLayout locale={locale}>{children}</LocaleClientLayout>
+    </NextIntlClientProvider>
+  );
 }

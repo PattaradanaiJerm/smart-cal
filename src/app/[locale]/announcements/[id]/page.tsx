@@ -22,7 +22,7 @@ export default async function AnnouncementDetailPage({
 
   return (
     <div className="max-w-2xl mx-auto py-8">
-      <Link href={`/${locale}/announcements`} className="text-sm text-indigo-600 hover:text-indigo-700 mb-6 inline-flex items-center gap-1">
+      <Link href="/announcements" className="text-sm text-indigo-600 hover:text-indigo-700 mb-6 inline-flex items-center gap-1">
         ← {t("back_to_list")}
       </Link>
       <h1 className="text-2xl font-bold mt-4 mb-2">

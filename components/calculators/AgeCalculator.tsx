@@ -24,7 +24,7 @@ export function AgeCalculator() {
 
   const calculate = () => {
     if (!state.birthdate) {
-      setErrors({ birthdate: locale === "th" ? "กรุณาเลือกวันเกิด" : "Birthdate required" });
+      setErrors({ birthdate: t("required_birthdate") });
       return;
     }
     setErrors({});
@@ -58,8 +58,8 @@ export function AgeCalculator() {
   };
 
   return (
-    <div className="space-y-4">
-      <div className="calc-card space-y-5">
+    <div className="calc-page-stack">
+      <div className="calc-card">
         <div>
           <label className="calc-label">{t("birthdate")}</label>
           <input

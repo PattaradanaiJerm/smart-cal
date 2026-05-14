@@ -15,7 +15,15 @@
     "about": "About",
     "privacy": "Privacy Policy",
     "terms": "Terms of Service",
-    "contact": "Contact Us"
+    "contact": "Contact Us",
+    "search_placeholder": "Search calculators...",
+    "no_results": "No results found",
+    "recently_used": "Recently used",
+    "users_also_use": "Users also use",
+    "info": "Info",
+    "accept": "Accept",
+    "footer_brand": "Free online calculators \u2014 easy to use on any device, no sign-up required.",
+    "cookie_text": "This site uses cookies for Google AdSense advertising and anonymous analytics."
   },
   "home": {
     "hero_title": "Online Calculators",
@@ -25,7 +33,36 @@
     "all_tools": "All Tools",
     "stats_users": "Users",
     "stats_calc": "Calculations",
-    "stats_tools": "Tools"
+    "stats_tools": "Tools",
+    "stats_page_views": "Page views",
+    "badge_free": "Free & Instant",
+    "browse_all": "Browse all",
+    "why_title": "Why use D-Calc?",
+    "why_subtitle": "Built for speed, accuracy, and simplicity.",
+    "faq_title": "Frequently Asked Questions",
+    "feature_instant_title": "Instant Access",
+    "feature_instant_desc": "No signup, no download. Open the site and start calculating.",
+    "feature_accurate_title": "Accurate Results",
+    "feature_accurate_desc": "Industry-standard formulas, tested and verified.",
+    "feature_privacy_title": "Privacy First",
+    "feature_privacy_desc": "All calculations run in your browser \u2014 no data sent to servers.",
+    "feature_bilingual_title": "Bilingual",
+    "feature_bilingual_desc": "Available in Thai and English. Switch anytime.",
+    "faq_free_q": "Is this website free to use?",
+    "faq_free_a": "Yes, 100% free. No subscription, no signup required.",
+    "faq_bmi_q": "What is BMI?",
+    "faq_bmi_a": "BMI is calculated by dividing your weight in kg by your height in meters squared.",
+    "faq_data_q": "Is my data stored anywhere?",
+    "faq_data_a": "No. All calculations happen entirely in your browser.",
+    "faq_loan_q": "How does the loan calculator work?",
+    "faq_loan_a": "It uses the standard amortization formula based on loan amount, interest rate, and period.",
+    "faq_mobile_q": "Does it work on mobile?",
+    "faq_mobile_a": "Yes, fully responsive \u2014 works on PC, tablet, and mobile.",
+    "website_description": "10+ free online calculators",
+    "meta_title": "Free Online Calculators | D-Calc",
+    "meta_description": "Free online calculators \u2014 BMI, Age, Loan, GPA, Calorie, Unit converter, Currency and more. Easy to use on any device, no sign-up required.",
+    "meta_og_title": "Free Online Calculators | D-Calc",
+    "meta_og_description": "10+ free online calculators. Easy to use on any device."
   },
   "nav": {
     "unit_converter": "Unit Converter",
@@ -40,7 +77,13 @@
     "gpa_calculator": "GPA Calculator",
     "random_number": "Random Number",
     "spin_wheel": "Spin Wheel",
-    "card_draw": "Card Draw"
+    "card_draw": "Card Draw",
+    "storage_converter": "Storage Converter",
+    "categories": {
+      "calculators": "Calculators",
+      "converters": "Converters",
+      "random": "Random"
+    }
   },
   "bmi": {
     "title": "BMI Calculator Online — Free",
@@ -54,7 +97,9 @@
     "status_normal": "Normal",
     "status_overweight": "Overweight",
     "status_obese": "Obese",
-    "tip": "A BMI between 18.5–24.9 is considered normal."
+    "tip": "A BMI between 18.5\u201324.9 is considered normal.",
+    "required_weight": "Weight required",
+    "required_height": "Height required"
   },
   "unit": {
     "title": "Unit Converter Online — Free",
@@ -70,7 +115,8 @@
       "area": "Area",
       "volume": "Volume",
       "speed": "Speed"
-    }
+    },
+    "required_value": "Value required"
   },
   "age": {
     "title": "Age Calculator Online — Free",
@@ -81,7 +127,8 @@
     "months": "Months",
     "days": "Days",
     "next_birthday": "Next Birthday",
-    "days_until": "{days} days away"
+    "days_until": "{days} days away",
+    "required_birthdate": "Birthdate required"
   },
   "currency": {
     "title": "Currency Converter Online — Free",
@@ -90,7 +137,13 @@
     "from": "From",
     "to": "To",
     "rate_note": "Approximate exchange rates",
-    "swap": "Swap"
+    "swap": "Swap",
+    "required_amount": "Amount required",
+    "loading_rates": "Loading exchange rates...",
+    "approximate_rates": "Using approximate rates (could not fetch real-time data)",
+    "live_rates_as_of": "Live rates as of {date}",
+    "live_rates": "Live exchange rates",
+    "search_currency": "Search currency..."
   },
   "loan": {
     "title": "Loan Calculator Online — Free",
@@ -100,7 +153,13 @@
     "term_months": "Term (Months)",
     "monthly_payment": "Monthly Payment",
     "total_payment": "Total Payment",
-    "total_interest": "Total Interest"
+    "total_interest": "Total Interest",
+    "required_principal": "Loan amount required",
+    "required_rate": "Interest rate required",
+    "required_months": "Term required",
+    "principal_vs_interest": "Principal vs Interest",
+    "label_principal": "Principal",
+    "label_interest": "Interest"
   },
   "percentage": {
     "title": "Percentage Calculator Online — Free",
@@ -115,7 +174,9 @@
     "part": "Part",
     "whole": "Whole",
     "increase": "Increase",
-    "decrease": "Decrease"
+    "decrease": "Decrease",
+    "required_value": "Value required",
+    "nonzero_value": "Value cannot be 0"
   },
   "calorie": {
     "title": "Calorie Calculator Online — Free",
@@ -137,7 +198,10 @@
     "activity_very_active": "Very hard exercise / physical job",
     "goal_maintain": "Maintain weight",
     "goal_lose": "Lose weight (-500 kcal)",
-    "goal_gain": "Gain weight (+500 kcal)"
+    "goal_gain": "Gain weight (+500 kcal)",
+    "required_age": "Age required",
+    "required_weight": "Weight required",
+    "required_height": "Height required"
   },
   "date": {
     "title": "Date Calculator Online — Free",
@@ -151,7 +215,8 @@
     "diff_result": "Duration",
     "result_date": "Result Date",
     "weekdays": "Business Days",
-    "calendar_days": "Calendar Days"
+    "calendar_days": "Calendar Days",
+    "required_days": "Days required"
   },
   "sleep": {
     "title": "Sleep Calculator Online — Free",
@@ -178,7 +243,8 @@
     "credits_total": "Total Credits",
     "prev_gpa": "Previous GPA (optional)",
     "prev_credits": "Previous Credits",
-    "cumulative_gpa": "Cumulative GPA"
+    "cumulative_gpa": "Cumulative GPA",
+    "required_course": "Add at least 1 course with credits"
   },
   "announcements": {
     "title": "Announcements & News",
@@ -200,7 +266,19 @@
     "title": "About D-Calc",
     "desc": "D-Calc is a free online calculator hub for everyone. We build easy-to-use, fast, and accurate tools to make your everyday life easier.",
     "mission": "Our Mission",
-    "mission_desc": "Build the best calculator tools in Thailand — free, easy, and ad-friendly."
+    "mission_desc": "Build the best calculator tools in Thailand \u2014 free, easy, and ad-friendly.",
+    "subtitle": "Free online calculators \u2014 easy to use on any device, no sign-up required.",
+    "mission_long": "We believe everyday calculations \u2014 BMI, loans, GPA, calories \u2014 should be free, fast, and accessible to everyone without intrusive popups or account requirements.",
+    "tools_heading": "Our Tools",
+    "values_heading": "What We Stand For",
+    "value_free_title": "Free & Open",
+    "value_free_desc": "Every tool is free, forever. No paywalls.",
+    "value_privacy_title": "Privacy First",
+    "value_privacy_desc": "Your data stays in your browser. We collect zero PII.",
+    "value_fast_title": "Fast & Simple",
+    "value_fast_desc": "Designed for mobile & desktop. Available in Thai & English.",
+    "value_autosave_title": "Auto-Save",
+    "value_autosave_desc": "Results are saved locally \u2014 reopen and continue where you left off."
   },
   "random_number": {
     "title": "Random Number Generator — Free",
@@ -213,7 +291,8 @@
     "generate": "Generate!",
     "result": "Results",
     "error_range": "Min must be less than Max",
-    "error_count": "Count exceeds available range (no duplicates allowed)"
+    "error_count": "Count exceeds available range (no duplicates allowed)",
+    "error_count_range": "Count exceeds available range ({range} values)"
   },
   "spin_wheel": {
     "title": "Spin Wheel — Custom Random",
@@ -222,7 +301,13 @@
     "spin": "Spin!",
     "spinning": "Spinning...",
     "result_label": "Result",
-    "add_items": "Add at least 2 items"
+    "add_items": "Add at least 2 items",
+    "default_items": "Option 1\nOption 2\nOption 3\nOption 4\nOption 5\nOption 6",
+    "add_to_see_wheel": "Add items to see the wheel",
+    "congratulations": "Congratulations!",
+    "items_suffix": "items",
+    "items_max_warning": "15 items recommended max",
+    "input_placeholder": "Enter options..."
   },
   "card_draw": {
     "title": "Card Draw — Random Card Pick",
@@ -234,6 +319,81 @@
     "drawn_label": "Drawn cards",
     "remaining": "Remaining in deck",
     "max_warning": "Max {max} cards",
-    "placeholder": "Player 1\nPlayer 2\nPlayer 3\n..."
+    "placeholder": "Player 1\nPlayer 2\nPlayer 3\n...",
+    "default_items": "Player 1\nPlayer 2\nPlayer 3\nPlayer 4\nPlayer 5\nPlayer 6\nPlayer 7\nPlayer 8\nPlayer 9\nPlayer 10",
+    "items_suffix": "items",
+    "cards_suffix": "cards",
+    "max_label": "max",
+    "draw_again": "Draw again"
+  },
+  "storage": {
+    "title": "Storage Converter Online — Free",
+    "description": "Convert data storage units: Bit, Byte, KB, MB, GB, TB, PB \u2014 fast and accurate.",
+    "value_label": "Value to convert",
+    "from_unit": "From",
+    "to_unit": "To",
+    "swap_units": "Swap units",
+    "required_value": "Please enter a valid value",
+    "unit_bit": "Bit",
+    "unit_byte": "Byte",
+    "unit_kb": "KB",
+    "unit_mb": "MB",
+    "unit_gb": "GB",
+    "unit_tb": "TB",
+    "unit_pb": "PB"
+  },
+  "patch_notes": {
+    "title": "Patch Notes",
+    "subtitle": "See what has changed in each version"
+  },
+  "cards": {
+    "unit_converter": "Convert length, weight, temperature and more",
+    "bmi": "Calculate Body Mass Index and check your health",
+    "age_calculator": "Calculate exact age in years, months and days",
+    "currency_converter": "Convert world currencies with live exchange rates",
+    "loan_calculator": "Calculate loan payments, interest and total cost",
+    "percentage_calculator": "Calculate percentages, changes and discounts",
+    "calorie_calculator": "Calculate daily calorie needs (TDEE) by activity level",
+    "date_calculator": "Calculate days between dates or add/subtract days",
+    "sleep_calculator": "Calculate best sleep times based on 90-minute cycles",
+    "gpa_calculator": "Calculate semester GPA and cumulative GPA",
+    "random_number": "Generate random numbers in any range",
+    "spin_wheel": "Custom spin wheel with your own options",
+    "card_draw": "Draw random cards from your custom deck",
+    "storage_converter": "Convert storage units: Bit, Byte, KB, MB, GB, TB, PB"
+  },
+  "contact": {
+    "page_title": "Contact Us",
+    "page_subtitle": "We'd love to hear from you",
+    "send_message_heading": "Send a Message",
+    "subject_label": "Subject",
+    "message_label": "Message",
+    "message_placeholder": "Type your message here...",
+    "send_btn": "Send Message",
+    "sending": "Sending...",
+    "privacy_note": "Information you send will only be used to respond to your inquiry. We do not share your personal information with third parties.",
+    "topic_bug_title": "Bug Report",
+    "topic_bug_desc": "Found an error in calculations or display issues",
+    "topic_feature_title": "Feature Request",
+    "topic_feature_desc": "Have ideas for new tools or improvements to existing ones",
+    "topic_partner_title": "Partnership",
+    "topic_partner_desc": "Interested in collaboration, link exchange, or partnership",
+    "topic_privacy_title": "Privacy Inquiry",
+    "topic_privacy_desc": "Questions about our privacy policy or your data",
+    "alert_msg_required_title": "Message required",
+    "alert_msg_required_text": "Please enter at least 5 characters",
+    "alert_ok": "OK",
+    "alert_confirm_title": "Confirm submission?",
+    "alert_topic_label": "Topic:",
+    "alert_message_label_html": "Message:",
+    "alert_send_btn": "\u2705 Send",
+    "alert_cancel_btn": "Cancel",
+    "alert_success_title": "Sent successfully! \ud83c\udf89",
+    "alert_success_text": "Thank you for reaching out. We'll review and get back to you as soon as possible.",
+    "alert_rate_title": "Too many requests",
+    "alert_rate_text": "Please wait a moment before trying again",
+    "alert_error_title": "Something went wrong",
+    "alert_error_text": "Could not send your message. Please try again.",
+    "alert_retry": "Try Again"
   }
 }

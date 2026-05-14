@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useMemo } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useTranslations, useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 import { calculators } from "@/config/calculators";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
@@ -15,29 +15,25 @@ import type { LucideIcon } from "lucide-react";
 
 const categoryConfig: {
   id: string;
-  labelTh: string;
-  labelEn: string;
+  labelKey: "calculators" | "converters" | "random";
   icon: LucideIcon;
   slugs: string[];
 }[] = [
   {
     id: "calculators",
-    labelTh: "เครื่องคิดเลข",
-    labelEn: "Calculators",
+    labelKey: "calculators",
     icon: Calculator,
     slugs: ["bmi","age-calculator","loan-calculator","percentage-calculator","calorie-calculator","date-calculator","sleep-calculator","gpa-calculator"],
   },
   {
     id: "converters",
-    labelTh: "แปลง",
-    labelEn: "Converters",
+    labelKey: "converters",
     icon: ArrowLeftRight,
-    slugs: ["unit-converter","currency-converter"],
+    slugs: ["unit-converter","currency-converter","storage-converter"],
   },
   {
     id: "random",
-    labelTh: "สุ่ม",
-    labelEn: "Random",
+    labelKey: "random",
     icon: Shuffle,
     slugs: ["random-number","spin-wheel","card-draw"],
   },
@@ -52,27 +48,28 @@ interface SidebarProps {
 export function Sidebar({ onClose, collapsed = false, onToggleCollapse }: SidebarProps) {
   const t = useTranslations("nav");
   const tc = useTranslations("common");
-  const locale = useLocale();
+  const tcat = useTranslations("nav.categories");
   const pathname = usePathname();
 
   const isActive = (slug: string) => pathname.includes(`/${slug}`);
 
   const [search, setSearch] = useState("");
-  const [recentSlugs, setRecentSlugs] = useState<string[]>([]);
 
-  useEffect(() => {
+  const recentSlugs = useMemo(() => {
     try {
-      const stored = JSON.parse(localStorage.getItem("sc_recent_calcs") ?? "[]") as string[];
-      setRecentSlugs(stored.slice(0, 3));
-    } catch {}
+      return (JSON.parse(localStorage.getItem("sc_recent_calcs") ?? "[]") as string[]).slice(0, 3);
+    } catch {
+      return [];
+    }
+  // re-read whenever the user navigates (pathname changes trigger localStorage refresh)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
   const filteredCalcs = search.trim()
     ? calculators.filter((c) => {
         const term = search.toLowerCase();
         const name = t(c.nameKey as Parameters<typeof t>[0]).toLowerCase();
-        const desc = (locale === "th" ? c.descTh : c.descEn).toLowerCase();
-        return name.includes(term) || c.slug.includes(term) || desc.includes(term);
+        return name.includes(term) || c.slug.includes(term);
       })
     : [];
 
@@ -102,7 +99,7 @@ export function Sidebar({ onClose, collapsed = false, onToggleCollapse }: Sideba
       {/* Logo + collapse — hidden on mobile (Header already shows logo) */}
       <div className={cn("hidden lg:flex items-center h-14 pl-4 pr-2 border-b border-(--sidebar-border) shrink-0", collapsed && "lg:justify-center lg:pl-2 lg:pr-2")}>
         <Link
-          href={`/${locale}`}
+          href="/"
           onClick={onClose}
           className={cn("flex items-center gap-2 font-bold text-lg flex-1 min-w-0", collapsed && "lg:hidden")}
         >
@@ -121,8 +118,8 @@ export function Sidebar({ onClose, collapsed = false, onToggleCollapse }: Sideba
       {/* Home */}
       <div className="px-2 pt-3 pb-1">
         <NavLink
-          href={`/${locale}`}
-          active={pathname === `/${locale}` || pathname === `/${locale}/`}
+          href="/"
+          active={pathname === "/" || pathname === ""}
           onClick={onClose}
           collapsed={collapsed}
           tooltip={tc("home")}
@@ -141,7 +138,7 @@ export function Sidebar({ onClose, collapsed = false, onToggleCollapse }: Sideba
               type="text"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              placeholder={locale === "th" ? "ค้นหาเครื่องคำนวณ..." : "Search calculators..."}
+              placeholder={tc("search_placeholder")}
               className="w-full pl-8 pr-3 py-1.5 text-sm bg-(--muted) border border-(--border) rounded-lg text-foreground placeholder:text-(--muted-foreground) focus:outline-none focus:border-(--primary) focus:bg-(--card) transition-colors"
             />
           </div>
@@ -153,7 +150,7 @@ export function Sidebar({ onClose, collapsed = false, onToggleCollapse }: Sideba
         <div className="px-2 pb-2">
           {filteredCalcs.length === 0 ? (
             <p className="text-xs text-(--muted-foreground) px-3 py-2">
-              {locale === "th" ? "ไม่พบผลลัพธ์" : "No results found"}
+              {tc("no_results")}
             </p>
           ) : (
             filteredCalcs.map((calc) => {
@@ -161,7 +158,7 @@ export function Sidebar({ onClose, collapsed = false, onToggleCollapse }: Sideba
               return (
                 <NavLink
                   key={calc.slug}
-                  href={`/${locale}/${calc.slug}`}
+                  href={`/${calc.slug}`}
                   active={isActive(calc.slug)}
                   onClick={() => { setSearch(""); onClose?.(); }}
                   collapsed={false}
@@ -182,12 +179,12 @@ export function Sidebar({ onClose, collapsed = false, onToggleCollapse }: Sideba
         <div className="px-2 pb-1">
           <p className="text-xs font-semibold text-(--muted-foreground) uppercase tracking-wider px-3 py-1.5 flex items-center gap-1.5">
             <Clock size={11} />
-            {locale === "th" ? "ที่ใช้ล่าสุด" : "Recently used"}
+            {tc("recently_used")}
           </p>
           {recentCalcs.map((calc) => {
             const Icon = calc.icon;
             return (
-              <NavLink key={calc.slug} href={`/${locale}/${calc.slug}`} active={isActive(calc.slug)} onClick={onClose} collapsed={false}>
+              <NavLink key={calc.slug} href={`/${calc.slug}`} active={isActive(calc.slug)} onClick={onClose} collapsed={false}>
                 <span className={cn("flex items-center justify-center w-5 h-5 rounded text-white shrink-0", calc.color)}>
                   <Icon size={11} />
                 </span>
@@ -210,7 +207,7 @@ export function Sidebar({ onClose, collapsed = false, onToggleCollapse }: Sideba
           const CatIcon = cat.icon;
           const isOpen = openCategories[cat.id] ?? false;
           const hasActive = cat.slugs.some((slug) => isActive(slug));
-          const label = locale === "th" ? cat.labelTh : cat.labelEn;
+          const label = tcat(cat.labelKey);
 
           return (
             <div key={cat.id}>
@@ -242,7 +239,7 @@ export function Sidebar({ onClose, collapsed = false, onToggleCollapse }: Sideba
                     if (!calc) return null;
                     const Icon = calc.icon;
                     return (
-                      <NavLink key={slug} href={`/${locale}/${slug}`} active={isActive(slug)} onClick={onClose} collapsed={false}>
+                      <NavLink key={slug} href={`/${slug}`} active={isActive(slug)} onClick={onClose} collapsed={false}>
                         <span className={cn("flex items-center justify-center w-5 h-5 rounded text-white shrink-0", calc.color)}>
                           <Icon size={11} />
                         </span>
@@ -260,11 +257,11 @@ export function Sidebar({ onClose, collapsed = false, onToggleCollapse }: Sideba
 
       {/* Footer */}
       <div className="px-2 py-3 border-t border-(--sidebar-border) space-y-0.5">
-        <NavLink href={`/${locale}/about`} active={isActive("about")} onClick={onClose} collapsed={collapsed} tooltip={tc("about")}>
+        <NavLink href="/about" active={isActive("about")} onClick={onClose} collapsed={collapsed} tooltip={tc("about")}>
           <Info size={16} className="shrink-0" />
           <span className={cn(collapsed && "lg:hidden")}>{tc("about")}</span>
         </NavLink>
-        <NavLink href={`/${locale}/contact`} active={isActive("contact")} onClick={onClose} collapsed={collapsed} tooltip={tc("contact")}>
+        <NavLink href="/contact" active={isActive("contact")} onClick={onClose} collapsed={collapsed} tooltip={tc("contact")}>
           <Mail size={16} className="shrink-0" />
           <span className={cn(collapsed && "lg:hidden")}>{tc("contact")}</span>
         </NavLink>

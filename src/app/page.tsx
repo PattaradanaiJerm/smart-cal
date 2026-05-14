@@ -1,5 +1,4 @@
-import { redirect } from "next/navigation";
-
+// Middleware handles locale detection — this page is not reached during normal flow
 export default function Root() {
-  redirect("/th");
+  return null;
 }

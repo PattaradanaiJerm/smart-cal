@@ -26,8 +26,8 @@ export function BmiCalculator() {
     const errs: Record<string, string> = {};
     const w = parseFloat(state.weight);
     const h = parseFloat(state.height) / 100;
-    if (!state.weight || isNaN(w) || w <= 0) errs.weight = locale === "th" ? "กรุณากรอกน้ำหนัก" : "Weight required";
-    if (!state.height || isNaN(parseFloat(state.height)) || parseFloat(state.height) <= 0) errs.height = locale === "th" ? "กรุณากรอกส่วนสูง" : "Height required";
+    if (!state.weight || isNaN(w) || w <= 0) errs.weight = t("required_weight");
+    if (!state.height || isNaN(parseFloat(state.height)) || parseFloat(state.height) <= 0) errs.height = t("required_height");
     setErrors(errs);
     if (Object.keys(errs).length > 0) return;
     const bmi = w / (h * h);
@@ -43,8 +43,8 @@ export function BmiCalculator() {
   };
 
   return (
-    <div className="space-y-4">
-      <div className="calc-card space-y-5">
+    <div className="calc-page-stack">
+      <div className="calc-card">
         <Field
           label={`${t("weight")} (${t("weight_unit")})`}
           value={state.weight}
@@ -99,7 +99,7 @@ export function BmiCalculator() {
             </div>
             <div className="h-2.5 bg-(--muted) rounded-full overflow-hidden">
               <div
-                className="h-full rounded-full bg-gradient-to-r from-blue-400 via-emerald-400 via-amber-400 to-red-500 transition-all duration-500"
+                className="h-full rounded-full bg-linear-to-r from-blue-400 via-amber-400 to-red-500 transition-all duration-500"
                 style={{ width: `${Math.min((state.result / 40) * 100, 100)}%` }}
               />
             </div>

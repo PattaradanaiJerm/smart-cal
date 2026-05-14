@@ -72,7 +72,7 @@ export function UnitConverter() {
   const convert = () => {
     const v = parseFloat(state.input);
     if (state.input === "" || isNaN(v)) {
-      setErrors({ input: locale === "th" ? "กรุณากรอกค่า" : "Value required" });
+      setErrors({ input: t("required_value") });
       return;
     }
     setErrors({});
@@ -87,8 +87,8 @@ export function UnitConverter() {
   const currentUnits = units[state.category];
 
   return (
-    <div className="space-y-4">
-      <div className="calc-card space-y-5">
+    <div className="calc-page-stack">
+      <div className="calc-card">
         {/* Category */}
         <div>
           <label className="calc-label">{t("category")}</label>
